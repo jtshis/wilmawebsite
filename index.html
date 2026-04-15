@@ -1222,8 +1222,8 @@ nav.scrolled{
 
 /* Large comma ghost in CTA */
 .cta-comma{
-  position:absolute;right:80px;top:50%;
-  transform:translateY(-50%);
+  position:absolute;right:80px;top:62%;
+  transform:translateY(-62%);
   pointer-events:none;
   user-select:none;
 }
@@ -2553,22 +2553,8 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
 </section>
 
 
-<!-- ② COMMA MOMENT -->
-<div class="comma-moment" data-section="1">
-  <div class="comma-giant r" id="commaGiant">
-    <img src="comma-forest.png" alt="" loading="lazy" style="height:clamp(160px,22vw,300px);width:auto;">
-  </div>
-  <div class="comma-aside r d2">
-    <p class="comma-aside-text">
-      We believe marketing should not be extractive. We build the digital infrastructure for organisations that prioritise people and planet.
-    </p>
-    <span class="comma-aside-sub">Lise Kriekemans · Founder, Wilma Collective</span>
-  </div>
-</div>
-
-
-<!-- ③ HOW WE WORK -->
-<section class="section-how" id="how" data-section="2">
+<!-- ② HOW WE WORK -->
+<section class="section-how" id="how" data-section="1">
   <p class="section-label r">Process</p>
   <h2 class="section-title r d1">How we <em>work.</em></h2>
 
@@ -2712,6 +2698,21 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
 </section>
 
 
+
+
+<!-- ③ COMMA MOMENT -->
+<div class="comma-moment" data-section="2">
+  <div class="comma-giant r" id="commaGiant">
+    <img src="comma-forest.png" alt="" loading="lazy" style="height:clamp(160px,22vw,300px);width:auto;">
+  </div>
+  <div class="comma-aside r d2">
+    <p class="comma-aside-text">
+      We believe marketing should not be extractive. We build the digital infrastructure for organisations that prioritise people and planet.
+    </p>
+    <span class="comma-aside-sub">Lise Kriekemans · Founder, Wilma Collective</span>
+  </div>
+</div>
+
 <!-- ④ MANIFESTO — dark + globe bg -->
 <section class="manifesto" data-section="3">
 
@@ -2732,14 +2733,13 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
     <ellipse cx="320" cy="320" rx="182" ry="280" stroke="rgba(189,203,148,0.28)" stroke-width="1" fill="none"/>
     <!-- Vertical axis -->
     <line x1="320" y1="40" x2="320" y2="600" stroke="rgba(189,203,148,0.5)" stroke-width="1.5"/>
-    <!-- Africa continent - forest green filled -->
-    <path d="M295 165 Q315 155 332 168 Q348 188 343 218 Q337 244 330 272 Q322 300 320 325 Q314 348 320 366 Q310 378 300 363 Q287 338 291 312 Q286 282 288 254 Q285 222 288 197 Z" fill="#154739" opacity=".55"/>
-    <!-- Europe blob - forest -->
-    <path d="M288 155 Q306 144 323 150 Q334 156 332 172 Q321 166 304 169 Q291 173 288 155Z" fill="#154739" opacity=".5"/>
-    <!-- Americas - lavender tint for contrast -->
-    <path d="M148 185 Q163 172 176 183 Q185 202 181 232 Q175 262 170 290 Q164 316 168 340 Q159 352 149 338 Q137 312 141 283 Q136 250 138 219 Q136 198 148 185Z" fill="#C7B0D6" opacity=".35"/>
-    <!-- Asia rough - sky blue tint -->
-    <path d="M380 145 Q408 138 428 152 Q442 168 438 192 Q430 215 418 230 Q405 242 392 235 Q378 220 375 200 Q370 178 375 160 Z" fill="#A8BFDF" opacity=".3"/>
+    <!-- Simplified continents -->
+    <path d="M168 158 Q184 144 206 146 Q226 148 238 159 Q247 168 244 181 Q240 192 228 197 Q214 203 200 199 Q191 196 183 189 Q173 181 168 171 Q163 164 168 158 Z" fill="#154739" opacity=".56"/>
+    <path d="M204 254 Q219 262 223 276 Q227 291 223 306 Q220 319 214 334 Q209 348 203 363 Q197 376 188 372 Q181 368 180 357 Q182 342 186 329 Q189 315 189 303 Q188 289 189 278 Q193 263 204 254 Z" fill="#154739" opacity=".56"/>
+    <path d="M287 150 Q302 142 321 145 Q336 149 343 160 Q349 171 345 181 Q341 190 332 195 Q320 199 310 197 Q301 195 294 188 Q287 181 285 171 Q283 160 287 150 Z" fill="#BDCB94" opacity=".34"/>
+    <path d="M286 184 Q304 181 322 186 Q337 192 343 206 Q349 221 346 239 Q342 258 335 279 Q329 299 323 323 Q320 343 313 359 Q305 373 294 366 Q286 360 285 345 Q286 329 285 311 Q282 294 279 276 Q277 247 279 226 Q280 203 286 184 Z" fill="#154739" opacity=".58"/>
+    <path d="M364 151 Q388 141 412 147 Q429 152 439 166 Q445 179 443 193 Q440 206 431 216 Q421 226 407 229 Q393 231 381 225 Q370 218 364 206 Q358 193 359 178 Q360 160 364 151 Z" fill="#A8BFDF" opacity=".34"/>
+    <path d="M398 304 Q410 300 419 304 Q427 309 426 318 Q425 327 417 331 Q408 334 400 329 Q392 325 392 317 Q392 309 398 304 Z" fill="#C7B0D6" opacity=".34"/>
     <!-- Outer dashed ring - sage -->
     <circle cx="320" cy="320" r="292" stroke="rgba(189,203,148,0.2)" stroke-width="1" stroke-dasharray="5 11" fill="none"/>
   </svg>
@@ -2940,7 +2940,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
     <div class="cta-line" style="top:56%;animation-delay:1.6s"></div>
     <div class="cta-line" style="top:72%;animation-delay:2.4s"></div>
   </div>
-  <div class="cta-comma"><img src="comma-sage.png" alt="" loading="lazy" style="height:380px;width:auto;opacity:.14;"></div>
+  <div class="cta-comma"><img src="comma-sage.png" alt="" loading="lazy" style="height:380px;width:auto;opacity:1;"></div>
   <div class="cta-left">
     <p class="cta-label r">Let's work together</p>
     <h2 class="cta-headline r d1">
