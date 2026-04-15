@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -42,9 +42,9 @@
 </script>
 <style>
 
-/* ─────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    DESIGN TOKENS
-───────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 :root {
   --cream:       #FAFAF8;
   --cream-deep:  #F4F5F0;
@@ -76,9 +76,9 @@
   --safe-left: env(safe-area-inset-left, 0px);
 }
 
-/* ─────────────────────────────────────────
-   GRAIN TEXTURE — premium film overlay
-───────────────────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   GRAIN TEXTURE â€” premium film overlay
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 body::after{
   content:'';
   position:fixed;inset:0;
@@ -116,17 +116,17 @@ img{display:block;max-width:100%}
 }
 .is-mobile body.menu-open{overflow:hidden}
 
-/* ─────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    CURSOR
-───────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 #cur{position:fixed;width:6px;height:6px;background:var(--forest);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s var(--spring),height .3s var(--spring),background .3s;opacity:0}
 #cur-ring{position:fixed;width:28px;height:28px;border:1px solid rgba(21,71,57,.3);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .4s var(--spring),height .4s var(--spring),border-color .3s;opacity:0}
 body.cursor-hover #cur{width:12px;height:12px;background:var(--cherry)}
 body.cursor-hover #cur-ring{width:44px;height:44px;border-color:rgba(139,0,32,.25)}
 
-/* ─────────────────────────────────────────
-   GLOBAL GRID — architectural, sage-warm
-───────────────────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   GLOBAL GRID â€” architectural, sage-warm
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 #grid-bg{
   position:fixed;inset:0;pointer-events:none;z-index:0;
   background-image:
@@ -136,9 +136,9 @@ body.cursor-hover #cur-ring{width:44px;height:44px;border-color:rgba(139,0,32,.2
   opacity:0;
 }
 
-/* ─────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    SCROLL PROGRESS
-───────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 #progress{
   position:fixed;right:24px;top:50%;transform:translateY(-50%);
   z-index:200;display:flex;flex-direction:column;align-items:center;gap:6px;
@@ -146,9 +146,9 @@ body.cursor-hover #cur-ring{width:44px;height:44px;border-color:rgba(139,0,32,.2
 .prog-dot{width:4px;height:4px;border-radius:50%;background:rgba(21,71,57,.2);transition:background .3s,transform .3s}
 .prog-dot.active{background:var(--forest);transform:scale(1.5)}
 
-/* ─────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    NAV
-───────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
   display:flex;align-items:center;justify-content:space-between;
@@ -189,9 +189,9 @@ nav.scrolled{
 .nav-cta::after{display:none!important}
 .nav-cta:hover{background:var(--forest-mid)!important;transform:translateY(-1px)!important}
 
-/* ─────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    PAGE WRAPPER
-───────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .page{position:relative;z-index:1}
 .about-page{display:none}
 .about-page.active{display:block}
@@ -199,9 +199,9 @@ nav.scrolled{
 .mobile-bottom-nav,
 .mobile-menu-backdrop{display:none}
 
-/* ─────────────────────────────────────────
-   ①  HERO
-───────────────────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   â‘   HERO
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .hero{
   min-height:100vh;padding-top:62px;
   display:grid;grid-template-columns:1fr 1fr;
@@ -217,7 +217,7 @@ nav.scrolled{
   width:100%;height:100%;object-fit:cover;
   position:absolute;inset:0;
 }
-/* No overlay — text sits directly on sage */
+/* No overlay â€” text sits directly on sage */
 
 .hero-left{
   position:relative;z-index:2;
@@ -296,7 +296,7 @@ nav.scrolled{
 }
 .btn-ghost:hover{color:var(--forest-dark);gap:14px}
 
-/* Hero right — cherry zone */
+/* Hero right â€” cherry zone */
 .hero-right{
   position:relative;z-index:2;
   display:flex;align-items:flex-start;justify-content:flex-end;
@@ -309,7 +309,7 @@ nav.scrolled{
   min-height:100vh;
 }
 
-/* Cherry image — positioned top-right bleeding off */
+/* Cherry image â€” positioned top-right bleeding off */
 .cherry-img{
   position:absolute;
   top:-20px;right:-40px;
@@ -327,9 +327,9 @@ nav.scrolled{
   100%{opacity:1;transform:translateY(0) scale(1) rotate(0deg)}
 }
 
-/* ─────────────────────────────────────────
-   ② COMMA MOMENT — full structural break
-───────────────────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   â‘¡ COMMA MOMENT â€” full structural break
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .comma-moment{
   background:rgba(189,203,148,.28);
   padding:0 52px;
@@ -373,9 +373,9 @@ nav.scrolled{
   opacity:.55;
 }
 
-/* ─────────────────────────────────────────
-   ③ HOW WE WORK
-───────────────────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   â‘¢ HOW WE WORK
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .section-how{
   padding:120px 52px;
   background:var(--cream);
@@ -428,7 +428,7 @@ nav.scrolled{
 .how-card:hover::before{transform:scaleX(1)}
 .how-card:hover{background:rgba(189,203,148,.05)}
 
-/* Text zone — top of card */
+/* Text zone â€” top of card */
 .how-text-zone{
   flex:0 0 auto;
   padding-bottom:40px;
@@ -450,7 +450,7 @@ nav.scrolled{
   color:var(--mid);font-weight:300;
 }
 
-/* Illustration zone — bottom, bleeds to edges */
+/* Illustration zone â€” bottom, bleeds to edges */
 .how-illus-zone{
   flex:1;
   display:flex;
@@ -565,12 +565,12 @@ nav.scrolled{
   transform:scale(1);
 }
 
-/* ─────────────────────────────────────────
-   HOW-CARD HOVER ANIMATIONS — desktop only
-───────────────────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   HOW-CARD HOVER ANIMATIONS â€” desktop only
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 @media(hover:hover) and (min-width:768px){
 
-  /* Card 1 — magnifying glass scans document */
+  /* Card 1 â€” magnifying glass scans document */
   .how-card:hover .mag-glass{animation:magScan 2.6s var(--smooth) infinite}
   @keyframes magScan{
     0%  {transform:translate(0,0)}
@@ -590,7 +590,7 @@ nav.scrolled{
   .how-card:hover .dh3{animation:hlFade .5s .95s ease forwards}
   @keyframes hlFade{from{opacity:0}to{opacity:1}}
 
-  /* Card 2 — cube face lights on hover */
+  /* Card 2 â€” cube face lights on hover */
   .how-card:hover .iso-core{
     transform:translateY(-6px) rotate(-5deg) scale(1.03);
     filter:drop-shadow(0 20px 32px rgba(21,71,57,.14));
@@ -620,7 +620,7 @@ nav.scrolled{
     transform:scale(1.08);
   }
 
-  /* Card 3 — before/after reveals cleanly */
+  /* Card 3 â€” before/after reveals cleanly */
   .how-card:hover .evid-before{animation:beforeDraw 1.1s .1s var(--out) forwards}
   @keyframes beforeDraw{from{stroke-dashoffset:400}to{stroke-dashoffset:0}}
   .how-card:hover .evid-area{animation:areaFade .7s .7s ease forwards}
@@ -640,9 +640,9 @@ nav.scrolled{
 
 }
 
-/* ─────────────────────────────────────────
-   ④ MANIFESTO (forest dark + globe bg)
-───────────────────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   â‘£ MANIFESTO (forest dark + globe bg)
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .manifesto{
   background:var(--forest-dark);
   padding:120px 52px;
@@ -715,9 +715,9 @@ nav.scrolled{
 }
 .btn-sage:hover{background:#ccd9a8;transform:translateY(-2px)}
 
-/* ─────────────────────────────────────────
-   ⑤ WHO WE WORK WITH — sage wash bg
-───────────────────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   â‘¤ WHO WE WORK WITH â€” sage wash bg
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .section-who{
   padding:120px 52px;
   background:var(--cream-deep);
@@ -768,9 +768,9 @@ nav.scrolled{
   color:var(--mid);font-weight:400;
 }
 
-/* ─────────────────────────────────────────
-   ⑥ PROJECTS — clean white band for real logos
-───────────────────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   â‘¥ PROJECTS â€” clean white band for real logos
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .section-projects{
   background:var(--forest);
   padding:72px 52px;
@@ -810,7 +810,7 @@ nav.scrolled{
 .logo-client:last-child{border-right:none}
 .logo-client:hover{background:rgba(255,255,255,.04)}
 
-/* Logo image slot — replace text with <img> when assets available */
+/* Logo image slot â€” replace text with <img> when assets available */
 .logo-client-img{
   height:44px;
   display:flex;align-items:center;
@@ -897,9 +897,9 @@ nav.scrolled{
   color:rgba(255,255,255,.5);
 }
 
-/* ─────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    CASE STUDIES
-───────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .section-cases{
   padding:120px 52px;
   background:rgba(189,203,148,.12);
@@ -928,7 +928,7 @@ nav.scrolled{
   border:1px solid rgba(189,203,148,.3);
 }
 
-/* ── Case card — two-state system ── */
+/* â”€â”€ Case card â€” two-state system â”€â”€ */
 .case-card{
   background:rgba(255,255,255,.65);
   position:relative;
@@ -944,7 +944,7 @@ nav.scrolled{
 .case-card.strategic::before{background:var(--forest)}
 .case-card.tactical::before{background:var(--lavender)}
 
-/* ── State 1: Identity zone (always visible) ── */
+/* â”€â”€ State 1: Identity zone (always visible) â”€â”€ */
 .case-identity{
   padding:48px 52px 32px;
   position:relative;z-index:2;
@@ -970,7 +970,7 @@ nav.scrolled{
   text-transform:uppercase;color:var(--muted);
 }
 
-/* ── Image zone — State 1 default ── */
+/* â”€â”€ Image zone â€” State 1 default â”€â”€ */
 .case-image-zone{
   position:relative;
   width:100%;
@@ -986,7 +986,7 @@ nav.scrolled{
 .case-card.strategic .case-photo{object-position:top center}
 .case-card.tactical .case-photo{object-position:center}
 
-/* Sage wash over photo — brand harmony */
+/* Sage wash over photo â€” brand harmony */
 .case-photo-wash{
   position:absolute;inset:0;
   background:rgba(189,203,148,.15);
@@ -1022,7 +1022,7 @@ nav.scrolled{
 .case-card:hover .case-invite span,
 .case-card:focus .case-invite span{transform:translateX(3px)}
 
-/* ── Stats overlay — State 2 ── */
+/* â”€â”€ Stats overlay â€” State 2 â”€â”€ */
 .case-overlay{
   position:absolute;
   inset:0;
@@ -1077,7 +1077,7 @@ nav.scrolled{
 }
 .case-duration::before{content:'';width:16px;height:1px;background:rgba(255,255,255,.25)}
 
-/* ── ACTIVE STATE ── */
+/* â”€â”€ ACTIVE STATE â”€â”€ */
 .case-card.case-active .case-overlay{
   background:rgba(13,46,34,.88);
 }
@@ -1121,7 +1121,7 @@ nav.scrolled{
   position:relative;border-radius:4px;
   overflow:hidden;aspect-ratio:4/3;
 }
-/* Windmill placeholder — replace with AI Studio asset */
+/* Windmill placeholder â€” replace with AI Studio asset */
 .sig-img-inner{
   width:100%;height:100%;
   background:linear-gradient(160deg,#1a3d52 0%,#154739 35%,#0d2e22 70%,#060f0a 100%);
@@ -1133,7 +1133,7 @@ nav.scrolled{
   width:100%;height:100%;
 }
 
-/* Cherry leaf detail — appears bottom corner of image */
+/* Cherry leaf detail â€” appears bottom corner of image */
 .sig-cherry-detail{
   position:absolute;bottom:-20px;right:-20px;
   width:120px;opacity:.7;
@@ -1161,7 +1161,7 @@ nav.scrolled{
   font-size:15px;line-height:1.85;
   color:var(--mid);font-weight:300;margin-bottom:16px;
 }
-/* Founder name — cherry connection moment */
+/* Founder name â€” cherry connection moment */
 .sig-founder{
   font-family:var(--serif);font-style:italic;
   font-size:13px;color:var(--muted);
@@ -1184,9 +1184,9 @@ nav.scrolled{
   border-color:var(--forest);gap:16px;
 }
 
-/* ─────────────────────────────────────────
-   ⑧ CTA
-───────────────────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   â‘§ CTA
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .section-cta{
   margin:0;
   background:var(--forest-dark);
@@ -1260,9 +1260,9 @@ nav.scrolled{
 }
 .btn-cta:hover{background:var(--sage-dim);background:#d8e4b8;transform:translateY(-2px)}
 
-/* ─────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    FOOTER
-───────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 footer{
   padding:40px 52px;
   border-top:1px solid var(--grid-col);
@@ -1279,12 +1279,12 @@ footer{
 .ft-right{display:flex;justify-content:flex-end;align-items:center;gap:24px}
 .ft-copy{font-size:11px;color:var(--muted);opacity:.5}
 
-/* ─────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    ABOUT PAGE
-───────────────────────────────────────── */
-/* ─────────────────────────────────────────
-   ABOUT PAGE — full rebuild
-───────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   ABOUT PAGE â€” full rebuild
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 /* Hero */
 .about-hero-new{
@@ -1439,7 +1439,7 @@ footer{
   background:var(--sage);transform:translateY(-2px);gap:16px;
 }
 
-/* Lise craft seal — old rule kept for cascade order; margin zeroed out */
+/* Lise craft seal â€” old rule kept for cascade order; margin zeroed out */
 .lise-seal{
   margin-top:0;
   display:inline-block;
@@ -1473,7 +1473,7 @@ footer{
 .val-title{font-family:var(--serif);font-size:20px;font-weight:400;color:var(--charcoal);margin-bottom:12px}
 .val-body{font-size:13px;line-height:1.8;color:var(--mid);font-weight:300}
 
-/* Signature video — cinematic closing */
+/* Signature video â€” cinematic closing */
 .about-signature{
   position:relative;
   height:70vh;
@@ -1526,7 +1526,7 @@ footer{
 }
 .about-sig-contact a:hover{color:var(--sage)}
 
-/* Hide global CSS grid over hero — image has grid baked in */
+/* Hide global CSS grid over hero â€” image has grid baked in */
 .hero ~ #grid-bg,
 .hero + * ~ #grid-bg { opacity: 1; }
 .hero { isolation: isolate; }
@@ -1547,18 +1547,18 @@ footer{
 }
 .card-r.in{opacity:1;transform:translateY(0) rotateX(0)}
 
-/* ─────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    KEYFRAMES
-───────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 @keyframes wipeIn{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0% 0 0)}}
 @keyframes wordUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes scaleIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes countUp{from{opacity:0}to{opacity:1}}
 
-/* ─────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    MANIFESTO WORD HIGHLIGHT
-───────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .mw{
   color:rgba(255,255,255,.2);
   transition:color .5s ease;
@@ -1567,7 +1567,7 @@ footer{
 .mw.lit{color:var(--white)}
 .manifesto-headline em .mw.lit{color:var(--sage)}
 
-/* Sage thread — runs through all light sections */
+/* Sage thread â€” runs through all light sections */
 .section-how::before{
   content:'';
   position:absolute;
@@ -1581,17 +1581,17 @@ footer{
   pointer-events:none;
 }
 
-/* Section number counter — visual consistency */
+/* Section number counter â€” visual consistency */
 .section-how,.section-who,.about-values-new{
   counter-increment:section-count;
 }
 
-/* Manifesto — sage bleeds into dark from above */
+/* Manifesto â€” sage bleeds into dark from above */
 .manifesto{
   border-top:3px solid rgba(189,203,148,.2);
 }
 
-/* About page — comma recurring as watermark */
+/* About page â€” comma recurring as watermark */
 .about-hero-new::after{
   content:'';
   position:absolute;
@@ -1602,12 +1602,12 @@ footer{
   pointer-events:none;
 }
 
-/* Signature video — sage bleed at top */
+/* Signature video â€” sage bleed at top */
 .about-signature{
   border-top:3px solid rgba(189,203,148,.15);
 }
 
-/* Values grid on about — matches homepage grid weight */
+/* Values grid on about â€” matches homepage grid weight */
 .about-values-new .values-grid{
   background:rgba(189,203,148,.35);
   border-color:rgba(189,203,148,.35);
@@ -1616,7 +1616,7 @@ footer{
   background:var(--cream);
 }
 
-/* Nav comma — ink drop on page load */
+/* Nav comma â€” ink drop on page load */
 .nav-logo img{
   transform-origin:center;
   animation:commaInkDrop .9s .3s var(--spring) both;
@@ -1628,7 +1628,7 @@ footer{
   100%{transform:scale(1) rotate(0deg);opacity:1}
 }
 
-/* Giant comma moment — coin flip reveal */
+/* Giant comma moment â€” coin flip reveal */
 .comma-giant{
   perspective:1000px;
 }
@@ -1652,7 +1652,7 @@ footer{
 .iso-top,.iso-left,.iso-right{
   transition:fill .4s ease;
 }
-/* CTA ghost comma — slow fade rotate */
+/* CTA ghost comma â€” slow fade rotate */
 .cta-comma img{
   animation:commaGhostSpin 20s linear infinite;
   transform-origin:center;
@@ -1664,9 +1664,9 @@ footer{
 .magnetic{display:inline-block;position:relative}
 
 
-/* ─────────────────────────────────────────
-   ABOUT PAGE — restructured
-───────────────────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   ABOUT PAGE â€” restructured
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .about-eyebrow{
   font-size:10px;font-weight:500;letter-spacing:.16em;
   text-transform:uppercase;color:var(--sage);
@@ -1771,9 +1771,9 @@ footer{
 .seal-rotate{transform-origin:50px 50px;animation:sealSpin 28s linear infinite;}
 @keyframes sealSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
-/* ─────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    BLOG PAGE
-───────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .blog-page{display:none}
 .blog-page.active{display:block}
 .blog-hero{
@@ -1937,9 +1937,9 @@ footer{
 }
 .blog-newsletter-btn:hover{background:#ccd9a8;transform:translateY(-2px);}
 
-/* ─────────────────────────────────────────
-   MOBILE HAMBURGER — base styles (all sizes)
-───────────────────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   MOBILE HAMBURGER â€” base styles (all sizes)
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .nav-hamburger{
   display:none;
   flex-direction:column;
@@ -2068,12 +2068,12 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   transform:translateY(-1px);
 }
 
-/* ─────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    @media max-width: 768px  (tablet / mobile)
-───────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 @media(max-width:768px){
 
-  /* ── NAV ── */
+  /* â”€â”€ NAV â”€â”€ */
   nav{padding:0 24px}
   .nav-links{display:none}
   .nav-hamburger{display:flex}
@@ -2081,10 +2081,10 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   .mobile-menu-backdrop{display:block}
   .mobile-bottom-nav{display:grid}
 
-  /* ── PROGRESS DOTS ── */
+  /* â”€â”€ PROGRESS DOTS â”€â”€ */
   #progress{display:none!important}
 
-  /* ── HERO ── */
+  /* â”€â”€ HERO â”€â”€ */
   .hero{
     grid-template-columns:1fr;
     min-height:100svh;
@@ -2105,7 +2105,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   .hero-actions{display:flex;margin-top:0}
   .btn-primary{width:100%;max-width:220px;text-align:center}
 
-  /* ── COMMA MOMENT ── */
+  /* â”€â”€ COMMA MOMENT â”€â”€ */
   .comma-moment{
     grid-template-columns:1fr;
     padding:48px 24px;
@@ -2119,7 +2119,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   .comma-giant img{height:clamp(100px,28vw,160px)!important}
   .comma-aside{padding:28px 0 0 0}
 
-  /* ── HOW WE WORK ── */
+  /* â”€â”€ HOW WE WORK â”€â”€ */
   .section-how{padding:72px 24px}
   .section-how::before{left:24px}
   .how-grid{grid-template-columns:1fr}
@@ -2138,7 +2138,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   }
   .how-anim{padding:0 20px 28px;width:100%}
 
-  /* ── MANIFESTO ── */
+  /* â”€â”€ MANIFESTO â”€â”€ */
   .manifesto{padding:80px 24px}
   .manifesto-globe{display:none}
   .manifesto-inner{max-width:100%}
@@ -2148,15 +2148,15 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
     gap:20px;padding-top:36px;
   }
 
-  /* ── WHO WE WORK WITH ── */
+  /* â”€â”€ WHO WE WORK WITH â”€â”€ */
   .section-who{padding:72px 24px}
   .who-grid{grid-template-columns:1fr}
 
-  /* ── SELECTED WORK — 2×2 grid ── */
+  /* â”€â”€ SELECTED WORK â€” 2Ã—2 grid â”€â”€ */
   .section-projects{padding:60px 24px}
   .logos-row{flex-wrap:nowrap}
 
-  /* ── CASE STUDIES ── */
+  /* â”€â”€ CASE STUDIES â”€â”€ */
   .section-cases{padding:72px 24px}
   .cases-grid{grid-template-columns:1fr}
   .case-card{
@@ -2189,7 +2189,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   }
   .case-identity{padding:36px 28px 20px}
 
-  /* ── CTA ── */
+  /* â”€â”€ CTA â”€â”€ */
   .section-cta{
     grid-template-columns:1fr;
     padding:72px 24px;
@@ -2200,7 +2200,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   .cta-comma{display:none}
   .cta-right{display:flex;justify-content:flex-start}
 
-  /* ── FOOTER ── */
+  /* â”€â”€ FOOTER â”€â”€ */
   footer{
     grid-template-columns:1fr;
     text-align:center;
@@ -2212,11 +2212,11 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   .ft-mid{justify-content:center;flex-wrap:wrap;gap:16px}
   .ft-right{justify-content:center}
 
-  /* ── ABOUT — HERO ── */
+  /* â”€â”€ ABOUT â€” HERO â”€â”€ */
   .about-hero-new{padding:120px 24px 72px}
   .about-h1-new{font-size:clamp(38px,11vw,72px)}
 
-  /* ── ABOUT — AGENCY (image on top) ── */
+  /* â”€â”€ ABOUT â€” AGENCY (image on top) â”€â”€ */
   .about-agency{
     grid-template-columns:1fr;
     padding:72px 24px;
@@ -2233,7 +2233,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   }
   .about-stat:last-child{border-bottom:none;padding-bottom:0!important}
 
-  /* ── ABOUT — FOUNDER (image on top) ── */
+  /* â”€â”€ ABOUT â€” FOUNDER (image on top) â”€â”€ */
   .about-founder{
     grid-template-columns:1fr;
     padding:72px 24px;
@@ -2241,7 +2241,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   }
   .about-founder-img{order:-1}
 
-  /* ── ABOUT — LISE (image on top) ── */
+  /* â”€â”€ ABOUT â€” LISE (image on top) â”€â”€ */
   .about-lise{
     grid-template-columns:1fr;
     padding:72px 24px;
@@ -2249,17 +2249,17 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   }
   .about-lise-img{order:-1}
 
-  /* ── ABOUT — VALUES (2 cols at tablet) ── */
+  /* â”€â”€ ABOUT â€” VALUES (2 cols at tablet) â”€â”€ */
   .about-values-new{padding:72px 24px}
   .values-grid{grid-template-columns:1fr 1fr}
   .val-card{padding:32px 24px}
 
-  /* ── ABOUT — WHY + LINKEDIN ── */
+  /* â”€â”€ ABOUT â€” WHY + LINKEDIN â”€â”€ */
   .about-why{padding:72px 24px}
   .about-linkedin{padding:60px 24px}
   .about-linkedin-inner{grid-template-columns:1fr;gap:28px}
 
-  /* ── BLOG — HERO ── */
+  /* â”€â”€ BLOG â€” HERO â”€â”€ */
   .blog-hero{
     grid-template-columns:1fr;
     padding:120px 24px 60px;
@@ -2271,7 +2271,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   .blog-hero-desc{margin-left:0;max-width:100%}
   .blog-issue{justify-content:flex-start}
 
-  /* ── BLOG — FILTERS ── */
+  /* â”€â”€ BLOG â€” FILTERS â”€â”€ */
   .blog-filters{
     padding:0 24px;
     overflow-x:auto;
@@ -2279,7 +2279,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
     flex-wrap:nowrap;
   }
 
-  /* ── BLOG — FEATURED POST ── */
+  /* â”€â”€ BLOG â€” FEATURED POST â”€â”€ */
   .blog-featured{grid-template-columns:1fr}
   .blog-featured-content{
     padding:40px 24px;
@@ -2295,45 +2295,45 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
     background:rgba(250,250,248,.82);
   }
 
-  /* ── BLOG — POST GRID (2 cols at tablet) ── */
+  /* â”€â”€ BLOG â€” POST GRID (2 cols at tablet) â”€â”€ */
   .blog-grid{grid-template-columns:1fr 1fr}
   .blog-card{padding:36px 24px}
 
-  /* ── BLOG — NEWSLETTER ── */
+  /* â”€â”€ BLOG â€” NEWSLETTER â”€â”€ */
   .blog-newsletter{
     grid-template-columns:1fr;
     padding:60px 24px;
     gap:28px;
   }
 
-  /* ── SECTION COMMON ── */
+  /* â”€â”€ SECTION COMMON â”€â”€ */
   .section-label{margin-bottom:10px}
   .section-title{margin-bottom:40px}
 
 }
 
-/* ─────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    @media max-width: 480px  (small mobile)
-───────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 @media(max-width:480px){
 
-  /* VALUES — 1 column */
+  /* VALUES â€” 1 column */
   .values-grid{grid-template-columns:1fr}
 
-  /* ABOUT AGENCY STATS — 1 column */
+  /* ABOUT AGENCY STATS â€” 1 column */
   .about-agency-stats{grid-template-columns:1fr}
 
-  /* BLOG GRID — 1 column */
+  /* BLOG GRID â€” 1 column */
   .blog-grid{grid-template-columns:1fr}
 
-  /* CASE STATS — 1 column */
+  /* CASE STATS â€” 1 column */
   .case-stats{grid-template-columns:1fr}
   .case-stats>div:nth-child(3){
     grid-column:auto;
     border-top:1px solid rgba(255,255,255,.1);
   }
 
-  /* ── NATIVE FEEL — no 3D on touch ── */
+  /* â”€â”€ NATIVE FEEL â€” no 3D on touch â”€â”€ */
   .card-r{
     transform:translateY(24px) !important;
   }
@@ -2341,22 +2341,22 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
     transform:translateY(0) !important;
   }
 
-  /* ── MOBILE NAV LINKS — bigger touch targets ── */
+  /* â”€â”€ MOBILE NAV LINKS â€” bigger touch targets â”€â”€ */
   .mobile-menu a{padding:18px 0;font-size:16px}
 
-  /* ── ABOUT FOUNDER — stack seal + btn vertically on small screens ── */
+  /* â”€â”€ ABOUT FOUNDER â€” stack seal + btn vertically on small screens â”€â”€ */
   .about-founder-bottom{
     flex-wrap:wrap;
     gap:20px;
   }
 
-  /* ── SIGNATURE — larger name ── */
+  /* â”€â”€ SIGNATURE â€” larger name â”€â”€ */
   .about-sig-name{font-size:clamp(56px,18vw,96px)}
 
-  /* ── BLOG CARD — no card image on mobile, save space ── */
+  /* â”€â”€ BLOG CARD â€” no card image on mobile, save space â”€â”€ */
   .blog-card-img{display:none}
 
-  /* ── WHO CARD — less padding ── */
+  /* â”€â”€ WHO CARD â€” less padding â”€â”€ */
   .who-title{padding-top:0}
 
 }
@@ -2515,12 +2515,12 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
 </div>
 
 
-<!-- ══════════════════════════════════
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      HOME PAGE
-══════════════════════════════════ -->
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div class="page home-page" id="homePage">
 
-<!-- ① HERO -->
+<!-- â‘  HERO -->
 <section class="hero" data-section="0">
 
   <!-- Background: replace div with <video> or <img> from AI Studio -->
@@ -2538,7 +2538,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       <span class="line"><span class="word"><em>purpose.</em></span></span>
     </h1>
     <p class="hero-sub">
-      At Wilma Collective, we help purpose-led brands scale through structured strategy and digital systems.
+      We build the structured strategies and digital systems that empower mission-driven brands to expand their reach and elevate their influence.
     </p>
     <div class="hero-actions">
       <a href="#cta" class="btn-primary magnetic" onclick="goToSection('cta');return false">Contact us</a>
@@ -2553,7 +2553,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
 </section>
 
 
-<!-- ② HOW WE WORK -->
+<!-- â‘¡ HOW WE WORK -->
 <section class="section-how" id="how" data-section="1">
   <p class="section-label r">Process</p>
   <h2 class="section-title r d1">How we <em>work.</em></h2>
@@ -2569,9 +2569,9 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       </div>
       <div class="how-illus-zone">
         <svg class="how-anim" viewBox="0 0 360 220" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
-          <!-- Document — larger, more confident -->
+          <!-- Document â€” larger, more confident -->
           <rect class="ha-draw" x="24" y="10" width="130" height="170" rx="4" stroke="#154739" stroke-width="2" fill="rgba(21,71,57,.03)"/>
-          <!-- Doc lines — sage, clearly visible -->
+          <!-- Doc lines â€” sage, clearly visible -->
           <line class="ha-draw doc-line" x1="40" y1="36" x2="138" y2="36" stroke="#BDCB94" stroke-width="1.8" stroke-linecap="round"/>
           <line class="ha-draw doc-line" x1="40" y1="54" x2="138" y2="54" stroke="#BDCB94" stroke-width="1.8" stroke-linecap="round"/>
           <line class="ha-draw doc-line" x1="40" y1="72" x2="120" y2="72" stroke="#BDCB94" stroke-width="1.8" stroke-linecap="round"/>
@@ -2583,7 +2583,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
           <rect class="doc-highlight dh1" x="24" y="26" width="130" height="18" fill="rgba(189,203,148,.2)" opacity="0"/>
           <rect class="doc-highlight dh2" x="24" y="44" width="130" height="18" fill="rgba(189,203,148,.2)" opacity="0"/>
           <rect class="doc-highlight dh3" x="24" y="62" width="130" height="18" fill="rgba(189,203,148,.2)" opacity="0"/>
-          <!-- Magnifying glass — large, confident -->
+          <!-- Magnifying glass â€” large, confident -->
           <g class="mag-glass">
             <circle cx="258" cy="100" r="52" stroke="#154739" stroke-width="2.5" fill="rgba(189,203,148,.05)"/>
             <!-- Inner detail ring -->
@@ -2607,11 +2607,11 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       <div class="how-text-zone">
         <span class="how-num">02</span>
         <h3 class="how-title">The Build</h3>
-        <p class="how-body">Ethical execution that respects human agency. We build systems that convert and reach the right target audiences in Europe and beyond.</p>
+        <p class="how-body">Execution that respects human agency. We build systems that convert and reach the right target audiences in Europe and beyond.</p>
       </div>
       <div class="how-illus-zone">
         <svg class="how-anim" viewBox="0 0 360 220" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
-          <!-- Isometric wireframe cube — paths for scroll-draw animation -->
+          <!-- Isometric wireframe cube â€” paths for scroll-draw animation -->
           <ellipse class="iso-floor" cx="180" cy="190" rx="88" ry="22" fill="rgba(21,71,57,.08)"/>
           <line class="ha-draw iso-beam" x1="180" y1="54" x2="180" y2="164" stroke="#BDCB94" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="180" stroke-dashoffset="180"/>
           <g class="iso-core">
@@ -2658,7 +2658,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
           <!-- Area fill under AFTER line -->
           <path class="ha-fill-grow" d="M48 172 Q92 158 136 136 Q188 108 228 78 Q272 48 316 24 L316 185 L48 185Z"
             fill="rgba(189,203,148,.1)" stroke="none"/>
-          <!-- BEFORE line — lavender, hover only -->
+          <!-- BEFORE line â€” lavender, hover only -->
           <path class="evid-before" d="M48 175 Q100 168 148 158 Q204 146 252 136 Q292 128 316 122"
             stroke="#C7B0D6" stroke-width="2" stroke-linecap="round" fill="none"
             stroke-dasharray="600" stroke-dashoffset="600"/>
@@ -2667,7 +2667,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
             d="M48 175 Q100 168 148 158 Q204 146 252 136 Q292 128 316 122
                L316 24 Q272 48 228 78 Q188 108 136 136 Q92 158 48 172Z"
             fill="rgba(189,203,148,.08)" opacity="0"/>
-          <!-- AFTER line — main growth, forest green -->
+          <!-- AFTER line â€” main growth, forest green -->
           <path class="ha-line-grow" d="M48 172 Q92 158 136 136 Q188 108 228 78 Q272 48 316 24"
             stroke="#154739" stroke-width="3" stroke-linecap="round" fill="none"/>
           <!-- Data points -->
@@ -2677,13 +2677,13 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
           <circle class="ha-draw evid-dot" cx="316" cy="24" r="4.5" fill="#154739"/>
           <!-- Pulsing top point -->
           <circle class="ha-pulse" cx="316" cy="24" r="9" fill="none" stroke="#BDCB94" stroke-width="1.8"/>
-          <!-- Tooltip — hover only -->
+          <!-- Tooltip â€” hover only -->
           <g class="evid-tooltip" opacity="0">
             <rect x="268" y="8" width="52" height="22" rx="4" fill="#154739"/>
             <text x="294" y="23" text-anchor="middle" font-family="DM Sans, sans-serif"
-              font-size="10" font-weight="500" fill="#BDCB94" letter-spacing=".05em">+11×</text>
+              font-size="10" font-weight="500" fill="#BDCB94" letter-spacing=".05em">+11x</text>
           </g>
-          <!-- Legend — hover only -->
+          <!-- Legend â€” hover only -->
           <g class="evid-legend" opacity="0">
             <line x1="28" y1="205" x2="50" y2="205" stroke="#154739" stroke-width="2.5" stroke-linecap="round"/>
             <text x="56" y="208" font-family="DM Sans, sans-serif" font-size="9" fill="rgba(21,71,57,.65)" letter-spacing=".04em">After</text>
@@ -2700,20 +2700,20 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
 
 
 
-<!-- ③ COMMA MOMENT -->
+<!-- â‘¢ COMMA MOMENT -->
 <div class="comma-moment" data-section="2">
   <div class="comma-giant r" id="commaGiant">
     <img src="comma-forest.png" alt="" loading="lazy" style="height:clamp(160px,22vw,300px);width:auto;">
   </div>
   <div class="comma-aside r d2">
     <p class="comma-aside-text">
-      We believe marketing should not be extractive. We build the digital infrastructure for organisations that prioritise people and planet.
+      We design sustainable digital marketing infrastructure for organisations that put people and the planet at the heart of their growth.
     </p>
-    <span class="comma-aside-sub">Lise Kriekemans · Founder, Wilma Collective</span>
+    <span class="comma-aside-sub">Lise Kriekemans - Founder, Wilma Collective</span>
   </div>
 </div>
 
-<!-- ④ MANIFESTO — dark + globe bg -->
+<!-- â‘£ MANIFESTO â€” dark + globe bg -->
 <section class="manifesto" data-section="3">
 
   <!-- Globe ghost background -->
@@ -2747,11 +2747,10 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   <div class="manifesto-inner">
     <p class="manifesto-label r">Our belief</p>
     <h2 class="manifesto-headline r d1">
-      <span class="mw">You've</span> <span class="mw">built</span> <span class="mw">something</span> <span class="mw">good.</span><br>
-      <em><span class="mw">Let's</span> <span class="mw">make</span> <span class="mw">it</span> <span class="mw">known.</span></em>
+      <span class="mw">You've</span> <span class="mw">built</span> <span class="mw">something</span> <span class="mw">good,</span> <span class="mw">let's</span> <span class="mw">make</span> <span class="mw">it</span> <span class="mw">known.</span>
     </h2>
     <p class="manifesto-body r d2">
-      We believe marketing should not be extractive. We do not just launch campaigns; we build the digital infrastructure for organisations that prioritise social responsibility and human agency.
+      We trade short-term tactics for long-term ecosystems. By building robust digital infrastructure, we help purpose-led organisations scale their influence without losing their soul.
     </p>
     <div class="manifesto-bottom r d3">
       <a href="#section-cases" class="btn-sage magnetic" onclick="goToSection('section-cases');return false">See our work</a>
@@ -2761,7 +2760,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
 </section>
 
 
-<!-- ⑤ WHO WE WORK WITH -->
+<!-- â‘¤ WHO WE WORK WITH -->
 <section class="section-who" data-section="4">
   <p class="section-label r">Clients</p>
   <h2 class="section-title r d1">Who we <em>work with.</em></h2>
@@ -2787,7 +2786,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
 </section>
 
 
-<!-- ⑥ PROJECTS — dark band -->
+<!-- â‘¥ PROJECTS â€” dark band -->
 <section class="section-projects" data-section="5">
   <p class="projects-label r">Selected work</p>
   <div class="logos-row">
@@ -2796,34 +2795,34 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
         <!-- ASSET SLOT: <img src="beyond-the-bet-logo.png" alt="Beyond the Bet"> -->
       </div>
       <span class="logo-client-name">Beyond the Bet</span>
-      <span class="logo-client-type">Social Impact · Prevention</span>
+      <span class="logo-client-type">Social impact - Belgium</span>
     </div>
     <div class="logo-client r d2">
       <div class="logo-client-img">
         <!-- ASSET SLOT: <img src="irdh-logo.png" alt="IRDH"> -->
       </div>
       <span class="logo-client-name">IRDH</span>
-      <span class="logo-client-type">Human Rights · NGO</span>
+      <span class="logo-client-type">Human Rights - The DRC</span>
     </div>
     <div class="logo-client r d3">
       <div class="logo-client-img">
-        <!-- ASSET SLOT: <img src="lifepowr-logo.png" alt="Lifepowr"> -->
+        <!-- ASSET SLOT: <img src="lifepowr-logo.png" alt="LIFEPOWR"> -->
       </div>
-      <span class="logo-client-name">Lifepowr</span>
-      <span class="logo-client-type">Green Energy · Belgium</span>
+      <span class="logo-client-name">LIFEPOWR</span>
+      <span class="logo-client-type">Green energy - Belgium</span>
     </div>
     <div class="logo-client r d4">
       <div class="logo-client-img">
-        <!-- ASSET SLOT: <img src="keyweo-logo.png" alt="Keyweo"> -->
+        <!-- ASSET SLOT: <img src="uptomore-logo.png" alt="UpToMore"> -->
       </div>
-      <span class="logo-client-name">Keyweo</span>
-      <span class="logo-client-type">Digital · Agency</span>
+      <span class="logo-client-name">UpToMore</span>
+      <span class="logo-client-type">FinTech - The Netherlands</span>
     </div>
   </div>
 </section>
 
 
-<!-- ⑦ SIGNATURE -->
+<!-- â‘¦ SIGNATURE -->
 <!-- CASE STUDIES -->
 <section class="section-cases" id="section-cases" data-section="6">
 
@@ -2838,38 +2837,38 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
 
   <div class="cases-grid">
 
-    <!-- IRDH — Strategic -->
+    <!-- IRDH â€” Strategic -->
     <div class="case-card strategic card-r d1" id="caseIRDH">
 
-      <!-- Identity zone — always visible -->
+      <!-- Identity zone â€” always visible -->
       <div class="case-identity">
         <p class="case-tag">Strategic</p>
         <h3 class="case-client">IRDH</h3>
-        <p class="case-client-sub">Institut de Recherche en Droits Humains · Belgium</p>
+        <p class="case-client-sub">Institut de Recherche en Droits Humains · The DRC</p>
       </div>
 
-      <!-- Image zone — State 1 -->
+      <!-- Image zone â€” State 1 -->
       <div class="case-image-zone">
         <img class="case-photo" src="irdh-casestudy.png"
           alt="IRDH human rights conference" loading="lazy">
         <div class="case-photo-wash"></div>
-        <div class="case-invite">See impact <span>→</span></div>
+        <div class="case-invite">See impact <span>-></span></div>
 
-        <!-- Overlay — State 2 -->
+        <!-- Overlay â€” State 2 -->
         <div class="case-overlay">
           <div class="case-stats-inner">
             <div class="case-stats">
               <div>
-                <div class="case-stat-num" data-count="11" data-suffix="×">11×</div>
-                <div class="case-stat-label">Facebook growth<br>200 → 2,300 likes</div>
+                <div class="case-stat-num" data-count="11" data-suffix="x">11x</div>
+                <div class="case-stat-label">Facebook growth<br>200 -> 2,300 likes</div>
               </div>
               <div>
                 <div class="case-stat-num" data-count="300" data-suffix="">300</div>
                 <div class="case-stat-label">Newsletter subscribers<br>built from zero</div>
               </div>
               <div>
-                <div class="case-stat-num">1→4</div>
-                <div class="case-stat-label">Channels opened<br>LinkedIn, Twitter, WhatsApp</div>
+                <div class="case-stat-num">1->4</div>
+                <div class="case-stat-label">Channels opened<br>LinkedIn, X, WhatsApp and Facebook</div>
               </div>
             </div>
             <p class="case-body">
@@ -2882,24 +2881,24 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
 
     </div>
 
-    <!-- Beyond the Bet — Tactical -->
+    <!-- Beyond the Bet â€” Tactical -->
     <div class="case-card tactical card-r d2" id="caseBTB">
 
-      <!-- Identity zone — always visible -->
+      <!-- Identity zone â€” always visible -->
       <div class="case-identity">
         <p class="case-tag">Tactical</p>
         <h3 class="case-client">Beyond the Bet</h3>
-        <p class="case-client-sub">Gambling Prevention Campaign · Belgium</p>
+        <p class="case-client-sub">Gambling Prevention Campaign - Belgium</p>
       </div>
 
-      <!-- Image zone — State 1 -->
+      <!-- Image zone â€” State 1 -->
       <div class="case-image-zone">
         <img class="case-photo" src="beyond-thebet.jpg"
           alt="Beyond the Bet gambling prevention" loading="lazy">
         <div class="case-photo-wash"></div>
-        <div class="case-invite">See impact <span>→</span></div>
+        <div class="case-invite">See impact <span>-></span></div>
 
-        <!-- Overlay — State 2 -->
+        <!-- Overlay â€” State 2 -->
         <div class="case-overlay">
           <div class="case-stats-inner">
             <div class="case-stats">
@@ -2919,7 +2918,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
             <p class="case-body">
               We built a social media strategy from scratch with over 20K weekly impressions, placing Beyond the Bet in front of young audiences across Belgium and the Netherlands and raising awareness of gambling harm.
             </p>
-            <p class="case-duration">Social · Email · PR · Television</p>
+            <p class="case-duration">Social - Email - PR - Television</p>
           </div>
         </div>
       </div>
@@ -2931,7 +2930,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
 </section>
 
 
-<!-- ⑧ CTA -->
+<!-- â‘§ CTA -->
 <section class="section-cta" id="cta">
   <div class="cta-grid"></div>
   <div class="cta-lines">
@@ -2940,7 +2939,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
     <div class="cta-line" style="top:56%;animation-delay:1.6s"></div>
     <div class="cta-line" style="top:72%;animation-delay:2.4s"></div>
   </div>
-  <div class="cta-comma"><img src="comma-sage.png" alt="" loading="lazy" style="height:380px;width:auto;opacity:1;"></div>
+  <div class="cta-comma"><img src="comma-sage.png" alt="" loading="lazy" style="height:380px;width:auto;opacity:0.6;"></div>
   <div class="cta-left">
     <p class="cta-label r">Let's work together</p>
     <h2 class="cta-headline r d1">
@@ -2973,16 +2972,16 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   <div class="ft-right">
     <a href="#">@wilmacollective</a>
     <a href="#">LinkedIn</a>
-    <span class="ft-copy">© 2026</span>
+    <span class="ft-copy">(c) 2026</span>
   </div>
 </footer>
 
 </div><!-- /home-page -->
 
 
-<!-- ══════════════════════════════════
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      ABOUT PAGE
-══════════════════════════════════ -->
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div class="page about-page" id="aboutPage">
 
 <section class="about-hero-new">
@@ -3000,18 +2999,18 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   </div>
   <div class="r d2">
     <p class="about-agency-body">We help sustainability-driven brands, NGOs, and impact entrepreneurs grow their reach through structured strategy and digital systems. Unlike traditional agencies, we offer personal, story-first support: strategic storytelling, content creation and visibility coaching in one coherent service.</p>
-    <p class="about-agency-body">We exist to give the new generation of changemakers the authentic voice they need to lead, inspire, and grow sustainably. No vanishing acts. No extractive tactics. Just honest digital growth.</p>
+    <p class="about-agency-body">We exist to give the new generation of changemakers the authentic voice they need to lead, inspire, and grow sustainably. No excuses. No extractive tactics. Just honest digital growth.</p>
     <div class="about-agency-stats r d3">
       <div class="about-stat">
         <span class="about-stat-num">5+</span>
         <span class="about-stat-label">Years building impact brands</span>
       </div>
       <div class="about-stat">
-        <span class="about-stat-num">BE · ZA · DRC</span>
+        <span class="about-stat-num">BE - ZA - DRC</span>
         <span class="about-stat-label">Belgium, South Africa, DRC</span>
       </div>
       <div class="about-stat">
-        <span class="about-stat-num">NGO · B2B · Tech</span>
+        <span class="about-stat-num">NGO - B2B - Tech</span>
         <span class="about-stat-label">Sectors we specialise in</span>
       </div>
     </div>
@@ -3041,7 +3040,8 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
     <p class="about-eyebrow r">The founder</p>
     <h2 class="about-founder-title r d1">Lise <em>Kriekemans.</em></h2>
     <p class="about-founder-intro r d2">Lise built Wilma Collective around everything she cares about: languages, storytelling, strategy and social change. With a background in Business Communication and Cultural Anthropology, and years working with NGOs including Trias, Caritas, Studio Globo and Studio Zambia, she brings a perspective few marketers have.</p>
-    <p class="about-founder-body r d3">Working across Europe, Africa and the DRC gave her a clear view of how communication drives real change and how often it falls short. Wilma Collective exists to close that gap. Purpose-led organisations deserve the same quality of digital thinking as any commercial brand.</p>
+    <p class="about-founder-body r d3">Working across Europe and Africa gave her a clear view of how communication drives real change and how often it falls short. Wilma Collective exists to close that gap. Purpose-led organisations deserve the same quality of digital thinking as any commercial brand.</p>
+    <p class="about-founder-body r d4">Fun fact: Wilma is Lise’s middle name, named after her godfather Wim and Wilma Flinstone, a logical and assertive woman known for her level-headed resourcefulness and her inventive ways of finding solutions.</p>
     <div class="about-founder-bottom r d4">
       <div class="lise-seal">
         <svg viewBox="0 0 100 100" width="64" height="64" aria-hidden="true">
@@ -3050,7 +3050,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
           <circle cx="50" cy="50" r="26" fill="none" stroke="#154739" stroke-width=".6" stroke-dasharray="2 3" opacity=".25"/>
           <g class="seal-rotate">
             <text font-family="DM Sans, sans-serif" font-size="7" font-weight="500" letter-spacing="0.12em" fill="#154739" opacity=".7">
-              <textPath href="#sealPath">DRAFTING — CLARIFYING — REVISING — PERFECTING — </textPath>
+              <textPath href="#sealPath">DRAFTING - CLARIFYING - REVISING - PERFECTING - </textPath>
             </text>
           </g>
           <text x="50" y="55" text-anchor="middle" font-family="Cormorant, Georgia, serif" font-size="20" font-style="italic" font-weight="300" fill="#154739" opacity=".6">W</text>
@@ -3092,16 +3092,16 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   <div class="ft-right">
     <a href="#">@wilmacollective</a>
     <a href="#">LinkedIn</a>
-    <span class="ft-copy">© 2026</span>
+    <span class="ft-copy">(c) 2026</span>
   </div>
 </footer>
 
 </div><!-- /about-page -->
 
 
-<!-- ══════════════════════════════════
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      BLOG PAGE
-══════════════════════════════════ -->
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div class="page blog-page" id="blogPage">
 
 <!-- BLOG HERO -->
@@ -3112,7 +3112,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   </div>
   <div class="blog-hero-right r d2">
     <p class="blog-hero-desc">Strategy, storytelling, and honest thinking on digital growth for organisations that care about more than the bottom line.</p>
-    <span class="blog-issue">Est. 2024 · Wilma Collective</span>
+    <span class="blog-issue">Est. 2024 - Wilma Collective</span>
   </div>
 </section>
 
@@ -3133,7 +3133,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
     </div>
   </div>
   <div class="blog-featured-content">
-    <p class="blog-tag">Featured · Strategy</p>
+    <p class="blog-tag">Featured - Strategy</p>
     <h2 class="blog-featured-title">Why most NGO digital strategies fail before they <em>launch</em></h2>
     <p class="blog-featured-excerpt">The brief arrives full of ambition. The team is motivated. The mission is real. So why do so many NGO digital strategies collapse within six months? After working with a dozen organisations across Europe and Africa, we've identified the three structural failures that derail even the most committed teams.</p>
     <div class="blog-meta">
@@ -3143,7 +3143,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       <span class="blog-meta-dot"></span>
       <span>March 2026</span>
     </div>
-    <a href="#" class="blog-read-more">Read article <span>→</span></a>
+    <a href="#" class="blog-read-more">Read article <span>-></span></a>
   </div>
 </article>
 
@@ -3251,7 +3251,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   <div class="ft-right">
     <a href="#">@wilmacollective</a>
     <a href="#">LinkedIn</a>
-    <span class="ft-copy">© 2026</span>
+    <span class="ft-copy">(c) 2026</span>
   </div>
 </footer>
 
@@ -3268,7 +3268,7 @@ document.querySelectorAll('.blog-filter').forEach(btn=>{
 </script>
 
 <script>
-/* ── Cursor — desktop/hover only ── */
+/* â”€â”€ Cursor â€” desktop/hover only â”€â”€ */
 if(window.matchMedia('(hover:hover)').matches){
 const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
 let mx=0,my=0,rx=0,ry=0,cursorVisible=false;
@@ -3291,7 +3291,7 @@ document.querySelectorAll('a,button,.magnetic').forEach(el=>{
 });
 }
 
-/* ── Nav scroll + grid fade over hero ── */
+/* â”€â”€ Nav scroll + grid fade over hero â”€â”€ */
 const nav=document.getElementById('nav');
 const gridBg=document.getElementById('grid-bg');
 window.addEventListener('scroll',()=>{
@@ -3311,7 +3311,7 @@ window.addEventListener('scroll',()=>{
 /* Hide grid initially since hero image has grid baked in */
 gridBg.style.opacity='0';
 
-/* ── Scroll reveal ── */
+/* â”€â”€ Scroll reveal â”€â”€ */
 const ro=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
@@ -3327,7 +3327,7 @@ const ro=new IntersectionObserver(entries=>{
 },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.r,.card-r').forEach(el=>ro.observe(el));
 
-/* ── Progress dots ── */
+/* â”€â”€ Progress dots â”€â”€ */
 const sections=document.querySelectorAll('[data-section]');
 const dots=document.querySelectorAll('.prog-dot');
 const po=new IntersectionObserver(entries=>{
@@ -3341,7 +3341,7 @@ const po=new IntersectionObserver(entries=>{
 },{threshold:.3});
 sections.forEach(s=>po.observe(s));
 
-/* ── 3D card tilt — desktop only, gentle ── */
+/* â”€â”€ 3D card tilt â€” desktop only, gentle â”€â”€ */
 (function(){
   if(!window.matchMedia('(hover:hover) and (min-width:768px)').matches) return;
   document.querySelectorAll('.how-card,.who-card').forEach(card=>{
@@ -3361,7 +3361,7 @@ sections.forEach(s=>po.observe(s));
   });
 })();
 
-/* ── Comma parallax — on wrapper not the animated element ── */
+/* â”€â”€ Comma parallax â€” on wrapper not the animated element â”€â”€ */
 const commaWrap=document.querySelector('.comma-giant');
 window.addEventListener('scroll',()=>{
   if(!commaWrap)return;
@@ -3374,7 +3374,7 @@ window.addEventListener('scroll',()=>{
   }
 },{passive:true});
 
-/* ── Magnetic buttons ── */
+/* â”€â”€ Magnetic buttons â”€â”€ */
 if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
   document.querySelectorAll('.magnetic').forEach(btn=>{
     btn.addEventListener('mousemove',e=>{
@@ -3392,7 +3392,7 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
 }
 
 
-/* ── Manifesto word highlight ── */
+/* â”€â”€ Manifesto word highlight â”€â”€ */
 (function(){
   const words = document.querySelectorAll('.mw');
   if(!words.length) return;
@@ -3407,7 +3407,7 @@ if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
   });
 })();
 
-/* ── Counter animation — fires on demand ── */
+/* â”€â”€ Counter animation â€” fires on demand â”€â”€ */
 function animCounter(el, target, suffix, duration){
   el.textContent = '0' + suffix;
   const isFloat = target % 1 !== 0;
@@ -3425,7 +3425,7 @@ function animCounter(el, target, suffix, duration){
   requestAnimationFrame(update);
 }
 
-/* ── Case card two-state system ── */
+/* â”€â”€ Case card two-state system â”€â”€ */
 (function(){
   const cards = document.querySelectorAll('.case-card');
   const isTouch = !window.matchMedia('(hover:hover)').matches;
@@ -3474,7 +3474,7 @@ function animCounter(el, target, suffix, duration){
   }
 })();
 
-/* ── Mobile hamburger menu ── */
+/* â”€â”€ Mobile hamburger menu â”€â”€ */
 const hamburger=document.getElementById('navHamburger');
 const mobileMenu=document.getElementById('mobileMenu');
 const mobileMenuBackdrop=document.getElementById('mobileMenuBackdrop');
@@ -3559,3 +3559,4 @@ syncMobileNav('home');
 </script>
 </body>
 </html>
+
