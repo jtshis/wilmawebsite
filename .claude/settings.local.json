@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"C:\\\\Users\\\\jonat\\\\Desktop\\\\4. Wilma Collective\\\\website-build\" /B /O:D)"
+    ]
+  }
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found | Wilma Collective</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FAFAF8;
+  --forest:#154739;
+  --forest-mid:#1e5c49;
+  --sage:#BDCB94;
+  --charcoal:#1a1a18;
+  --mid:#2e2e28;
+  --serif:'Cormorant',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --out:cubic-bezier(0.16,1,0.3,1);
+}
+html{font-size:16px}
+body{
+  font-family:var(--sans);
+  background:var(--cream);
+  color:var(--charcoal);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:40px 24px;
+  text-align:center;
+}
+.wrapper{max-width:560px;width:100%}
+.four-oh-four{
+  font-family:var(--serif);
+  font-size:clamp(100px,20vw,180px);
+  font-weight:300;
+  line-height:1;
+  color:var(--forest);
+  opacity:.12;
+  letter-spacing:-.04em;
+  margin-bottom:-16px;
+}
+.comma{
+  font-family:var(--serif);
+  font-size:clamp(60px,10vw,90px);
+  font-weight:300;
+  color:var(--forest);
+  line-height:1;
+  margin-bottom:24px;
+}
+h1{
+  font-family:var(--serif);
+  font-size:clamp(28px,5vw,44px);
+  font-weight:300;
+  line-height:1.1;
+  letter-spacing:-.025em;
+  color:var(--charcoal);
+  margin-bottom:16px;
+}
+h1 em{font-style:italic;color:var(--forest)}
+p{
+  font-size:15px;
+  line-height:1.75;
+  color:var(--mid);
+  font-weight:300;
+  margin-bottom:40px;
+}
+.btn{
+  display:inline-block;
+  background:var(--forest);
+  color:#fff;
+  padding:14px 36px;
+  border-radius:100px;
+  font-size:13px;
+  font-weight:500;
+  letter-spacing:.03em;
+  text-decoration:none;
+  transition:background .25s, transform .3s var(--out);
+}
+.btn:hover{background:var(--forest-mid);transform:translateY(-2px)}
+.brand{
+  margin-top:60px;
+  font-size:11px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--sage);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+}
+.brand::before,.brand::after{content:'';width:28px;height:1px;background:var(--sage);opacity:.5}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="four-oh-four">404</div>
+  <div class="comma">,</div>
+  <h1>Page <em>not found.</em></h1>
+  <p>The page you're looking for doesn't exist or may have moved.<br>Let's get you back to somewhere useful.</p>
+  <a href="/" class="btn">Back to homepage</a>
+  <div class="brand">Wilma Collective</div>
+</div>
+</body>
+</html>
