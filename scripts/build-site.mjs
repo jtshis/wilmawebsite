@@ -16,16 +16,15 @@ async function loadSanityContent() {
   if (!projectId) return null;
 
   const apiVersion = process.env.SANITY_API_VERSION || 'v2025-04-01';
-  const query = encodeURIComponent(`{
-    "blogPosts": *[_type=="blogPost"] | sort(date desc)
-  }`);
+  const query = encodeURIComponent(`*[_type=="blogPage"][0]`);
   const url = `https://${projectId}.api.sanity.io/${apiVersion}/data/query/${dataset}?query=${query}&perspective=published`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`Sanity query failed: ${response.status} ${response.statusText}`);
   }
   const payload = await response.json();
-  return payload?.result || null;
+  const blogPage = payload?.result || null;
+  return { blogPage };
 }
 
 function isObject(value) {
@@ -54,23 +53,24 @@ async function writeModule(outPath, data) {
   await writeFile(outPath, body, 'utf8');
 }
 
-function generateBlogPostsHtml(blogPosts) {
-  if (!blogPosts || !Array.isArray(blogPosts) || blogPosts.length === 0) {
+function generateBlogCardsHtml(cards) {
+  if (!cards || !Array.isArray(cards) || cards.length === 0) {
     return null;
   }
 
-  const tags = ['All', 'Strategy', 'Impact', 'Digital', 'Culture'];
-  const cards = blogPosts.map((post, idx) => {
-    const tag = post.tags?.[0] || 'Strategy';
-    const date = post.date ? new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' }) : 'Jan 2026';
-    const readingTime = post.readingTime || '5 min read';
+  return cards.map((card, idx) => {
+    const tag = card.tag || 'Strategy';
+    const titleHtml = card.titleHtml || card.title || '';
+    const excerpt = card.excerpt || '';
+    const readingTime = card.readingTime || '5 min read';
+    const date = card.date || '';
     const num = String(idx + 1).padStart(2, '0');
 
     return `  <article class="blog-card r d${(idx % 3) + 1}">
     <div class="blog-card-img"><div class="blog-card-img-inner"><span class="blog-card-num">${num}</span></div></div>
     <p class="blog-tag">${tag}</p>
-    <h3 class="blog-card-title">${post.title}</h3>
-    <p class="blog-card-excerpt">${post.excerpt || ''}</p>
+    <h3 class="blog-card-title">${titleHtml}</h3>
+    <p class="blog-card-excerpt">${excerpt}</p>
     <div class="blog-card-meta">
       <span>${readingTime}</span>
       <span class="blog-meta-dot"></span>
@@ -78,8 +78,6 @@ function generateBlogPostsHtml(blogPosts) {
     </div>
   </article>`;
   }).join('\n\n');
-
-  return cards;
 }
 
 async function copyFileIfExists(source, target) {
@@ -119,7 +117,8 @@ async function build() {
   });
 
   if (sanityContent) {
-    console.log('✅ Loaded from Sanity:', sanityContent.blogPosts?.length || 0, 'blog posts');
+    const cardCount = sanityContent.blogPage?.cards?.length || 0;
+    console.log('✅ Loaded from Sanity: blogPage with', cardCount, 'cards');
   } else {
     console.log('⚠️  Using fallback data (Sanity fetch failed or not configured)');
   }
@@ -128,10 +127,10 @@ async function build() {
 
   await copyFile(path.join(rootDir, 'cms.js'), path.join(distDir, 'cms.js'));
 
-  // Generate blog posts HTML from Sanity data
-  const blogPosts = finalData.blogPosts || [];
-  console.log('📝 Generating HTML for', blogPosts.length, 'blog posts');
-  const generatedBlogHtml = generateBlogPostsHtml(blogPosts);
+  // Generate blog cards HTML from Sanity blogPage data
+  const blogCards = finalData.blogPage?.cards || [];
+  console.log('📝 Generating HTML for', blogCards.length, 'blog cards');
+  const generatedBlogHtml = generateBlogCardsHtml(blogCards);
 
   // Read, modify, and write index.html with generated blog posts
   let indexHtml = await readFile(path.join(rootDir, 'index.html'), 'utf8');
