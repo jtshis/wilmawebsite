@@ -199,7 +199,7 @@ export default {
         "The brief arrives full of ambition. The team is motivated. The mission is real. So why do so many NGO digital strategies collapse within six months? After working with a dozen organisations across Europe and Africa, we've identified the three structural failures that derail even the most committed teams.",
       author: 'Lise Kriekemans',
       readingTime: '12 min read',
-      date: 'March 2026'
+      date: '2026-03-01'
     },
     filters: ['All', 'Strategy', 'Impact', 'Digital', 'Culture'],
     cards: [
@@ -209,7 +209,7 @@ export default {
         excerpt:
           "You've done the work. You've earned the certification. Now the hardest part: making your values legible to people who've never heard of B-Corp.",
         readingTime: '8 min read',
-        date: 'Feb 2026'
+        date: '2026-02-01'
       },
       {
         tag: 'Digital',
@@ -217,7 +217,7 @@ export default {
         excerpt:
           "Search optimisation has a reputation problem. Here's how purpose-led brands can grow their organic presence without compromising the principles that define them.",
         readingTime: '6 min read',
-        date: 'Feb 2026'
+        date: '2026-02-01'
       },
       {
         tag: 'Culture',
@@ -225,7 +225,7 @@ export default {
         excerpt:
           'Long before Wilma Collective, there were community meetings in Lusaka, translation challenges, and the slow realisation that communication is never neutral.',
         readingTime: '10 min read',
-        date: 'Jan 2026'
+        date: '2026-01-01'
       },
       {
         tag: 'Strategy',
@@ -233,7 +233,7 @@ export default {
         excerpt:
           'When your runway is short and your audience is sceptical, what you say and how you say it is not a secondary concern. It is the product.',
         readingTime: '7 min read',
-        date: 'Jan 2026'
+        date: '2026-01-01'
       },
       {
         tag: 'Digital',
@@ -241,7 +241,7 @@ export default {
         excerpt:
           'Most NGOs treat LinkedIn like a bulletin board. The organisations that actually build influence use it as a strategic publishing platform.',
         readingTime: '5 min read',
-        date: 'Dec 2025'
+        date: '2025-12-01'
       },
       {
         tag: 'Impact',
@@ -249,7 +249,7 @@ export default {
         excerpt:
           "Vanity metrics are comfortable. But if your reporting doesn't connect activity to actual change, you're optimising for the wrong thing entirely.",
         readingTime: '9 min read',
-        date: 'Nov 2025'
+        date: '2025-11-01'
       }
     ],
     newsletter: {

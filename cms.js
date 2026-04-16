@@ -29,6 +29,26 @@ function setMeta(selector, attr, value) {
   if (el) el.setAttribute(attr, value);
 }
 
+function parseJournalDate(value) {
+  if (!value) return 0;
+  const time = Date.parse(`${value}T12:00:00Z`);
+  return Number.isNaN(time) ? 0 : time;
+}
+
+function formatJournalDate(value) {
+  const time = parseJournalDate(value);
+  if (!time) return '';
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC'
+  }).format(new Date(time));
+}
+
+function sortJournalCards(cards = []) {
+  return [...cards].sort((a, b) => parseJournalDate(b.date) - parseJournalDate(a.date));
+}
+
 function replaceFooter(siteSettings) {
   qa('footer').forEach(footer => {
     setText('.ft-name', siteSettings.brandName, footer);
@@ -217,18 +237,19 @@ function applyBlog(blog) {
     const meta = qa('.blog-meta span', featured).filter(el => !el.classList.contains('blog-meta-dot'));
     if (meta[0]) meta[0].textContent = blog.featured?.author || '';
     if (meta[1]) meta[1].textContent = blog.featured?.readingTime || '';
-    if (meta[2]) meta[2].textContent = blog.featured?.date || '';
+    if (meta[2]) meta[2].textContent = formatJournalDate(blog.featured?.date);
   }
 
+  const cards = sortJournalCards(blog.cards);
   qa('.blog-grid .blog-card').forEach((card, index) => {
-    const item = blog.cards?.[index];
+    const item = cards[index];
     if (!item) return;
     setText('.blog-tag', item.tag, card);
     setHTML('.blog-card-title', item.titleHtml, card);
     setText('.blog-card-excerpt', item.excerpt, card);
     const meta = qa('.blog-card-meta span', card).filter(el => !el.classList.contains('blog-meta-dot'));
     if (meta[0]) meta[0].textContent = item.readingTime || '';
-    if (meta[1]) meta[1].textContent = item.date || '';
+    if (meta[1]) meta[1].textContent = formatJournalDate(item.date);
   });
 
   setText('.blog-newsletter .blog-newsletter-label', blog.newsletter?.eyebrow);

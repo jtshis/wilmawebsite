@@ -47,6 +47,26 @@ function deepMerge(base, override) {
   return out;
 }
 
+function parseJournalDate(value) {
+  if (!value) return 0;
+  const time = Date.parse(`${value}T12:00:00Z`);
+  return Number.isNaN(time) ? 0 : time;
+}
+
+function formatJournalDate(value) {
+  const time = parseJournalDate(value);
+  if (!time) return '';
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC'
+  }).format(new Date(time));
+}
+
+function sortJournalCards(cards = []) {
+  return [...cards].sort((a, b) => parseJournalDate(b.date) - parseJournalDate(a.date));
+}
+
 async function writeModule(outPath, data) {
   await mkdir(path.dirname(outPath), {recursive: true});
   const body = `export default ${JSON.stringify(data, null, 2)};\n`;
@@ -115,7 +135,7 @@ ${buttons}
       <span class="blog-meta-dot"></span>
       <span>${readingTime || ''}</span>
       <span class="blog-meta-dot"></span>
-      <span>${date || ''}</span>
+      <span>${formatJournalDate(date)}</span>
     </div>
     <a href="#" class="blog-read-more">Read article <span>-></span></a>
   </div>
@@ -127,17 +147,13 @@ ${buttons}
 
   // Post grid — sort newest-first by date string (YYYY-MM-DD or any ISO-sortable format)
   if (Array.isArray(blogPage.cards) && blogPage.cards.length) {
-    const sorted = [...blogPage.cards].sort((a, b) => {
-      const da = a.date ? new Date(a.date).getTime() : 0;
-      const db = b.date ? new Date(b.date).getTime() : 0;
-      return db - da;
-    });
+    const sorted = sortJournalCards(blogPage.cards);
     const cards = sorted.map((card, idx) => {
       const tag = card.tag || '';
       const titleHtml = card.titleHtml || card.title || '';
       const excerpt = card.excerpt || '';
       const readingTime = card.readingTime || '';
-      const date = card.date || '';
+      const date = formatJournalDate(card.date);
       const num = String(idx + 1).padStart(2, '0');
       return `  <article class="blog-card r d${(idx % 3) + 1}">
     <div class="blog-card-img"><div class="blog-card-img-inner"><span class="blog-card-num">${num}</span></div></div>
@@ -220,6 +236,9 @@ async function build() {
   }
 
   const finalData = deepMerge(fallbackData, sanityContent || {});
+  if (finalData.blogPage?.cards) {
+    finalData.blogPage.cards = sortJournalCards(finalData.blogPage.cards);
+  }
 
   await copyFile(path.join(rootDir, 'cms.js'), path.join(distDir, 'cms.js'));
 
