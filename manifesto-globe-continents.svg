@@ -1,0 +1,78 @@
+<svg viewBox="0 0 640 640" width="680" height="680" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="globeOcean" cx="32%" cy="26%" r="86%">
+      <stop offset="0%" stop-color="#365042"/>
+      <stop offset="48%" stop-color="#274536"/>
+      <stop offset="100%" stop-color="#12251c"/>
+    </radialGradient>
+    <radialGradient id="globeSheen" cx="30%" cy="22%" r="72%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity=".10"/>
+      <stop offset="40%" stop-color="#ffffff" stop-opacity=".03"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="globeClip">
+      <circle cx="320" cy="320" r="280"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#globeClip)">
+    <circle cx="320" cy="320" r="280" fill="url(#globeOcean)"/>
+    <circle cx="320" cy="320" r="280" fill="url(#globeSheen)"/>
+
+    <!-- Graticule -->
+    <g opacity=".62">
+      <ellipse cx="320" cy="320" rx="280" ry="68" stroke="rgba(189,203,148,0.28)" stroke-width="1" fill="none"/>
+      <ellipse cx="320" cy="320" rx="280" ry="152" stroke="rgba(189,203,148,0.24)" stroke-width="1" fill="none"/>
+      <ellipse cx="320" cy="320" rx="280" ry="232" stroke="rgba(189,203,148,0.20)" stroke-width="1" fill="none"/>
+      <line x1="40" y1="320" x2="600" y2="320" stroke="rgba(189,203,148,0.44)" stroke-width="1.5"/>
+      <ellipse cx="320" cy="320" rx="84" ry="280" stroke="rgba(189,203,148,0.22)" stroke-width="1" fill="none"/>
+      <ellipse cx="320" cy="320" rx="182" ry="280" stroke="rgba(189,203,148,0.22)" stroke-width="1" fill="none"/>
+      <line x1="320" y1="40" x2="320" y2="600" stroke="rgba(189,203,148,0.34)" stroke-width="1.25"/>
+    </g>
+
+    <!-- CONTINENTS: REALISTIC EARTH GLOBE -->
+    <g fill="#25483b" fill-opacity="1" stroke="rgba(225,236,201,0.18)" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round">
+
+      <!-- AFRICA: Realistic continent with Mediterranean indentation, Gulf of Guinea, Horn, Cape -->
+      <path d="M265 170 Q290 165 320 168 Q350 172 368 185 L378 205 Q385 235 385 265 Q383 295 378 325 Q370 355 355 375 Q330 395 300 402 Q270 405 250 398 Q240 385 238 365 Q236 330 238 295 Q240 260 245 225 Q250 190 260 175 Z"/>
+
+      <!-- EUROPE: Compact, with Mediterranean as clear indentation, jagged coast -->
+      <path d="M270 155 Q295 150 320 152 Q345 155 360 165 Q368 178 365 195 Q350 208 325 213 Q300 215 280 210 Q270 200 268 180 Z"/>
+
+      <!-- NORTH AMERICA: Wider northern section (Canada), tapers south with realistic coast -->
+      <path d="M85 95 Q110 75 140 80 Q165 85 178 105 Q188 130 188 160 Q185 190 175 220 Q160 245 140 260 Q110 275 85 270 Q70 250 70 215 Q72 160 80 120 Z"/>
+
+      <!-- SOUTH AMERICA: Narrower than North America, elongated, realistic taper -->
+      <path d="M140 265 Q160 270 175 290 Q182 320 180 350 Q175 375 160 395 Q140 410 120 410 Q108 400 108 370 Q110 330 118 295 Q128 275 140 265 Z"/>
+
+      <!-- ASIA: Massive landmass, realistic proportions and coast complexity -->
+      <path d="M320 155 Q370 145 420 155 Q470 168 510 190 Q540 215 555 245 Q562 280 560 310 Q550 340 530 360 Q500 378 465 380 Q425 375 395 355 Q365 330 345 295 Q335 260 332 220 Z"/>
+
+      <!-- INDIA PENINSULA: Distinct triangular peninsula from southern Asia -->
+      <path d="M410 310 Q430 308 450 325 Q458 350 450 375 Q430 390 410 385 Q405 360 410 330 Z"/>
+
+      <!-- SOUTHEAST ASIA: Island region complexity (Indonesia/Philippines area) -->
+      <path d="M455 320 Q475 325 495 340 Q500 360 495 375 Q475 378 455 368 Z"/>
+
+      <!-- AUSTRALIA: Compact, distinct island continent -->
+      <path d="M510 350 Q535 348 555 365 Q560 390 550 415 Q525 428 505 425 Q495 405 500 375 Z"/>
+
+      <!-- GREENLAND: Northern accent -->
+      <path d="M255 120 Q268 115 280 125 Q282 145 270 155 Q258 150 255 135 Z"/>
+
+      <!-- MADAGASCAR: Island detail off Africa's east coast -->
+      <path d="M360 375 Q375 375 380 395 Q375 410 360 410 Q355 395 360 375 Z"/>
+
+    </g>
+
+    <!-- Depth effects -->
+    <ellipse cx="240" cy="218" rx="74" ry="134" fill="rgba(255,255,255,0.04)" transform="rotate(-19 240 218)"/>
+    <ellipse cx="462" cy="402" rx="64" ry="98" fill="rgba(0,0,0,0.08)" transform="rotate(17 462 402)"/>
+
+    <!-- Sphere edge -->
+    <circle cx="320" cy="320" r="280" fill="none" stroke="rgba(189,203,148,0.50)" stroke-width="2"/>
+  </g>
+
+  <!-- Outer ring -->
+  <circle cx="320" cy="320" r="292" stroke="rgba(189,203,148,0.2)" stroke-width="1" stroke-dasharray="5 11" fill="none"/>
+</svg>
