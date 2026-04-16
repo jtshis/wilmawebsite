@@ -279,7 +279,11 @@ export const schemaTypes = [
           textField('excerpt', 'Excerpt'),
           stringField('author', 'Author'),
           stringField('readingTime', 'Reading time'),
-          stringField('date', 'Date')
+          defineField({
+            name: 'date',
+            title: 'Date',
+            type: 'date'
+          })
         ]
       }),
       defineField({
@@ -300,7 +304,11 @@ export const schemaTypes = [
               htmlStringField('titleHtml', 'Title HTML'),
               textField('excerpt', 'Excerpt'),
               stringField('readingTime', 'Reading time'),
-              stringField('date', 'Date')
+              defineField({
+                name: 'date',
+                title: 'Date',
+                type: 'date'
+              })
             ]
           })
         ]
