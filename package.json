@@ -1,0 +1,14 @@
+{
+  "name": "wilma-collective-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-site.mjs",
+    "sync:content": "node scripts/build-site.mjs --sync-only",
+    "import:notion": "node scripts/import-notion.mjs"
+  },
+  "dependencies": {
+    "@sanity/dashboard": "^5.0.1",
+    "sanity-plugin-dashboard-widget-netlify": "^2.0.4"
+  }
+}

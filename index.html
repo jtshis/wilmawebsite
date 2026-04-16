@@ -666,7 +666,9 @@ nav.scrolled{
   width:680px;height:680px;
   opacity:.75;
   pointer-events:none;
-  animation:globeSpin 80s linear infinite;
+  transform-origin:50% 50%;
+  transform-box:fill-box;
+  animation:globeSpin 110s linear infinite;
 }
 @keyframes globeSpin{from{transform:translateY(-50%) rotate(0)}to{transform:translateY(-50%) rotate(360deg)}}
 
@@ -1222,8 +1224,8 @@ nav.scrolled{
 
 /* Large comma ghost in CTA */
 .cta-comma{
-  position:absolute;right:80px;top:62%;
-  transform:translateY(-62%);
+  position:absolute;right:80px;top:68%;
+  transform:translateY(-68%);
   pointer-events:none;
   user-select:none;
 }
@@ -1268,11 +1270,12 @@ footer{
   border-top:1px solid var(--grid-col);
   display:grid;
   grid-template-columns:1fr auto 1fr;
-  align-items:baseline;gap:40px;
+  align-items:end;gap:40px;
 }
 .ft-brand{display:flex;flex-direction:column;gap:4px}
 .ft-name{font-size:12px;font-weight:500;color:var(--forest);letter-spacing:.06em;text-transform:uppercase}
 .ft-tag{font-size:11px;color:var(--muted);font-weight:300}
+.ft-reg{display:block;font-size:11px;color:var(--muted);font-weight:300;margin-top:2px}
 .ft-mid{display:flex;gap:32px}
 .ft-mid a,.ft-right a{font-size:11px;color:var(--muted);letter-spacing:.04em;transition:color .2s}
 .ft-mid a:hover,.ft-right a:hover{color:var(--forest)}
@@ -1723,7 +1726,51 @@ footer{
 .about-founder-title em{font-style:italic;color:var(--cherry)}
 .about-founder-intro{font-size:15px;line-height:1.85;color:var(--charcoal);font-weight:400;margin-bottom:16px;}
 .about-founder-body{font-size:15px;line-height:1.85;color:var(--mid);font-weight:300;margin-bottom:0;}
-.about-founder-funfact{font-size:16px;line-height:1.85;color:var(--charcoal);font-weight:300;margin-top:32px;margin-bottom:32px;padding-left:16px;border-left:4px solid var(--forest);font-style:italic;}
+.about-founder-funfact{
+  position:relative;
+  margin-top:28px;
+  margin-bottom:26px;
+  padding:26px 26px 24px;
+  border:1px solid rgba(21,71,57,.08);
+  border-radius:28px;
+  background:
+    linear-gradient(180deg, rgba(250,250,248,.98), rgba(246,246,241,.94));
+  box-shadow:0 20px 38px rgba(13,46,34,.05);
+  overflow:hidden;
+}
+.about-founder-funfact::before{
+  content:'';
+  position:absolute;
+  inset:0 auto auto 0;
+  width:84px;
+  height:2px;
+  background:linear-gradient(90deg,var(--forest),rgba(139,0,32,.55));
+  opacity:.75;
+}
+.about-founder-funfact-label{
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--forest);
+  font-weight:500;
+  margin-bottom:12px;
+}
+.about-founder-funfact-lead{
+  font-family:var(--serif);
+  font-size:clamp(23px,2.4vw,32px);
+  line-height:1.05;
+  letter-spacing:-.02em;
+  color:var(--charcoal);
+  font-style:italic;
+  margin-bottom:10px;
+}
+.about-founder-funfact-body{
+  font-size:15px;
+  line-height:1.85;
+  color:var(--mid);
+  font-weight:300;
+  max-width:44ch;
+}
 .about-founder-bottom{
   display:inline-flex;
   align-items:center;
@@ -2350,6 +2397,18 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
     flex-wrap:wrap;
     gap:20px;
   }
+  .about-founder-funfact{
+    padding:20px 20px 18px;
+    border-radius:22px;
+    margin-top:24px;
+    margin-bottom:24px;
+  }
+  .about-founder-funfact-lead{
+    font-size:clamp(21px,5vw,27px);
+  }
+  .about-founder-funfact-body{
+    max-width:none;
+  }
 
   /* â”€â”€ SIGNATURE â€” larger name â”€â”€ */
   .about-sig-name{font-size:clamp(56px,18vw,96px)}
@@ -2719,28 +2778,79 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
 
   <!-- Globe ghost background -->
   <svg class="manifesto-globe" viewBox="0 0 640 640" fill="none">
-    <!-- Ocean fill - sage tint -->
-    <circle cx="320" cy="320" r="278" fill="rgba(189,203,148,0.08)"/>
-    <!-- Outer circle -->
-    <circle cx="320" cy="320" r="280" stroke="rgba(189,203,148,0.6)" stroke-width="2" fill="none"/>
-    <!-- Latitude lines - sage -->
-    <ellipse cx="320" cy="320" rx="280" ry="68" stroke="rgba(189,203,148,0.35)" stroke-width="1" fill="none"/>
-    <ellipse cx="320" cy="320" rx="280" ry="152" stroke="rgba(189,203,148,0.3)" stroke-width="1" fill="none"/>
-    <ellipse cx="320" cy="320" rx="280" ry="232" stroke="rgba(189,203,148,0.25)" stroke-width="1" fill="none"/>
-    <!-- Equator - brighter -->
-    <line x1="40" y1="320" x2="600" y2="320" stroke="rgba(189,203,148,0.55)" stroke-width="1.5"/>
-    <!-- Longitude lines - sage -->
-    <ellipse cx="320" cy="320" rx="84" ry="280" stroke="rgba(189,203,148,0.28)" stroke-width="1" fill="none"/>
-    <ellipse cx="320" cy="320" rx="182" ry="280" stroke="rgba(189,203,148,0.28)" stroke-width="1" fill="none"/>
-    <!-- Vertical axis -->
-    <line x1="320" y1="40" x2="320" y2="600" stroke="rgba(189,203,148,0.5)" stroke-width="1.5"/>
-    <!-- Simplified continents -->
-    <path d="M168 158 Q184 144 206 146 Q226 148 238 159 Q247 168 244 181 Q240 192 228 197 Q214 203 200 199 Q191 196 183 189 Q173 181 168 171 Q163 164 168 158 Z" fill="#154739" opacity=".56"/>
-    <path d="M204 254 Q219 262 223 276 Q227 291 223 306 Q220 319 214 334 Q209 348 203 363 Q197 376 188 372 Q181 368 180 357 Q182 342 186 329 Q189 315 189 303 Q188 289 189 278 Q193 263 204 254 Z" fill="#154739" opacity=".56"/>
-    <path d="M287 150 Q302 142 321 145 Q336 149 343 160 Q349 171 345 181 Q341 190 332 195 Q320 199 310 197 Q301 195 294 188 Q287 181 285 171 Q283 160 287 150 Z" fill="#BDCB94" opacity=".34"/>
-    <path d="M286 184 Q304 181 322 186 Q337 192 343 206 Q349 221 346 239 Q342 258 335 279 Q329 299 323 323 Q320 343 313 359 Q305 373 294 366 Q286 360 285 345 Q286 329 285 311 Q282 294 279 276 Q277 247 279 226 Q280 203 286 184 Z" fill="#154739" opacity=".58"/>
-    <path d="M364 151 Q388 141 412 147 Q429 152 439 166 Q445 179 443 193 Q440 206 431 216 Q421 226 407 229 Q393 231 381 225 Q370 218 364 206 Q358 193 359 178 Q360 160 364 151 Z" fill="#A8BFDF" opacity=".34"/>
-    <path d="M398 304 Q410 300 419 304 Q427 309 426 318 Q425 327 417 331 Q408 334 400 329 Q392 325 392 317 Q392 309 398 304 Z" fill="#C7B0D6" opacity=".34"/>
+    <defs>
+      <radialGradient id="globeOcean" cx="32%" cy="26%" r="86%">
+        <stop offset="0%" stop-color="#365042"/>
+        <stop offset="48%" stop-color="#274536"/>
+        <stop offset="100%" stop-color="#12251c"/>
+      </radialGradient>
+      <radialGradient id="globeSheen" cx="30%" cy="22%" r="72%">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity=".10"/>
+        <stop offset="40%" stop-color="#ffffff" stop-opacity=".03"/>
+        <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+      </radialGradient>
+      <clipPath id="globeClip">
+        <circle cx="320" cy="320" r="280"/>
+      </clipPath>
+    </defs>
+
+    <g clip-path="url(#globeClip)">
+      <circle cx="320" cy="320" r="280" fill="url(#globeOcean)"/>
+      <circle cx="320" cy="320" r="280" fill="url(#globeSheen)"/>
+
+      <!-- Graticule -->
+      <g opacity=".62">
+        <ellipse cx="320" cy="320" rx="280" ry="68" stroke="rgba(189,203,148,0.28)" stroke-width="1" fill="none"/>
+        <ellipse cx="320" cy="320" rx="280" ry="152" stroke="rgba(189,203,148,0.24)" stroke-width="1" fill="none"/>
+        <ellipse cx="320" cy="320" rx="280" ry="232" stroke="rgba(189,203,148,0.20)" stroke-width="1" fill="none"/>
+        <line x1="40" y1="320" x2="600" y2="320" stroke="rgba(189,203,148,0.44)" stroke-width="1.5"/>
+        <ellipse cx="320" cy="320" rx="84" ry="280" stroke="rgba(189,203,148,0.22)" stroke-width="1" fill="none"/>
+        <ellipse cx="320" cy="320" rx="182" ry="280" stroke="rgba(189,203,148,0.22)" stroke-width="1" fill="none"/>
+        <line x1="320" y1="40" x2="320" y2="600" stroke="rgba(189,203,148,0.34)" stroke-width="1.25"/>
+      </g>
+
+      <!-- Recognizable Earth continents: realistic geographic shapes -->
+      <g fill="#25483b" fill-opacity="1" stroke="rgba(225,236,201,0.18)" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round">
+
+        <!-- Africa: Realistic continent with Mediterranean indentation, Gulf of Guinea, Horn, Cape -->
+        <path d="M265 170 Q290 165 320 168 Q350 172 368 185 L378 205 Q385 235 385 265 Q383 295 378 325 Q370 355 355 375 Q330 395 300 402 Q270 405 250 398 Q240 385 238 365 Q236 330 238 295 Q240 260 245 225 Q250 190 260 175 Z"/>
+
+        <!-- Europe: Compact, with Mediterranean as clear indentation, jagged coast -->
+        <path d="M270 155 Q295 150 320 152 Q345 155 360 165 Q368 178 365 195 Q350 208 325 213 Q300 215 280 210 Q270 200 268 180 Z"/>
+
+        <!-- North America: Wider northern section (Canada), tapers south with realistic coast -->
+        <path d="M85 95 Q110 75 140 80 Q165 85 178 105 Q188 130 188 160 Q185 190 175 220 Q160 245 140 260 Q110 275 85 270 Q70 250 70 215 Q72 160 80 120 Z"/>
+
+        <!-- South America: Narrower than North America, elongated, realistic taper -->
+        <path d="M140 265 Q160 270 175 290 Q182 320 180 350 Q175 375 160 395 Q140 410 120 410 Q108 400 108 370 Q110 330 118 295 Q128 275 140 265 Z"/>
+
+        <!-- Asia: Massive landmass, realistic proportions and coast complexity -->
+        <path d="M320 155 Q370 145 420 155 Q470 168 510 190 Q540 215 555 245 Q562 280 560 310 Q550 340 530 360 Q500 378 465 380 Q425 375 395 355 Q365 330 345 295 Q335 260 332 220 Z"/>
+
+        <!-- India Peninsula: Distinct triangular peninsula from southern Asia -->
+        <path d="M410 310 Q430 308 450 325 Q458 350 450 375 Q430 390 410 385 Q405 360 410 330 Z"/>
+
+        <!-- Southeast Asia: Island region complexity (Indonesia/Philippines area) -->
+        <path d="M455 320 Q475 325 495 340 Q500 360 495 375 Q475 378 455 368 Z"/>
+
+        <!-- Australia: Compact, distinct island continent -->
+        <path d="M510 350 Q535 348 555 365 Q560 390 550 415 Q525 428 505 425 Q495 405 500 375 Z"/>
+
+        <!-- Greenland: Northern accent -->
+        <path d="M255 120 Q268 115 280 125 Q282 145 270 155 Q258 150 255 135 Z"/>
+
+        <!-- Madagascar: Island detail off Africa's east coast -->
+        <path d="M360 375 Q375 375 380 395 Q375 410 360 410 Q355 395 360 375 Z"/>
+      </g>
+
+      <!-- Soft front-limb highlight for depth -->
+      <ellipse cx="240" cy="218" rx="74" ry="134" fill="rgba(255,255,255,0.04)" transform="rotate(-19 240 218)"/>
+      <ellipse cx="462" cy="402" rx="64" ry="98" fill="rgba(0,0,0,0.08)" transform="rotate(17 462 402)"/>
+
+      <!-- Inner sphere edge -->
+      <circle cx="320" cy="320" r="280" fill="none" stroke="rgba(189,203,148,0.50)" stroke-width="2"/>
+    </g>
+
     <!-- Outer dashed ring - sage -->
     <circle cx="320" cy="320" r="292" stroke="rgba(189,203,148,0.2)" stroke-width="1" stroke-dasharray="5 11" fill="none"/>
   </svg>
@@ -2940,7 +3050,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
     <div class="cta-line" style="top:56%;animation-delay:1.6s"></div>
     <div class="cta-line" style="top:72%;animation-delay:2.4s"></div>
   </div>
-  <div class="cta-comma"><img src="comma-sage.png" alt="" loading="lazy" style="height:380px;width:auto;opacity:0.6;"></div>
+  <div class="cta-comma"><img src="comma-sage.png" alt="" loading="lazy" style="height:380px;width:auto;opacity:1;"></div>
   <div class="cta-left">
     <p class="cta-label r">Let's work together</p>
     <h2 class="cta-headline r d1">
@@ -2964,6 +3074,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       <span class="ft-name">Wilma Collective</span>
     </div>
     <span class="ft-tag">A digital marketing agency. Belgium &amp; South Africa.</span>
+    <span class="ft-reg">BE1035.594.071</span>
   </div>
   <div class="ft-mid">
     <a href="#how" onclick="goToSection('how');return false">Work</a>
@@ -2972,7 +3083,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   </div>
   <div class="ft-right">
     <a href="#">@wilmacollective</a>
-    <a href="#">LinkedIn</a>
+    <a href="https://www.linkedin.com/company/wilma-collective/" target="_blank" rel="noopener">LinkedIn</a>
     <span class="ft-copy">(c) 2026</span>
   </div>
 </footer>
@@ -3026,7 +3137,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
     <div class="values-grid">
       <div class="val-card r d1"><h3 class="val-title">Growth</h3><p class="val-body">Every engagement begins with awareness: of self, of need, of impact. We build toward where your brand wants to be in years, not quarters.</p></div>
       <div class="val-card r d2"><h3 class="val-title">Credibility</h3><p class="val-body">Trust is earned through transparency, not performance. We mean what we say and deliver what we promise.</p></div>
-      <div class="val-card r d3"><h3 class="val-title">Accountability</h3><p class="val-body">Full accountability from the first brief to the final handover. No excuses, no vanishing acts.</p></div>
+      <div class="val-card r d3"><h3 class="val-title">Accountability</h3><p class="val-body">Full accountability from the first brief to the final handover. No excuses.</p></div>
       <div class="val-card r d4"><h3 class="val-title">Balance</h3><p class="val-body">Less is more. In design and in impact measurement, clean essential work outlasts noise.</p></div>
     </div>
   </div>
@@ -3042,7 +3153,11 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
     <h2 class="about-founder-title r d1">Lise <em>Kriekemans.</em></h2>
     <p class="about-founder-intro r d2">Lise built Wilma Collective around everything she cares about: languages, storytelling, strategy and social change. With a background in Business Communication and Cultural Anthropology, and years working with NGOs including Trias, Caritas, Studio Globo and Studio Zambia, she brings a perspective few marketers have.</p>
     <p class="about-founder-body r d3">Working across Europe and Africa gave her a clear view of how communication drives real change and how often it falls short. Wilma Collective exists to close that gap. Purpose-led organisations deserve the same quality of digital thinking as any commercial brand.</p>
-    <p class="about-founder-funfact r d4">Fun fact: Wilma is Lise’s middle name, named after her godfather Wim and Wilma Flinstone, a logical and assertive woman known for her level-headed resourcefulness and her inventive ways of finding solutions.</p>
+    <div class="about-founder-funfact r d4">
+      <p class="about-founder-funfact-label">Fun fact</p>
+      <p class="about-founder-funfact-lead">Wilma is Lise’s middle name.</p>
+      <p class="about-founder-funfact-body">Kriekemans means cherries in Dutch, and the name’s origin also nods to her godfather Wim and Wilma Flinstone, a logical, inventive woman known for her resourcefulness.</p>
+    </div>
     <div class="about-founder-bottom r d4">
       <div class="lise-seal">
         <svg viewBox="0 0 100 100" width="64" height="64" aria-hidden="true">
@@ -3057,7 +3172,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
           <text x="50" y="55" text-anchor="middle" font-family="Cormorant, Georgia, serif" font-size="20" font-style="italic" font-weight="300" fill="#154739" opacity=".6">W</text>
         </svg>
       </div>
-      <a href="https://www.linkedin.com/in/lisekriekemans" target="_blank" rel="noopener" class="about-linkedin-btn magnetic">
+      <a href="https://www.linkedin.com/in/lise-kriekemans-315b5611a/" target="_blank" rel="noopener" class="about-linkedin-btn magnetic">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
         View LinkedIn
       </a>
@@ -3084,6 +3199,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       <span class="ft-name">Wilma Collective</span>
     </div>
     <span class="ft-tag">A digital marketing agency. Belgium &amp; South Africa.</span>
+    <span class="ft-reg">BE1035.594.071</span>
   </div>
   <div class="ft-mid">
     <a href="#" onclick="showPage('home');return false">Home</a>
@@ -3092,7 +3208,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   </div>
   <div class="ft-right">
     <a href="#">@wilmacollective</a>
-    <a href="#">LinkedIn</a>
+    <a href="https://www.linkedin.com/company/wilma-collective/" target="_blank" rel="noopener">LinkedIn</a>
     <span class="ft-copy">(c) 2026</span>
   </div>
 </footer>
@@ -3243,6 +3359,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       <span class="ft-name">Wilma Collective</span>
     </div>
     <span class="ft-tag">A digital marketing agency. Belgium &amp; South Africa.</span>
+    <span class="ft-reg">BE1035.594.071</span>
   </div>
   <div class="ft-mid">
     <a href="#" onclick="showPage('home');return false">Home</a>
@@ -3251,7 +3368,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   </div>
   <div class="ft-right">
     <a href="#">@wilmacollective</a>
-    <a href="#">LinkedIn</a>
+    <a href="https://www.linkedin.com/company/wilma-collective/" target="_blank" rel="noopener">LinkedIn</a>
     <span class="ft-copy">(c) 2026</span>
   </div>
 </footer>
@@ -3529,11 +3646,19 @@ function showPage(p, options={}){
         b=document.getElementById('blogPage'),
         dots=document.getElementById('progress');
   const activeNav=options.activeNav || p;
-  h.classList.add('hidden');a.classList.remove('active');
+  document.body.dataset.page=p;
+  if(p==='home'){
+    h.classList.remove('hidden');
+  } else {
+    h.classList.add('hidden');
+  }
+  a.classList.remove('active');
   if(b)b.classList.remove('active');
   dots.style.display='none';
-  if(p==='home'){h.classList.remove('hidden');dots.style.display=isMobileExperience()?'none':'flex';}
-  else if(p==='about'){
+  if(p==='home'){
+    h.classList.remove('hidden');
+    dots.style.display=isMobileExperience()?'none':'flex';
+  } else if(p==='about'){
     a.classList.add('active');
     setTimeout(()=>{
       a.querySelectorAll('.r,.card-r').forEach(el=>{
@@ -3553,11 +3678,12 @@ function showPage(p, options={}){
   syncMobileNav(activeNav);
   closeMobileMenu();
   if(!options.preserveScroll){
-    window.scrollTo({top:0,behavior:'smooth'});
+    window.scrollTo({top:0,behavior:p==='home'?'auto':'smooth'});
   }
 }
 syncMobileNav('home');
 </script>
+<script type="module" src="/cms.js"></script>
 </body>
 </html>
 
