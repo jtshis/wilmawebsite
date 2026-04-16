@@ -17,10 +17,6 @@ async function loadSanityContent() {
 
   const apiVersion = process.env.SANITY_API_VERSION || 'v2025-04-01';
   const query = encodeURIComponent(`{
-    "siteSettings": *[_type=="siteSettings"][0],
-    "home": *[_type=="homePage"][0],
-    "about": *[_type=="aboutPage"][0],
-    "blog": *[_type=="blogPage"][0],
     "blogPosts": *[_type=="blogPost"] | sort(date desc)
   }`);
   const url = `https://${projectId}.api.sanity.io/${apiVersion}/data/query/${dataset}?query=${query}&perspective=published`;
