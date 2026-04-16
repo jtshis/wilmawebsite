@@ -271,49 +271,31 @@ export const schemaTypes = [
       }),
       defineField({
         name: 'featured',
-        title: 'Featured post',
-        type: 'object',
-        fields: [
-          stringField('tag', 'Tag'),
-          htmlStringField('titleHtml', 'Title HTML'),
-          textField('excerpt', 'Excerpt'),
-          stringField('author', 'Author'),
-          stringField('readingTime', 'Reading time'),
-          stringField('slug', 'Article slug'),
-          defineField({
-            name: 'date',
-            title: 'Date',
-            type: 'date'
-          })
-        ]
+        title: 'Featured article',
+        type: 'reference',
+        to: [{type: 'journalPost'}],
+        description: 'Select a published article to feature at the top'
       }),
       defineField({
-        name: 'filters',
-        title: 'Filters',
+        name: 'filterCategories',
+        title: 'Filter categories',
         type: 'array',
-        of: [defineArrayMember({type: 'string'})]
+        of: [defineArrayMember({type: 'string'})],
+        description: 'Categories to show as filter buttons (auto-populated from articles)'
       }),
       defineField({
-        name: 'cards',
-        title: 'Cards',
+        name: 'articlesToShow',
+        title: 'Articles to display',
+        type: 'number',
+        initialValue: 6,
+        description: 'How many recent articles to show on landing page (newest first)'
+      }),
+      defineField({
+        name: 'pinned',
+        title: 'Pinned articles',
         type: 'array',
-        of: [
-          defineArrayMember({
-            type: 'object',
-            fields: [
-              stringField('tag', 'Tag'),
-              htmlStringField('titleHtml', 'Title HTML'),
-              textField('excerpt', 'Excerpt'),
-              stringField('readingTime', 'Reading time'),
-              stringField('slug', 'Article slug'),
-              defineField({
-                name: 'date',
-                title: 'Date',
-                type: 'date'
-              })
-            ]
-          })
-        ]
+        of: [defineArrayMember({type: 'reference', to: [{type: 'journalPost'}]})],
+        description: 'Articles to always show at the top (in addition to featured)'
       }),
       defineField({
         name: 'newsletter',
@@ -349,11 +331,7 @@ export const schemaTypes = [
     title: 'Journal Article',
     type: 'document',
     fields: [
-      defineField({
-        name: 'title',
-        title: 'Title',
-        type: 'string'
-      }),
+      stringField('title', 'Title', {validation: Rule => Rule.required()}),
       defineField({
         name: 'slug',
         title: 'Slug',
@@ -361,38 +339,102 @@ export const schemaTypes = [
         options: {
           source: 'title',
           maxLength: 96
-        }
+        },
+        validation: Rule => Rule.required()
       }),
-      stringField('category', 'Category'),
-      textField('excerpt', 'Excerpt', {rows: 4}),
-      stringField('author', 'Author'),
-      stringField('readingTime', 'Reading time'),
+      stringField('category', 'Category', {validation: Rule => Rule.required()}),
+      defineField({
+        name: 'status',
+        title: 'Status',
+        type: 'string',
+        options: {
+          list: ['draft', 'published'],
+          layout: 'radio'
+        },
+        initialValue: 'draft'
+      }),
       defineField({
         name: 'publishedAt',
-        title: 'Published at',
-        type: 'date'
+        title: 'Published date',
+        type: 'datetime'
+      }),
+      stringField('author', 'Author', {initialValue: 'Lise Kriekemans'}),
+      textField('excerpt', 'Excerpt', {rows: 3, validation: Rule => Rule.required()}),
+      defineField({
+        name: 'image',
+        title: 'Featured image',
+        type: 'image',
+        options: {
+          hotspot: true
+        }
+      }),
+      defineField({
+        name: 'imageAlt',
+        title: 'Image alt text',
+        type: 'string',
+        description: 'Describe the image for accessibility'
       }),
       defineField({
         name: 'body',
-        title: 'Body',
+        title: 'Article body',
         type: 'array',
-        of: [defineArrayMember({type: 'text', rows: 4})],
-        description: 'Draft the article in three paragraphs.'
+        of: [
+          defineArrayMember({
+            type: 'block',
+            styles: [
+              {title: 'Paragraph', value: 'normal'},
+              {title: 'Heading 2', value: 'h2'},
+              {title: 'Heading 3', value: 'h3'}
+            ],
+            marks: {
+              decorators: [
+                {title: 'Bold', value: 'strong'},
+                {title: 'Italic', value: 'em'},
+                {title: 'Underline', value: 'underline'}
+              ],
+              annotations: [
+                {
+                  name: 'link',
+                  type: 'object',
+                  title: 'Link',
+                  fields: [{name: 'href', type: 'string'}]
+                }
+              ]
+            },
+            lists: [{title: 'Bullet', value: 'bullet'}, {title: 'Numbered', value: 'number'}]
+          })
+        ],
+        validation: Rule => Rule.required()
+      }),
+      defineField({
+        name: 'seoDescription',
+        title: 'SEO description',
+        type: 'text',
+        rows: 2,
+        description: 'For search results (60-160 chars)'
+      }),
+      defineField({
+        name: 'ogImage',
+        title: 'Social share image',
+        type: 'image',
+        description: 'Image for when shared on social media'
       })
     ],
     preview: {
       select: {
         title: 'title',
         category: 'category',
-        date: 'publishedAt'
+        status: 'status',
+        date: 'publishedAt',
+        image: 'image'
       },
-      prepare({title, category, date}) {
-        const parts = [category || 'Journal article'];
-        if (date) parts.push(date);
-
+      prepare({title, category, status, date, image}) {
+        const statusEmoji = status === 'published' ? '✓' : '✎';
+        const parts = [statusEmoji, category || 'Journal', date || 'No date'];
         return {
-          title: title || 'Untitled article',
-          subtitle: parts.join(' · ')
+          title: title || 'Untitled',
+          subtitle: parts.join(' · '),
+          media: image
         };
       }
     }

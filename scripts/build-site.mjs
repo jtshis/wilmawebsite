@@ -19,18 +19,36 @@ async function loadSanityContent() {
   const query = encodeURIComponent(`{
     "blogPage": *[_type=="blogPage"][0]{
       ...,
-      featured{
-        ...,
-        slug
-      },
-      cards[]{
-        ...,
-        slug
+      "featured": featured->{
+        _id,
+        title,
+        "slug": slug.current,
+        category,
+        status,
+        publishedAt,
+        author,
+        excerpt,
+        "image": image.asset->{url, metadata},
+        imageAlt,
+        body,
+        seoDescription,
+        "ogImage": ogImage.asset->{url}
       }
     },
-    "journalPosts": *[_type=="journalPost"]|order(publishedAt desc, _createdAt desc){
-      ...,
-      "slug": slug.current
+    "journalPosts": *[_type=="journalPost" && status=="published"] | order(publishedAt desc){
+      _id,
+      title,
+      "slug": slug.current,
+      category,
+      status,
+      publishedAt,
+      author,
+      excerpt,
+      "image": image.asset->{url, metadata},
+      imageAlt,
+      body,
+      seoDescription,
+      "ogImage": ogImage.asset->{url}
     }
   }`);
   const url = `https://${projectId}.api.sanity.io/${apiVersion}/data/query/${dataset}?query=${query}&perspective=published`;
@@ -150,20 +168,75 @@ function synthesizeJournalPosts(blogPage = {}) {
   return posts;
 }
 
+function calculateReadingTime(body = []) {
+  let wordCount = 0;
+
+  if (Array.isArray(body)) {
+    for (const block of body) {
+      if (block._type === 'block' && block.children) {
+        for (const child of block.children) {
+          if (child.text) wordCount += child.text.split(/\s+/).length;
+        }
+      } else if (typeof block === 'string') {
+        wordCount += block.split(/\s+/).length;
+      }
+    }
+  }
+
+  const minutes = Math.max(1, Math.ceil(wordCount / 200));
+  return `${minutes} min read`;
+}
+
+function portableTextToHtml(blocks = []) {
+  if (!Array.isArray(blocks)) return '';
+
+  let html = '';
+  for (const block of blocks) {
+    if (block._type === 'block') {
+      const tag = block.style || 'p';
+      let content = '';
+
+      if (block.children) {
+        for (const child of block.children) {
+          let text = child.text || '';
+
+          if (child.marks) {
+            for (const mark of child.marks) {
+              if (mark === 'strong') text = `<strong>${text}</strong>`;
+              if (mark === 'em') text = `<em>${text}</em>`;
+              if (mark === 'underline') text = `<u>${text}</u>`;
+            }
+          }
+
+          content += text;
+        }
+      }
+
+      html += `<${tag}>${content}</${tag}>`;
+    }
+  }
+
+  return html;
+}
+
 function normalizeJournalPost(post = {}) {
-  const title = stripHtml(post.title || post.titleHtml || 'Journal article');
+  const title = post.title || 'Journal article';
+  const readingTime = calculateReadingTime(post.body);
+
   return {
     ...post,
     title,
-    slug: resolveJournalSlug(post),
-    category: post.category || post.tag || 'Journal',
+    slug: post.slug || slugify(title),
+    category: post.category || 'Journal',
     excerpt: post.excerpt || '',
     author: post.author || 'Lise Kriekemans',
-    readingTime: post.readingTime || '5 min read',
-    publishedAt: resolveJournalDate(post),
-    body: Array.isArray(post.body)
-      ? post.body.map(paragraph => String(paragraph || '').trim()).filter(Boolean)
-      : []
+    readingTime,
+    publishedAt: post.publishedAt || '',
+    body: post.body || [],
+    image: post.image,
+    imageAlt: post.imageAlt,
+    seoDescription: post.seoDescription,
+    ogImage: post.ogImage
   };
 }
 
@@ -172,49 +245,36 @@ function prepareJournalContent(finalData) {
   const journalPosts = Array.isArray(finalData.journalPosts)
     ? finalData.journalPosts.map(normalizeJournalPost)
     : [];
-  const knownSlugs = new Set(journalPosts.map(post => post.slug));
 
+  // Normalize featured post if it exists
   if (blogPage.featured) {
-    blogPage.featured.slug = resolveJournalSlug(blogPage.featured);
-    if (!knownSlugs.has(blogPage.featured.slug)) {
-      journalPosts.push(normalizeJournalPost({
-        title: stripHtml(blogPage.featured.titleHtml || blogPage.featured.title || 'Featured article'),
-        slug: blogPage.featured.slug,
-        category: blogPage.featured.tag || 'Featured',
-        excerpt: blogPage.featured.excerpt || '',
-        author: blogPage.featured.author || 'Lise Kriekemans',
-        readingTime: blogPage.featured.readingTime || '5 min read',
-        publishedAt: blogPage.featured.date || '',
-        body: makeFallbackJournalBody(
-          stripHtml(blogPage.featured.titleHtml || blogPage.featured.title || 'Featured article'),
-          blogPage.featured.excerpt || ''
-        )
-      }));
-      knownSlugs.add(blogPage.featured.slug);
-    }
+    blogPage.featured = normalizeJournalPost(blogPage.featured);
   }
 
-  blogPage.cards = (blogPage.cards || []).map(card => ({
-    ...card,
-    slug: resolveJournalSlug(card)
+  // Auto-generate cards from newest journalPosts
+  const articlesToShow = blogPage.articlesToShow || 6;
+  const cards = journalPosts.slice(0, articlesToShow).map((post, index) => ({
+    slug: post.slug,
+    tag: post.category,
+    titleHtml: post.title,
+    excerpt: post.excerpt,
+    readingTime: post.readingTime,
+    date: post.publishedAt,
+    author: post.author,
+    image: post.image,
+    imageAlt: post.imageAlt
   }));
 
-  for (const card of blogPage.cards) {
-    if (knownSlugs.has(card.slug)) continue;
-    journalPosts.push(normalizeJournalPost({
-      title: stripHtml(card.titleHtml || card.title || 'Journal article'),
-      slug: card.slug,
-      category: card.tag || 'Journal',
-      excerpt: card.excerpt || '',
-      author: card.author || 'Lise Kriekemans',
-      readingTime: card.readingTime || '5 min read',
-      publishedAt: card.date || '',
-      body: makeFallbackJournalBody(stripHtml(card.titleHtml || card.title || 'Journal article'), card.excerpt || '')
-    }));
-    knownSlugs.add(card.slug);
+  // Auto-generate filter categories from articles
+  const categoriesSet = new Set(journalPosts.map(p => p.category).filter(Boolean));
+  const categories = Array.from(categoriesSet).sort();
+  if (blogPage.filterCategories && blogPage.filterCategories.length > 0) {
+    blogPage.filterCategories = blogPage.filterCategories;
+  } else {
+    blogPage.filterCategories = ['All', ...categories];
   }
 
-  journalPosts.sort((a, b) => parseJournalDate(b.publishedAt) - parseJournalDate(a.publishedAt));
+  blogPage.cards = cards;
 
   return {
     ...finalData,
@@ -253,9 +313,10 @@ function injectBlogPage(html, blogPage) {
     );
   }
 
-  // Filter buttons
-  if (Array.isArray(blogPage.filters) && blogPage.filters.length) {
-    const buttons = blogPage.filters
+  // Filter buttons (use filterCategories which are auto-generated from articles)
+  const filterCategories = blogPage.filterCategories || ['All'];
+  if (Array.isArray(filterCategories) && filterCategories.length) {
+    const buttons = filterCategories
       .map((f, i) => `  <button class="blog-filter${i === 0 ? ' active' : ''}">${f}</button>`)
       .join('\n');
     html = html.replace(
@@ -271,7 +332,7 @@ ${buttons}
 
   // Featured post
   if (blogPage.featured) {
-    const { tag, titleHtml, excerpt, author, readingTime, slug } = blogPage.featured;
+    const { category, title, excerpt, author, readingTime, slug, publishedAt } = blogPage.featured;
     const initial = author ? author.trim().charAt(0).toUpperCase() : 'W';
     html = html.replace(
       /<!-- FEATURED POST -->[\s\S]*?<!-- POST GRID -->/,
@@ -283,15 +344,15 @@ ${buttons}
     </div>
   </div>
   <div class="blog-featured-content">
-    <p class="blog-tag">${tag || ''}</p>
-    <h2 class="blog-featured-title">${titleHtml || ''}</h2>
+    <p class="blog-tag">${category || ''}</p>
+    <h2 class="blog-featured-title">${title || ''}</h2>
     <p class="blog-featured-excerpt">${excerpt || ''}</p>
     <div class="blog-meta">
       <span>${author || ''}</span>
       <span class="blog-meta-dot"></span>
       <span>${readingTime || ''}</span>
       <span class="blog-meta-dot"></span>
-      <span>${formatJournalDate(blogPage.featured.date)}</span>
+      <span>${formatJournalDate(publishedAt)}</span>
     </div>
     <a href="#${slug || ''}" class="blog-read-more journal-link" data-journal-slug="${slug || ''}">Read article <span>-></span></a>
   </div>
