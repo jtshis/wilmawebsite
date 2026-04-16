@@ -666,7 +666,9 @@ nav.scrolled{
   width:680px;height:680px;
   opacity:.75;
   pointer-events:none;
-  animation:globeSpin 80s linear infinite;
+  transform-origin:50% 50%;
+  transform-box:fill-box;
+  animation:globeSpin 110s linear infinite;
 }
 @keyframes globeSpin{from{transform:translateY(-50%) rotate(0)}to{transform:translateY(-50%) rotate(360deg)}}
 
@@ -1726,72 +1728,48 @@ footer{
 .about-founder-body{font-size:15px;line-height:1.85;color:var(--mid);font-weight:300;margin-bottom:0;}
 .about-founder-funfact{
   position:relative;
-  margin-top:30px;
-  margin-bottom:28px;
-  padding:22px 22px 20px;
-  border:1px solid rgba(21,71,57,.11);
-  border-radius:24px;
+  margin-top:28px;
+  margin-bottom:26px;
+  padding:26px 26px 24px;
+  border:1px solid rgba(21,71,57,.08);
+  border-radius:28px;
   background:
-    linear-gradient(180deg, rgba(250,250,248,.96), rgba(244,245,240,.9)),
-    radial-gradient(circle at top right, rgba(139,0,32,.08), transparent 42%);
-  box-shadow:0 18px 34px rgba(13,46,34,.06);
+    linear-gradient(180deg, rgba(250,250,248,.98), rgba(246,246,241,.94));
+  box-shadow:0 20px 38px rgba(13,46,34,.05);
   overflow:hidden;
 }
 .about-founder-funfact::before{
   content:'';
   position:absolute;
   inset:0 auto auto 0;
-  width:100%;
+  width:84px;
   height:2px;
-  background:linear-gradient(90deg,var(--forest),rgba(139,0,32,.55),transparent);
-  opacity:.5;
+  background:linear-gradient(90deg,var(--forest),rgba(139,0,32,.55));
+  opacity:.75;
 }
 .about-founder-funfact-label{
   font-size:10px;
-  letter-spacing:.18em;
+  letter-spacing:.2em;
   text-transform:uppercase;
   color:var(--forest);
   font-weight:500;
-  margin-bottom:14px;
+  margin-bottom:12px;
 }
 .about-founder-funfact-lead{
   font-family:var(--serif);
-  font-size:clamp(22px,2.3vw,30px);
+  font-size:clamp(23px,2.4vw,32px);
   line-height:1.05;
   letter-spacing:-.02em;
   color:var(--charcoal);
   font-style:italic;
-  margin-bottom:12px;
+  margin-bottom:10px;
 }
 .about-founder-funfact-body{
   font-size:15px;
-  line-height:1.8;
+  line-height:1.85;
   color:var(--mid);
   font-weight:300;
   max-width:44ch;
-}
-.about-founder-funfact-pill{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  margin-top:14px;
-  padding:8px 12px;
-  border-radius:999px;
-  background:rgba(139,0,32,.08);
-  border:1px solid rgba(139,0,32,.14);
-  color:var(--cherry);
-  font-size:11px;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  font-weight:500;
-}
-.about-founder-funfact-pill::before{
-  content:'';
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:var(--cherry);
-  box-shadow:0 0 0 4px rgba(139,0,32,.08);
 }
 .about-founder-bottom{
   display:inline-flex;
@@ -2420,13 +2398,13 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
     gap:20px;
   }
   .about-founder-funfact{
-    padding:18px 18px 16px;
-    border-radius:20px;
+    padding:20px 20px 18px;
+    border-radius:22px;
     margin-top:24px;
     margin-bottom:24px;
   }
   .about-founder-funfact-lead{
-    font-size:clamp(20px,5vw,26px);
+    font-size:clamp(21px,5vw,27px);
   }
   .about-founder-funfact-body{
     max-width:none;
@@ -2800,28 +2778,58 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
 
   <!-- Globe ghost background -->
   <svg class="manifesto-globe" viewBox="0 0 640 640" fill="none">
-    <!-- Ocean fill - sage tint -->
-    <circle cx="320" cy="320" r="278" fill="rgba(189,203,148,0.08)"/>
-    <!-- Outer circle -->
-    <circle cx="320" cy="320" r="280" stroke="rgba(189,203,148,0.6)" stroke-width="2" fill="none"/>
-    <!-- Latitude lines - sage -->
-    <ellipse cx="320" cy="320" rx="280" ry="68" stroke="rgba(189,203,148,0.35)" stroke-width="1" fill="none"/>
-    <ellipse cx="320" cy="320" rx="280" ry="152" stroke="rgba(189,203,148,0.3)" stroke-width="1" fill="none"/>
-    <ellipse cx="320" cy="320" rx="280" ry="232" stroke="rgba(189,203,148,0.25)" stroke-width="1" fill="none"/>
-    <!-- Equator - brighter -->
-    <line x1="40" y1="320" x2="600" y2="320" stroke="rgba(189,203,148,0.55)" stroke-width="1.5"/>
-    <!-- Longitude lines - sage -->
-    <ellipse cx="320" cy="320" rx="84" ry="280" stroke="rgba(189,203,148,0.28)" stroke-width="1" fill="none"/>
-    <ellipse cx="320" cy="320" rx="182" ry="280" stroke="rgba(189,203,148,0.28)" stroke-width="1" fill="none"/>
-    <!-- Vertical axis -->
-    <line x1="320" y1="40" x2="320" y2="600" stroke="rgba(189,203,148,0.5)" stroke-width="1.5"/>
-    <!-- Simplified continents -->
-    <path d="M168 158 Q184 144 206 146 Q226 148 238 159 Q247 168 244 181 Q240 192 228 197 Q214 203 200 199 Q191 196 183 189 Q173 181 168 171 Q163 164 168 158 Z" fill="#154739" opacity=".56"/>
-    <path d="M204 254 Q219 262 223 276 Q227 291 223 306 Q220 319 214 334 Q209 348 203 363 Q197 376 188 372 Q181 368 180 357 Q182 342 186 329 Q189 315 189 303 Q188 289 189 278 Q193 263 204 254 Z" fill="#154739" opacity=".56"/>
-    <path d="M287 150 Q302 142 321 145 Q336 149 343 160 Q349 171 345 181 Q341 190 332 195 Q320 199 310 197 Q301 195 294 188 Q287 181 285 171 Q283 160 287 150 Z" fill="#BDCB94" opacity=".34"/>
-    <path d="M286 184 Q304 181 322 186 Q337 192 343 206 Q349 221 346 239 Q342 258 335 279 Q329 299 323 323 Q320 343 313 359 Q305 373 294 366 Q286 360 285 345 Q286 329 285 311 Q282 294 279 276 Q277 247 279 226 Q280 203 286 184 Z" fill="#154739" opacity=".58"/>
-    <path d="M364 151 Q388 141 412 147 Q429 152 439 166 Q445 179 443 193 Q440 206 431 216 Q421 226 407 229 Q393 231 381 225 Q370 218 364 206 Q358 193 359 178 Q360 160 364 151 Z" fill="#A8BFDF" opacity=".34"/>
-    <path d="M398 304 Q410 300 419 304 Q427 309 426 318 Q425 327 417 331 Q408 334 400 329 Q392 325 392 317 Q392 309 398 304 Z" fill="#C7B0D6" opacity=".34"/>
+    <defs>
+      <radialGradient id="globeOcean" cx="32%" cy="26%" r="86%">
+        <stop offset="0%" stop-color="#365042"/>
+        <stop offset="48%" stop-color="#274536"/>
+        <stop offset="100%" stop-color="#12251c"/>
+      </radialGradient>
+      <radialGradient id="globeSheen" cx="30%" cy="22%" r="72%">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity=".10"/>
+        <stop offset="40%" stop-color="#ffffff" stop-opacity=".03"/>
+        <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+      </radialGradient>
+      <clipPath id="globeClip">
+        <circle cx="320" cy="320" r="280"/>
+      </clipPath>
+    </defs>
+
+    <g clip-path="url(#globeClip)">
+      <circle cx="320" cy="320" r="280" fill="url(#globeOcean)"/>
+      <circle cx="320" cy="320" r="280" fill="url(#globeSheen)"/>
+
+      <!-- Graticule -->
+      <g opacity=".62">
+        <ellipse cx="320" cy="320" rx="280" ry="68" stroke="rgba(189,203,148,0.28)" stroke-width="1" fill="none"/>
+        <ellipse cx="320" cy="320" rx="280" ry="152" stroke="rgba(189,203,148,0.24)" stroke-width="1" fill="none"/>
+        <ellipse cx="320" cy="320" rx="280" ry="232" stroke="rgba(189,203,148,0.20)" stroke-width="1" fill="none"/>
+        <line x1="40" y1="320" x2="600" y2="320" stroke="rgba(189,203,148,0.44)" stroke-width="1.5"/>
+        <ellipse cx="320" cy="320" rx="84" ry="280" stroke="rgba(189,203,148,0.22)" stroke-width="1" fill="none"/>
+        <ellipse cx="320" cy="320" rx="182" ry="280" stroke="rgba(189,203,148,0.22)" stroke-width="1" fill="none"/>
+        <line x1="320" y1="40" x2="320" y2="600" stroke="rgba(189,203,148,0.34)" stroke-width="1.25"/>
+      </g>
+
+      <!-- Map-derived continents, simplified but recognizable -->
+      <g fill="#23493b" fill-opacity=".86" stroke="rgba(225,236,201,0.12)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M101 181 C122 162 154 156 182 165 C199 170 212 182 216 197 C220 211 215 224 202 233 C189 242 176 248 170 261 C165 271 164 286 159 296 C151 311 136 319 121 316 C105 313 94 302 90 286 C84 260 86 222 101 181 Z"/>
+        <path d="M204 130 C216 120 236 119 247 130 C258 141 257 158 246 166 C235 174 218 172 208 160 C199 149 196 138 204 130 Z"/>
+        <path d="M220 271 C235 273 245 284 248 297 C252 312 246 326 239 339 C232 353 225 369 218 387 C211 404 200 417 189 419 C177 421 168 412 167 399 C166 381 172 361 178 344 C184 327 184 313 184 300 C184 288 192 276 204 272 C209 270 215 270 220 271 Z"/>
+        <path d="M283 165 C298 155 321 152 338 158 C352 163 362 174 363 187 C365 200 357 210 345 215 C333 220 318 220 305 216 C292 211 282 202 278 191 C274 181 275 171 283 165 Z"/>
+        <path d="M286 191 C301 186 319 188 333 196 C346 204 353 216 354 232 C356 249 353 268 346 289 C340 309 331 333 325 356 C320 376 312 392 301 402 C291 411 277 410 271 398 C266 388 265 375 266 360 C266 346 261 332 257 317 C252 299 252 282 256 265 C261 245 267 228 273 213 C277 203 281 195 286 191 Z"/>
+        <path d="M361 161 C382 148 411 145 436 152 C456 159 473 172 484 190 C494 206 498 224 495 241 C492 258 483 272 468 282 C452 293 437 297 421 295 C405 293 393 286 384 275 C375 264 370 251 366 238 C361 220 359 200 361 182 C362 173 360 166 361 161 Z"/>
+        <path d="M416 304 C430 298 446 299 458 307 C468 314 472 325 469 335 C466 346 456 353 445 355 C433 356 421 351 415 341 C409 332 408 318 416 304 Z"/>
+        <path d="M449 391 C463 385 481 386 494 393 C506 400 511 411 509 423 C507 435 498 444 485 448 C471 452 455 449 446 441 C437 433 435 419 438 408 C440 401 443 395 449 391 Z"/>
+        <path d="M515 351 C527 347 540 349 548 356 C554 361 556 370 553 378 C550 386 542 391 533 391 C524 391 516 385 513 377 C510 368 510 356 515 351 Z"/>
+      </g>
+
+      <!-- Soft front-limb highlight for depth -->
+      <ellipse cx="240" cy="218" rx="74" ry="134" fill="rgba(255,255,255,0.04)" transform="rotate(-19 240 218)"/>
+      <ellipse cx="462" cy="402" rx="64" ry="98" fill="rgba(0,0,0,0.08)" transform="rotate(17 462 402)"/>
+
+      <!-- Inner sphere edge -->
+      <circle cx="320" cy="320" r="280" fill="none" stroke="rgba(189,203,148,0.50)" stroke-width="2"/>
+    </g>
+
     <!-- Outer dashed ring - sage -->
     <circle cx="320" cy="320" r="292" stroke="rgba(189,203,148,0.2)" stroke-width="1" stroke-dasharray="5 11" fill="none"/>
   </svg>
@@ -3128,7 +3136,6 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       <p class="about-founder-funfact-label">Fun fact</p>
       <p class="about-founder-funfact-lead">Wilma is Lise’s middle name.</p>
       <p class="about-founder-funfact-body">Kriekemans means cherries in Dutch, and the name’s origin also nods to her godfather Wim and Wilma Flinstone, a logical, inventive woman known for her resourcefulness.</p>
-      <span class="about-founder-funfact-pill">Cherries in Dutch</span>
     </div>
     <div class="about-founder-bottom r d4">
       <div class="lise-seal">
