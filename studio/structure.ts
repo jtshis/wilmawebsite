@@ -18,6 +18,7 @@ export const structure: StructureResolver = S =>
                 .title('Published')
                 .child(
                   S.documentList()
+                    .id('published-articles')
                     .schemaType('journalPost')
                     .filter('status == "published"')
                     .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
@@ -26,6 +27,7 @@ export const structure: StructureResolver = S =>
                 .title('Drafts')
                 .child(
                   S.documentList()
+                    .id('draft-articles')
                     .schemaType('journalPost')
                     .filter('status == "draft"')
                     .defaultOrdering([{field: '_updatedAt', direction: 'desc'}])
@@ -34,7 +36,9 @@ export const structure: StructureResolver = S =>
                 .title('All Articles')
                 .child(
                   S.documentList()
+                    .id('all-articles')
                     .schemaType('journalPost')
+                    .filter('_type == "journalPost"')
                     .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
                 ),
             ])
