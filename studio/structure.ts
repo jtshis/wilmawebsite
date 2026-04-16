@@ -38,6 +38,7 @@ export const structure: StructureResolver = S =>
                   S.documentList()
                     .id('all-articles')
                     .schemaType('journalPost')
+                    .filter('_type == "journalPost"')
                     .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
                 ),
             ])
