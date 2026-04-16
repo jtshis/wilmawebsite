@@ -1,6 +1,6 @@
 [build]
-  command = "echo 'Static site, no build needed'"
-  publish = "."
+  command = "node scripts/build-site.mjs"
+  publish = "dist"
 
 [[headers]]
   for = "/*.jpg"

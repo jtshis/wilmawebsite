@@ -17,3 +17,15 @@ yarn-error.log*
 *.swp
 *.swo
 *~
+
+# Build output
+dist/
+
+# Dependencies
+node_modules/
+studio/node_modules/
+
+# Local env
+.env
+.env.local
+.env.*.local
