@@ -1222,8 +1222,8 @@ nav.scrolled{
 
 /* Large comma ghost in CTA */
 .cta-comma{
-  position:absolute;right:80px;top:62%;
-  transform:translateY(-62%);
+  position:absolute;right:80px;top:68%;
+  transform:translateY(-68%);
   pointer-events:none;
   user-select:none;
 }
@@ -1268,11 +1268,12 @@ footer{
   border-top:1px solid var(--grid-col);
   display:grid;
   grid-template-columns:1fr auto 1fr;
-  align-items:baseline;gap:40px;
+  align-items:end;gap:40px;
 }
 .ft-brand{display:flex;flex-direction:column;gap:4px}
 .ft-name{font-size:12px;font-weight:500;color:var(--forest);letter-spacing:.06em;text-transform:uppercase}
 .ft-tag{font-size:11px;color:var(--muted);font-weight:300}
+.ft-reg{display:block;font-size:11px;color:var(--muted);font-weight:300;margin-top:2px}
 .ft-mid{display:flex;gap:32px}
 .ft-mid a,.ft-right a{font-size:11px;color:var(--muted);letter-spacing:.04em;transition:color .2s}
 .ft-mid a:hover,.ft-right a:hover{color:var(--forest)}
@@ -2940,7 +2941,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
     <div class="cta-line" style="top:56%;animation-delay:1.6s"></div>
     <div class="cta-line" style="top:72%;animation-delay:2.4s"></div>
   </div>
-  <div class="cta-comma"><img src="comma-sage.png" alt="" loading="lazy" style="height:380px;width:auto;opacity:0.6;"></div>
+  <div class="cta-comma"><img src="comma-sage.png" alt="" loading="lazy" style="height:380px;width:auto;opacity:1;"></div>
   <div class="cta-left">
     <p class="cta-label r">Let's work together</p>
     <h2 class="cta-headline r d1">
@@ -2964,6 +2965,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       <span class="ft-name">Wilma Collective</span>
     </div>
     <span class="ft-tag">A digital marketing agency. Belgium &amp; South Africa.</span>
+    <span class="ft-reg">BE1035.594.071</span>
   </div>
   <div class="ft-mid">
     <a href="#how" onclick="goToSection('how');return false">Work</a>
@@ -2972,7 +2974,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   </div>
   <div class="ft-right">
     <a href="#">@wilmacollective</a>
-    <a href="#">LinkedIn</a>
+    <a href="https://www.linkedin.com/company/wilma-collective/" target="_blank" rel="noopener">LinkedIn</a>
     <span class="ft-copy">(c) 2026</span>
   </div>
 </footer>
@@ -3026,7 +3028,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
     <div class="values-grid">
       <div class="val-card r d1"><h3 class="val-title">Growth</h3><p class="val-body">Every engagement begins with awareness: of self, of need, of impact. We build toward where your brand wants to be in years, not quarters.</p></div>
       <div class="val-card r d2"><h3 class="val-title">Credibility</h3><p class="val-body">Trust is earned through transparency, not performance. We mean what we say and deliver what we promise.</p></div>
-      <div class="val-card r d3"><h3 class="val-title">Accountability</h3><p class="val-body">Full accountability from the first brief to the final handover. No excuses, no vanishing acts.</p></div>
+      <div class="val-card r d3"><h3 class="val-title">Accountability</h3><p class="val-body">Full accountability from the first brief to the final handover. No excuses.</p></div>
       <div class="val-card r d4"><h3 class="val-title">Balance</h3><p class="val-body">Less is more. In design and in impact measurement, clean essential work outlasts noise.</p></div>
     </div>
   </div>
@@ -3057,7 +3059,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
           <text x="50" y="55" text-anchor="middle" font-family="Cormorant, Georgia, serif" font-size="20" font-style="italic" font-weight="300" fill="#154739" opacity=".6">W</text>
         </svg>
       </div>
-      <a href="https://www.linkedin.com/in/lisekriekemans" target="_blank" rel="noopener" class="about-linkedin-btn magnetic">
+      <a href="https://www.linkedin.com/company/wilma-collective/" target="_blank" rel="noopener" class="about-linkedin-btn magnetic">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
         View LinkedIn
       </a>
@@ -3084,6 +3086,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       <span class="ft-name">Wilma Collective</span>
     </div>
     <span class="ft-tag">A digital marketing agency. Belgium &amp; South Africa.</span>
+    <span class="ft-reg">BE1035.594.071</span>
   </div>
   <div class="ft-mid">
     <a href="#" onclick="showPage('home');return false">Home</a>
@@ -3092,7 +3095,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   </div>
   <div class="ft-right">
     <a href="#">@wilmacollective</a>
-    <a href="#">LinkedIn</a>
+    <a href="https://www.linkedin.com/company/wilma-collective/" target="_blank" rel="noopener">LinkedIn</a>
     <span class="ft-copy">(c) 2026</span>
   </div>
 </footer>
@@ -3243,6 +3246,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       <span class="ft-name">Wilma Collective</span>
     </div>
     <span class="ft-tag">A digital marketing agency. Belgium &amp; South Africa.</span>
+    <span class="ft-reg">BE1035.594.071</span>
   </div>
   <div class="ft-mid">
     <a href="#" onclick="showPage('home');return false">Home</a>
@@ -3251,7 +3255,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   </div>
   <div class="ft-right">
     <a href="#">@wilmacollective</a>
-    <a href="#">LinkedIn</a>
+    <a href="https://www.linkedin.com/company/wilma-collective/" target="_blank" rel="noopener">LinkedIn</a>
     <span class="ft-copy">(c) 2026</span>
   </div>
 </footer>
@@ -3529,11 +3533,15 @@ function showPage(p, options={}){
         b=document.getElementById('blogPage'),
         dots=document.getElementById('progress');
   const activeNav=options.activeNav || p;
-  h.classList.add('hidden');a.classList.remove('active');
+  document.body.dataset.page=p;
+  h.classList.remove('hidden');
+  a.classList.remove('active');
   if(b)b.classList.remove('active');
   dots.style.display='none';
-  if(p==='home'){h.classList.remove('hidden');dots.style.display=isMobileExperience()?'none':'flex';}
-  else if(p==='about'){
+  if(p==='home'){
+    h.classList.remove('hidden');
+    dots.style.display=isMobileExperience()?'none':'flex';
+  } else if(p==='about'){
     a.classList.add('active');
     setTimeout(()=>{
       a.querySelectorAll('.r,.card-r').forEach(el=>{
@@ -3553,7 +3561,7 @@ function showPage(p, options={}){
   syncMobileNav(activeNav);
   closeMobileMenu();
   if(!options.preserveScroll){
-    window.scrollTo({top:0,behavior:'smooth'});
+    window.scrollTo({top:0,behavior:p==='home'?'auto':'smooth'});
   }
 }
 syncMobileNav('home');
