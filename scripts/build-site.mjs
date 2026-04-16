@@ -114,13 +114,27 @@ async function copyDirContents(sourceDir, targetDir) {
 
 async function build() {
   await mkdir(distDir, {recursive: true});
-  const sanityContent = await loadSanityContent().catch(() => null);
+  console.log('🔨 Building site...');
+  console.log('Project ID:', process.env.SANITY_PROJECT_ID ? '✓ Set' : '✗ Not set');
+
+  const sanityContent = await loadSanityContent().catch((err) => {
+    console.error('❌ Failed to load Sanity content:', err.message);
+    return null;
+  });
+
+  if (sanityContent) {
+    console.log('✅ Loaded from Sanity:', sanityContent.blogPosts?.length || 0, 'blog posts');
+  } else {
+    console.log('⚠️  Using fallback data (Sanity fetch failed or not configured)');
+  }
+
   const finalData = deepMerge(fallbackData, sanityContent || {});
 
   await copyFile(path.join(rootDir, 'cms.js'), path.join(distDir, 'cms.js'));
 
   // Generate blog posts HTML from Sanity data
   const blogPosts = finalData.blogPosts || [];
+  console.log('📝 Generating HTML for', blogPosts.length, 'blog posts');
   const generatedBlogHtml = generateBlogPostsHtml(blogPosts);
 
   // Read, modify, and write index.html with generated blog posts
