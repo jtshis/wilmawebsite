@@ -53,20 +53,93 @@ async function writeModule(outPath, data) {
   await writeFile(outPath, body, 'utf8');
 }
 
-function generateBlogCardsHtml(cards) {
-  if (!cards || !Array.isArray(cards) || cards.length === 0) {
-    return null;
+function injectBlogPage(html, blogPage) {
+  if (!blogPage) return html;
+
+  // Hero
+  if (blogPage.hero) {
+    const { eyebrow, titleHtml, description, issue } = blogPage.hero;
+    html = html.replace(
+      /<!-- BLOG HERO -->[\s\S]*?<!-- FILTER BAR -->/,
+      `<!-- BLOG HERO -->
+<section class="blog-hero">
+  <div>
+    <p class="about-eyebrow r">${eyebrow || ''}</p>
+    <h1 class="blog-hero-title r d1">${titleHtml || ''}</h1>
+  </div>
+  <div class="blog-hero-right r d2">
+    <p class="blog-hero-desc">${description || ''}</p>
+    <span class="blog-issue">${issue || ''}</span>
+  </div>
+</section>
+
+<!-- FILTER BAR -->`
+    );
   }
 
-  return cards.map((card, idx) => {
-    const tag = card.tag || 'Strategy';
-    const titleHtml = card.titleHtml || card.title || '';
-    const excerpt = card.excerpt || '';
-    const readingTime = card.readingTime || '5 min read';
-    const date = card.date || '';
-    const num = String(idx + 1).padStart(2, '0');
+  // Filter buttons
+  if (Array.isArray(blogPage.filters) && blogPage.filters.length) {
+    const buttons = blogPage.filters
+      .map((f, i) => `  <button class="blog-filter${i === 0 ? ' active' : ''}">${f}</button>`)
+      .join('\n');
+    html = html.replace(
+      /<!-- FILTER BAR -->[\s\S]*?<!-- FEATURED POST -->/,
+      `<!-- FILTER BAR -->
+<div class="blog-filters">
+${buttons}
+</div>
 
-    return `  <article class="blog-card r d${(idx % 3) + 1}">
+<!-- FEATURED POST -->`
+    );
+  }
+
+  // Featured post
+  if (blogPage.featured) {
+    const { tag, titleHtml, excerpt, author, readingTime, date } = blogPage.featured;
+    const initial = author ? author.trim().charAt(0).toUpperCase() : 'W';
+    html = html.replace(
+      /<!-- FEATURED POST -->[\s\S]*?<!-- POST GRID -->/,
+      `<!-- FEATURED POST -->
+<article class="blog-featured r">
+  <div class="blog-featured-img">
+    <div class="blog-featured-img-inner">
+      <span class="blog-featured-placeholder">${initial}</span>
+    </div>
+  </div>
+  <div class="blog-featured-content">
+    <p class="blog-tag">${tag || ''}</p>
+    <h2 class="blog-featured-title">${titleHtml || ''}</h2>
+    <p class="blog-featured-excerpt">${excerpt || ''}</p>
+    <div class="blog-meta">
+      <span>${author || ''}</span>
+      <span class="blog-meta-dot"></span>
+      <span>${readingTime || ''}</span>
+      <span class="blog-meta-dot"></span>
+      <span>${date || ''}</span>
+    </div>
+    <a href="#" class="blog-read-more">Read article <span>-></span></a>
+  </div>
+</article>
+
+<!-- POST GRID -->`
+    );
+  }
+
+  // Post grid — sort newest-first by date string (YYYY-MM-DD or any ISO-sortable format)
+  if (Array.isArray(blogPage.cards) && blogPage.cards.length) {
+    const sorted = [...blogPage.cards].sort((a, b) => {
+      const da = a.date ? new Date(a.date).getTime() : 0;
+      const db = b.date ? new Date(b.date).getTime() : 0;
+      return db - da;
+    });
+    const cards = sorted.map((card, idx) => {
+      const tag = card.tag || '';
+      const titleHtml = card.titleHtml || card.title || '';
+      const excerpt = card.excerpt || '';
+      const readingTime = card.readingTime || '';
+      const date = card.date || '';
+      const num = String(idx + 1).padStart(2, '0');
+      return `  <article class="blog-card r d${(idx % 3) + 1}">
     <div class="blog-card-img"><div class="blog-card-img-inner"><span class="blog-card-num">${num}</span></div></div>
     <p class="blog-tag">${tag}</p>
     <h3 class="blog-card-title">${titleHtml}</h3>
@@ -77,7 +150,30 @@ function generateBlogCardsHtml(cards) {
       <span>${date}</span>
     </div>
   </article>`;
-  }).join('\n\n');
+    }).join('\n\n');
+    html = html.replace(
+      /<!-- POST GRID -->[\s\S]*?<!-- NEWSLETTER -->/,
+      `<!-- POST GRID -->
+<div class="blog-grid">
+
+${cards}
+
+</div>
+
+<!-- NEWSLETTER -->`
+    );
+  }
+
+  // Newsletter text (preserve existing button href — it is Cloudflare-obfuscated)
+  if (blogPage.newsletter) {
+    const { eyebrow, titleHtml, body, ctaLabel } = blogPage.newsletter;
+    if (eyebrow) html = html.replace(/(<p class="blog-newsletter-label">)[^<]*/, `$1${eyebrow}`);
+    if (titleHtml) html = html.replace(/(<h2 class="blog-newsletter-title">)[\s\S]*?(<\/h2>)/, `$1${titleHtml}$2`);
+    if (body) html = html.replace(/(<p class="blog-newsletter-body">)[^<]*/, `$1${body}`);
+    if (ctaLabel) html = html.replace(/(<a[^>]*class="blog-newsletter-btn[^>]*>)[^<]*/, `$1${ctaLabel}`);
+  }
+
+  return html;
 }
 
 async function copyFileIfExists(source, target) {
@@ -127,28 +223,12 @@ async function build() {
 
   await copyFile(path.join(rootDir, 'cms.js'), path.join(distDir, 'cms.js'));
 
-  // Generate blog cards HTML from Sanity blogPage data
-  const blogCards = finalData.blogPage?.cards || [];
-  console.log('📝 Generating HTML for', blogCards.length, 'blog cards');
-  const generatedBlogHtml = generateBlogCardsHtml(blogCards);
+  const cardCount = finalData.blogPage?.cards?.length || 0;
+  console.log('📝 Injecting Journal page:', cardCount, 'cards from blogPage');
 
-  // Read, modify, and write index.html with generated blog posts
+  // Read and inject the full Journal page from blogPage singleton
   let indexHtml = await readFile(path.join(rootDir, 'index.html'), 'utf8');
-
-  if (generatedBlogHtml) {
-    // Replace the hardcoded blog grid with generated posts
-    const blogGridPattern = /<!-- POST GRID -->[\s\S]*?<\/div>\s*<!-- NEWSLETTER -->/;
-    const replacement = `<!-- POST GRID -->
-<div class="blog-grid">
-
-${generatedBlogHtml}
-
-</div>
-
-<!-- NEWSLETTER -->`;
-    indexHtml = indexHtml.replace(blogGridPattern, replacement);
-  }
-
+  indexHtml = injectBlogPage(indexHtml, finalData.blogPage);
   await writeFile(path.join(distDir, 'index.html'), indexHtml, 'utf8');
 
   const staticFiles = [

@@ -255,7 +255,7 @@ function init() {
   applyMeta(data.siteSettings);
   applyHome(data.home, data.siteSettings || {});
   applyAbout(data.about, data.siteSettings || {});
-  applyBlog(data.blog, data.siteSettings || {});
+  applyBlog(data.blogPage, data.siteSettings || {});
   replaceFooter(data.siteSettings || {});
 }
 
