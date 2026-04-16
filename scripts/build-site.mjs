@@ -16,16 +16,15 @@ async function loadSanityContent() {
   if (!projectId) return null;
 
   const apiVersion = process.env.SANITY_API_VERSION || 'v2025-04-01';
-  const query = encodeURIComponent(`{
-    "blogPosts": *[_type=="blogPost"] | sort(date desc)
-  }`);
+  const query = encodeURIComponent(`*[_type=="blogPage"][0]`);
   const url = `https://${projectId}.api.sanity.io/${apiVersion}/data/query/${dataset}?query=${query}&perspective=published`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`Sanity query failed: ${response.status} ${response.statusText}`);
   }
   const payload = await response.json();
-  return payload?.result || null;
+  const blogPage = payload?.result || null;
+  return { blogPage };
 }
 
 function isObject(value) {
@@ -54,32 +53,127 @@ async function writeModule(outPath, data) {
   await writeFile(outPath, body, 'utf8');
 }
 
-function generateBlogPostsHtml(blogPosts) {
-  if (!blogPosts || !Array.isArray(blogPosts) || blogPosts.length === 0) {
-    return null;
+function injectBlogPage(html, blogPage) {
+  if (!blogPage) return html;
+
+  // Hero
+  if (blogPage.hero) {
+    const { eyebrow, titleHtml, description, issue } = blogPage.hero;
+    html = html.replace(
+      /<!-- BLOG HERO -->[\s\S]*?<!-- FILTER BAR -->/,
+      `<!-- BLOG HERO -->
+<section class="blog-hero">
+  <div>
+    <p class="about-eyebrow r">${eyebrow || ''}</p>
+    <h1 class="blog-hero-title r d1">${titleHtml || ''}</h1>
+  </div>
+  <div class="blog-hero-right r d2">
+    <p class="blog-hero-desc">${description || ''}</p>
+    <span class="blog-issue">${issue || ''}</span>
+  </div>
+</section>
+
+<!-- FILTER BAR -->`
+    );
   }
 
-  const tags = ['All', 'Strategy', 'Impact', 'Digital', 'Culture'];
-  const cards = blogPosts.map((post, idx) => {
-    const tag = post.tags?.[0] || 'Strategy';
-    const date = post.date ? new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' }) : 'Jan 2026';
-    const readingTime = post.readingTime || '5 min read';
-    const num = String(idx + 1).padStart(2, '0');
+  // Filter buttons
+  if (Array.isArray(blogPage.filters) && blogPage.filters.length) {
+    const buttons = blogPage.filters
+      .map((f, i) => `  <button class="blog-filter${i === 0 ? ' active' : ''}">${f}</button>`)
+      .join('\n');
+    html = html.replace(
+      /<!-- FILTER BAR -->[\s\S]*?<!-- FEATURED POST -->/,
+      `<!-- FILTER BAR -->
+<div class="blog-filters">
+${buttons}
+</div>
 
-    return `  <article class="blog-card r d${(idx % 3) + 1}">
+<!-- FEATURED POST -->`
+    );
+  }
+
+  // Featured post
+  if (blogPage.featured) {
+    const { tag, titleHtml, excerpt, author, readingTime, date } = blogPage.featured;
+    const initial = author ? author.trim().charAt(0).toUpperCase() : 'W';
+    html = html.replace(
+      /<!-- FEATURED POST -->[\s\S]*?<!-- POST GRID -->/,
+      `<!-- FEATURED POST -->
+<article class="blog-featured r">
+  <div class="blog-featured-img">
+    <div class="blog-featured-img-inner">
+      <span class="blog-featured-placeholder">${initial}</span>
+    </div>
+  </div>
+  <div class="blog-featured-content">
+    <p class="blog-tag">${tag || ''}</p>
+    <h2 class="blog-featured-title">${titleHtml || ''}</h2>
+    <p class="blog-featured-excerpt">${excerpt || ''}</p>
+    <div class="blog-meta">
+      <span>${author || ''}</span>
+      <span class="blog-meta-dot"></span>
+      <span>${readingTime || ''}</span>
+      <span class="blog-meta-dot"></span>
+      <span>${date || ''}</span>
+    </div>
+    <a href="#" class="blog-read-more">Read article <span>-></span></a>
+  </div>
+</article>
+
+<!-- POST GRID -->`
+    );
+  }
+
+  // Post grid — sort newest-first by date string (YYYY-MM-DD or any ISO-sortable format)
+  if (Array.isArray(blogPage.cards) && blogPage.cards.length) {
+    const sorted = [...blogPage.cards].sort((a, b) => {
+      const da = a.date ? new Date(a.date).getTime() : 0;
+      const db = b.date ? new Date(b.date).getTime() : 0;
+      return db - da;
+    });
+    const cards = sorted.map((card, idx) => {
+      const tag = card.tag || '';
+      const titleHtml = card.titleHtml || card.title || '';
+      const excerpt = card.excerpt || '';
+      const readingTime = card.readingTime || '';
+      const date = card.date || '';
+      const num = String(idx + 1).padStart(2, '0');
+      return `  <article class="blog-card r d${(idx % 3) + 1}">
     <div class="blog-card-img"><div class="blog-card-img-inner"><span class="blog-card-num">${num}</span></div></div>
     <p class="blog-tag">${tag}</p>
-    <h3 class="blog-card-title">${post.title}</h3>
-    <p class="blog-card-excerpt">${post.excerpt || ''}</p>
+    <h3 class="blog-card-title">${titleHtml}</h3>
+    <p class="blog-card-excerpt">${excerpt}</p>
     <div class="blog-card-meta">
       <span>${readingTime}</span>
       <span class="blog-meta-dot"></span>
       <span>${date}</span>
     </div>
   </article>`;
-  }).join('\n\n');
+    }).join('\n\n');
+    html = html.replace(
+      /<!-- POST GRID -->[\s\S]*?<!-- NEWSLETTER -->/,
+      `<!-- POST GRID -->
+<div class="blog-grid">
 
-  return cards;
+${cards}
+
+</div>
+
+<!-- NEWSLETTER -->`
+    );
+  }
+
+  // Newsletter text (preserve existing button href — it is Cloudflare-obfuscated)
+  if (blogPage.newsletter) {
+    const { eyebrow, titleHtml, body, ctaLabel } = blogPage.newsletter;
+    if (eyebrow) html = html.replace(/(<p class="blog-newsletter-label">)[^<]*/, `$1${eyebrow}`);
+    if (titleHtml) html = html.replace(/(<h2 class="blog-newsletter-title">)[\s\S]*?(<\/h2>)/, `$1${titleHtml}$2`);
+    if (body) html = html.replace(/(<p class="blog-newsletter-body">)[^<]*/, `$1${body}`);
+    if (ctaLabel) html = html.replace(/(<a[^>]*class="blog-newsletter-btn[^>]*>)[^<]*/, `$1${ctaLabel}`);
+  }
+
+  return html;
 }
 
 async function copyFileIfExists(source, target) {
@@ -119,7 +213,8 @@ async function build() {
   });
 
   if (sanityContent) {
-    console.log('✅ Loaded from Sanity:', sanityContent.blogPosts?.length || 0, 'blog posts');
+    const cardCount = sanityContent.blogPage?.cards?.length || 0;
+    console.log('✅ Loaded from Sanity: blogPage with', cardCount, 'cards');
   } else {
     console.log('⚠️  Using fallback data (Sanity fetch failed or not configured)');
   }
@@ -128,28 +223,12 @@ async function build() {
 
   await copyFile(path.join(rootDir, 'cms.js'), path.join(distDir, 'cms.js'));
 
-  // Generate blog posts HTML from Sanity data
-  const blogPosts = finalData.blogPosts || [];
-  console.log('📝 Generating HTML for', blogPosts.length, 'blog posts');
-  const generatedBlogHtml = generateBlogPostsHtml(blogPosts);
+  const cardCount = finalData.blogPage?.cards?.length || 0;
+  console.log('📝 Injecting Journal page:', cardCount, 'cards from blogPage');
 
-  // Read, modify, and write index.html with generated blog posts
+  // Read and inject the full Journal page from blogPage singleton
   let indexHtml = await readFile(path.join(rootDir, 'index.html'), 'utf8');
-
-  if (generatedBlogHtml) {
-    // Replace the hardcoded blog grid with generated posts
-    const blogGridPattern = /<!-- POST GRID -->[\s\S]*?<\/div>\s*<!-- NEWSLETTER -->/;
-    const replacement = `<!-- POST GRID -->
-<div class="blog-grid">
-
-${generatedBlogHtml}
-
-</div>
-
-<!-- NEWSLETTER -->`;
-    indexHtml = indexHtml.replace(blogGridPattern, replacement);
-  }
-
+  indexHtml = injectBlogPage(indexHtml, finalData.blogPage);
   await writeFile(path.join(distDir, 'index.html'), indexHtml, 'utf8');
 
   const staticFiles = [

@@ -184,7 +184,7 @@ export default {
       linkedinLabel: 'View LinkedIn'
     }
   },
-  blog: {
+  blogPage: {
     hero: {
       eyebrow: 'The Journal',
       titleHtml: 'Perspectives<br>on <em>purpose.</em>',
