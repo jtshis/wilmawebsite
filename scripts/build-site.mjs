@@ -20,7 +20,8 @@ async function loadSanityContent() {
     "siteSettings": *[_type=="siteSettings"][0],
     "home": *[_type=="homePage"][0],
     "about": *[_type=="aboutPage"][0],
-    "blog": *[_type=="blogPage"][0]
+    "blog": *[_type=="blogPage"][0],
+    "blogPosts": *[_type=="blogPost"] | sort(date desc)
   }`);
   const url = `https://${projectId}.api.sanity.io/${apiVersion}/data/query/${dataset}?query=${query}&perspective=published`;
   const response = await fetch(url);

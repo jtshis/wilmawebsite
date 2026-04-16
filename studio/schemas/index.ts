@@ -317,5 +317,54 @@ export const schemaTypes = [
         ]
       })
     ]
+  }),
+  defineType({
+    name: 'blogPost',
+    title: 'Blog Post',
+    type: 'document',
+    fields: [
+      defineField({
+        name: 'title',
+        title: 'Title',
+        type: 'string'
+      }),
+      defineField({
+        name: 'slug',
+        title: 'Slug (URL-friendly)',
+        type: 'string'
+      }),
+      defineField({
+        name: 'excerpt',
+        title: 'Excerpt',
+        type: 'string'
+      }),
+      defineField({
+        name: 'author',
+        title: 'Author',
+        type: 'string'
+      }),
+      defineField({
+        name: 'date',
+        title: 'Publish date (YYYY-MM-DD)',
+        type: 'string'
+      }),
+      defineField({
+        name: 'readingTime',
+        title: 'Reading time',
+        type: 'string'
+      }),
+      defineField({
+        name: 'tags',
+        title: 'Tags/Categories',
+        type: 'array',
+        of: [defineArrayMember({type: 'string'})]
+      }),
+      defineField({
+        name: 'body',
+        title: 'Content',
+        type: 'text',
+        rows: 20
+      })
+    ]
   })
 ];
