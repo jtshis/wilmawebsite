@@ -7,4 +7,7 @@ export const structure: StructureResolver = S =>
       S.listItem()
         .title('Journal Page')
         .child(S.document().schemaType('blogPage').documentId('blogPage')),
+      S.listItem()
+        .title('Journal Articles')
+        .child(S.documentTypeList('journalPost').title('Journal Articles')),
     ]);

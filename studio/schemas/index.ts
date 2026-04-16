@@ -255,7 +255,7 @@ export const schemaTypes = [
   }),
   defineType({
     name: 'blogPage',
-    title: 'Blog Page',
+    title: 'Journal Page',
     type: 'document',
     fields: [
       defineField({
@@ -279,6 +279,7 @@ export const schemaTypes = [
           textField('excerpt', 'Excerpt'),
           stringField('author', 'Author'),
           stringField('readingTime', 'Reading time'),
+          stringField('slug', 'Article slug'),
           defineField({
             name: 'date',
             title: 'Date',
@@ -304,6 +305,7 @@ export const schemaTypes = [
               htmlStringField('titleHtml', 'Title HTML'),
               textField('excerpt', 'Excerpt'),
               stringField('readingTime', 'Reading time'),
+              stringField('slug', 'Article slug'),
               defineField({
                 name: 'date',
                 title: 'Date',
@@ -324,6 +326,75 @@ export const schemaTypes = [
           stringField('ctaLabel', 'CTA label')
         ]
       })
-    ]
+    ],
+    preview: {
+      select: {
+        featuredAuthor: 'featured.author',
+        featuredDate: 'featured.date'
+      },
+      prepare({featuredAuthor, featuredDate}) {
+        const subtitleParts = ['Journal landing page'];
+        if (featuredAuthor) subtitleParts.push(`Featured: ${featuredAuthor}`);
+        if (featuredDate) subtitleParts.push(featuredDate);
+
+        return {
+          title: 'Journal Page',
+          subtitle: subtitleParts.join(' · ')
+        };
+      }
+    }
+  }),
+  defineType({
+    name: 'journalPost',
+    title: 'Journal Article',
+    type: 'document',
+    fields: [
+      defineField({
+        name: 'title',
+        title: 'Title',
+        type: 'string'
+      }),
+      defineField({
+        name: 'slug',
+        title: 'Slug',
+        type: 'slug',
+        options: {
+          source: 'title',
+          maxLength: 96
+        }
+      }),
+      stringField('category', 'Category'),
+      textField('excerpt', 'Excerpt', {rows: 4}),
+      stringField('author', 'Author'),
+      stringField('readingTime', 'Reading time'),
+      defineField({
+        name: 'publishedAt',
+        title: 'Published at',
+        type: 'date'
+      }),
+      defineField({
+        name: 'body',
+        title: 'Body',
+        type: 'array',
+        of: [defineArrayMember({type: 'text', rows: 4})],
+        description: 'Draft the article in three paragraphs.'
+      })
+    ],
+    preview: {
+      select: {
+        title: 'title',
+        category: 'category',
+        date: 'publishedAt'
+      },
+      prepare({title, category, date}) {
+        const parts = [category || 'Journal article'];
+        if (date) parts.push(date);
+
+        return {
+          title: title || 'Untitled article',
+          subtitle: parts.join(' · ')
+        };
+      }
+    }
   }),
 ];

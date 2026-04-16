@@ -11,5 +11,6 @@ This is the Sanity Studio scaffold for the Wilma Collective site.
 ## Notes
 
 - The Studio is configured for project `x5vhv4vi` and dataset `production`.
-- The site build uses the root static site and reads published content from Sanity at build time.
-- Notion is intended as the editorial layer first, then sync into Sanity when ready.
+- The Studio has two Journal entries now: `Journal Page` for the landing page and `Journal Articles` for real posts.
+- Publish a `Journal Article` after writing the title, slug, excerpt, and 3 body paragraphs. The site build reads published Sanity content at build time.
+- Notion can still be used for rough drafting, but Sanity is the publish step that the live site reads from.

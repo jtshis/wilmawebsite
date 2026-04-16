@@ -16,15 +16,30 @@ async function loadSanityContent() {
   if (!projectId) return null;
 
   const apiVersion = process.env.SANITY_API_VERSION || 'v2025-04-01';
-  const query = encodeURIComponent(`*[_type=="blogPage"][0]`);
+  const query = encodeURIComponent(`{
+    "blogPage": *[_type=="blogPage"][0]{
+      ...,
+      featured{
+        ...,
+        slug
+      },
+      cards[]{
+        ...,
+        slug
+      }
+    },
+    "journalPosts": *[_type=="journalPost"]|order(publishedAt desc, _createdAt desc){
+      ...,
+      "slug": slug.current
+    }
+  }`);
   const url = `https://${projectId}.api.sanity.io/${apiVersion}/data/query/${dataset}?query=${query}&perspective=published`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`Sanity query failed: ${response.status} ${response.statusText}`);
   }
   const payload = await response.json();
-  const blogPage = payload?.result || null;
-  return { blogPage };
+  return payload?.result || null;
 }
 
 function isObject(value) {
@@ -65,6 +80,147 @@ function formatJournalDate(value) {
 
 function sortJournalCards(cards = []) {
   return [...cards].sort((a, b) => parseJournalDate(b.date) - parseJournalDate(a.date));
+}
+
+function stripHtml(value = '') {
+  return String(value)
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function slugify(value = '') {
+  const base = stripHtml(value)
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+  return base || 'journal-article';
+}
+
+function resolveJournalSlug(item = {}) {
+  return item.slug || slugify(item.titleHtml || item.title || item.excerpt || item.tag || 'journal-article');
+}
+
+function resolveJournalDate(item = {}) {
+  return item.date || item.publishedAt || '';
+}
+
+function makeFallbackJournalBody(title, excerpt) {
+  return [
+    excerpt || `${title} gives Lise a clean starting point for a fuller article draft.`,
+    'Use the second paragraph to expand the idea with one practical example, a small case study, or a lesson from client work.',
+    'Close with a concrete takeaway so the article reads like a real publishable piece, not just a teaser.'
+  ];
+}
+
+function synthesizeJournalPosts(blogPage = {}) {
+  const posts = [];
+  const featured = blogPage.featured;
+  if (featured) {
+    const title = stripHtml(featured.titleHtml || featured.title || 'Featured article');
+    posts.push({
+      title,
+      slug: resolveJournalSlug(featured),
+      category: featured.tag || 'Featured',
+      excerpt: featured.excerpt || '',
+      author: featured.author || 'Lise Kriekemans',
+      readingTime: featured.readingTime || '5 min read',
+      publishedAt: resolveJournalDate(featured),
+      body: makeFallbackJournalBody(title, featured.excerpt)
+    });
+  }
+
+  for (const card of blogPage.cards || []) {
+    const title = stripHtml(card.titleHtml || card.title || 'Journal article');
+    posts.push({
+      title,
+      slug: resolveJournalSlug(card),
+      category: card.tag || 'Journal',
+      excerpt: card.excerpt || '',
+      author: card.author || 'Lise Kriekemans',
+      readingTime: card.readingTime || '5 min read',
+      publishedAt: resolveJournalDate(card),
+      body: makeFallbackJournalBody(title, card.excerpt)
+    });
+  }
+
+  return posts;
+}
+
+function normalizeJournalPost(post = {}) {
+  const title = stripHtml(post.title || post.titleHtml || 'Journal article');
+  return {
+    ...post,
+    title,
+    slug: resolveJournalSlug(post),
+    category: post.category || post.tag || 'Journal',
+    excerpt: post.excerpt || '',
+    author: post.author || 'Lise Kriekemans',
+    readingTime: post.readingTime || '5 min read',
+    publishedAt: resolveJournalDate(post),
+    body: Array.isArray(post.body)
+      ? post.body.map(paragraph => String(paragraph || '').trim()).filter(Boolean)
+      : []
+  };
+}
+
+function prepareJournalContent(finalData) {
+  const blogPage = finalData.blogPage || {};
+  const journalPosts = Array.isArray(finalData.journalPosts)
+    ? finalData.journalPosts.map(normalizeJournalPost)
+    : [];
+  const knownSlugs = new Set(journalPosts.map(post => post.slug));
+
+  if (blogPage.featured) {
+    blogPage.featured.slug = resolveJournalSlug(blogPage.featured);
+    if (!knownSlugs.has(blogPage.featured.slug)) {
+      journalPosts.push(normalizeJournalPost({
+        title: stripHtml(blogPage.featured.titleHtml || blogPage.featured.title || 'Featured article'),
+        slug: blogPage.featured.slug,
+        category: blogPage.featured.tag || 'Featured',
+        excerpt: blogPage.featured.excerpt || '',
+        author: blogPage.featured.author || 'Lise Kriekemans',
+        readingTime: blogPage.featured.readingTime || '5 min read',
+        publishedAt: blogPage.featured.date || '',
+        body: makeFallbackJournalBody(
+          stripHtml(blogPage.featured.titleHtml || blogPage.featured.title || 'Featured article'),
+          blogPage.featured.excerpt || ''
+        )
+      }));
+      knownSlugs.add(blogPage.featured.slug);
+    }
+  }
+
+  blogPage.cards = (blogPage.cards || []).map(card => ({
+    ...card,
+    slug: resolveJournalSlug(card)
+  }));
+
+  for (const card of blogPage.cards) {
+    if (knownSlugs.has(card.slug)) continue;
+    journalPosts.push(normalizeJournalPost({
+      title: stripHtml(card.titleHtml || card.title || 'Journal article'),
+      slug: card.slug,
+      category: card.tag || 'Journal',
+      excerpt: card.excerpt || '',
+      author: card.author || 'Lise Kriekemans',
+      readingTime: card.readingTime || '5 min read',
+      publishedAt: card.date || '',
+      body: makeFallbackJournalBody(stripHtml(card.titleHtml || card.title || 'Journal article'), card.excerpt || '')
+    }));
+    knownSlugs.add(card.slug);
+  }
+
+  journalPosts.sort((a, b) => parseJournalDate(b.publishedAt) - parseJournalDate(a.publishedAt));
+
+  return {
+    ...finalData,
+    blogPage,
+    journalPosts
+  };
 }
 
 async function writeModule(outPath, data) {
@@ -115,7 +271,7 @@ ${buttons}
 
   // Featured post
   if (blogPage.featured) {
-    const { tag, titleHtml, excerpt, author, readingTime, date } = blogPage.featured;
+    const { tag, titleHtml, excerpt, author, readingTime, slug } = blogPage.featured;
     const initial = author ? author.trim().charAt(0).toUpperCase() : 'W';
     html = html.replace(
       /<!-- FEATURED POST -->[\s\S]*?<!-- POST GRID -->/,
@@ -135,9 +291,9 @@ ${buttons}
       <span class="blog-meta-dot"></span>
       <span>${readingTime || ''}</span>
       <span class="blog-meta-dot"></span>
-      <span>${formatJournalDate(date)}</span>
+      <span>${formatJournalDate(blogPage.featured.date)}</span>
     </div>
-    <a href="#" class="blog-read-more">Read article <span>-></span></a>
+    <a href="#${slug || ''}" class="blog-read-more journal-link" data-journal-slug="${slug || ''}">Read article <span>-></span></a>
   </div>
 </article>
 
@@ -154,8 +310,9 @@ ${buttons}
       const excerpt = card.excerpt || '';
       const readingTime = card.readingTime || '';
       const date = formatJournalDate(card.date);
+      const slug = card.slug || resolveJournalSlug(card);
       const num = String(idx + 1).padStart(2, '0');
-      return `  <article class="blog-card r d${(idx % 3) + 1}">
+      return `  <article class="blog-card r d${(idx % 3) + 1}" role="link" tabindex="0" data-journal-slug="${slug}">
     <div class="blog-card-img"><div class="blog-card-img-inner"><span class="blog-card-num">${num}</span></div></div>
     <p class="blog-tag">${tag}</p>
     <h3 class="blog-card-title">${titleHtml}</h3>
@@ -230,12 +387,13 @@ async function build() {
 
   if (sanityContent) {
     const cardCount = sanityContent.blogPage?.cards?.length || 0;
-    console.log('✅ Loaded from Sanity: blogPage with', cardCount, 'cards');
+    const articleCount = sanityContent.journalPosts?.length || 0;
+    console.log('✅ Loaded from Sanity: blogPage with', cardCount, 'cards and', articleCount, 'articles');
   } else {
     console.log('⚠️  Using fallback data (Sanity fetch failed or not configured)');
   }
 
-  const finalData = deepMerge(fallbackData, sanityContent || {});
+  const finalData = prepareJournalContent(deepMerge(fallbackData, sanityContent || {}));
   if (finalData.blogPage?.cards) {
     finalData.blogPage.cards = sortJournalCards(finalData.blogPage.cards);
   }
@@ -243,7 +401,8 @@ async function build() {
   await copyFile(path.join(rootDir, 'cms.js'), path.join(distDir, 'cms.js'));
 
   const cardCount = finalData.blogPage?.cards?.length || 0;
-  console.log('📝 Injecting Journal page:', cardCount, 'cards from blogPage');
+  const articleCount = finalData.journalPosts?.length || 0;
+  console.log('📝 Injecting Journal page:', cardCount, 'cards and', articleCount, 'articles');
 
   // Read and inject the full Journal page from blogPage singleton
   let indexHtml = await readFile(path.join(rootDir, 'index.html'), 'utf8');

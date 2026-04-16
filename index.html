@@ -198,6 +198,92 @@ nav.scrolled{
 .home-page.hidden{display:none}
 .mobile-bottom-nav,
 .mobile-menu-backdrop{display:none}
+.blog-page.article-open .blog-hero,
+.blog-page.article-open .blog-filters,
+.blog-page.article-open .blog-featured,
+.blog-page.article-open .blog-grid,
+.blog-page.article-open .blog-newsletter,
+.blog-page.article-open footer{
+  display:none;
+}
+.journal-article{
+  display:none;
+  padding:96px 52px 120px;
+  max-width:980px;
+  margin:0 auto;
+}
+.blog-page.article-open .journal-article{
+  display:block;
+}
+.journal-back{
+  appearance:none;
+  border:0;
+  background:none;
+  color:var(--forest);
+  font-size:12px;
+  font-weight:500;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+  margin-bottom:28px;
+}
+.journal-back::before{
+  content:'←';
+  font-size:14px;
+  line-height:1;
+}
+.journal-article-head{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:24px;
+  align-items:end;
+  margin-bottom:28px;
+}
+.journal-article-label{
+  font-size:10px;
+  font-weight:500;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--sage);
+  margin-bottom:12px;
+}
+.journal-article-title{
+  font-family:var(--serif);
+  font-size:clamp(42px,6vw,84px);
+  line-height:.95;
+  letter-spacing:-.03em;
+  font-weight:300;
+  color:var(--forest);
+  max-width:10ch;
+}
+.journal-article-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  align-items:center;
+  justify-content:flex-end;
+  font-size:11px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.journal-article-meta .blog-meta-dot{
+  background:rgba(106,106,96,.35);
+}
+.journal-article-body{
+  margin-top:44px;
+  max-width:720px;
+}
+.journal-article-body p{
+  font-size:18px;
+  line-height:1.95;
+  color:var(--mid);
+  font-weight:300;
+  margin-bottom:22px;
+}
 
 /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    â‘   HERO
@@ -2415,6 +2501,27 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
 
   /* â”€â”€ BLOG CARD â€” no card image on mobile, save space â”€â”€ */
   .blog-card-img{display:none}
+  .journal-article{
+    padding:72px 24px 96px;
+  }
+  .journal-article-head{
+    grid-template-columns:1fr;
+    align-items:start;
+  }
+  .journal-article-meta{
+    justify-content:flex-start;
+  }
+  .journal-article-title{
+    max-width:none;
+    font-size:clamp(34px,10vw,54px);
+  }
+  .journal-article-body{
+    margin-top:32px;
+  }
+  .journal-article-body p{
+    font-size:16px;
+    line-height:1.85;
+  }
 
   /* â”€â”€ WHO CARD â€” less padding â”€â”€ */
   .who-title{padding-top:0}
@@ -3351,6 +3458,27 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   <a href="/cdn-cgi/l/email-protection#bbd7d2c8defbccd2d7d6dad8d4d7d7ded8cfd2cdde95d8d4d6" class="blog-newsletter-btn magnetic">Subscribe</a>
 </div>
 
+<!-- JOURNAL ARTICLE -->
+<article class="journal-article">
+  <button type="button" class="journal-back" onclick="closeJournalArticle();return false">Back to Journal</button>
+  <div class="journal-article-head">
+    <div>
+      <p class="journal-article-label">Journal article</p>
+      <h1 class="journal-article-title">Article title</h1>
+    </div>
+    <div class="journal-article-meta">
+      <span class="journal-article-author">Lise Kriekemans</span>
+      <span class="blog-meta-dot"></span>
+      <span class="journal-article-time">5 min read</span>
+      <span class="blog-meta-dot"></span>
+      <span class="journal-article-date">Mar 2026</span>
+    </div>
+  </div>
+  <div class="journal-article-body">
+    <p>Select an article from the Journal cards to read the full draft.</p>
+  </div>
+</article>
+
 <!-- FOOTER -->
 <footer>
   <div class="ft-brand">
@@ -3646,6 +3774,9 @@ function showPage(p, options={}){
         b=document.getElementById('blogPage'),
         dots=document.getElementById('progress');
   const activeNav=options.activeNav || p;
+  if (window.closeJournalArticle) {
+    window.closeJournalArticle({preserveScroll:true});
+  }
   document.body.dataset.page=p;
   if(p==='home'){
     h.classList.remove('hidden');
