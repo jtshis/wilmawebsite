@@ -7,4 +7,36 @@ export const structure: StructureResolver = S =>
       S.listItem()
         .title('Journal Page')
         .child(S.document().schemaType('blogPage').documentId('blogPage')),
+      S.divider(),
+      S.listItem()
+        .title('Journal Articles')
+        .child(
+          S.list()
+            .title('Articles')
+            .items([
+              S.listItem()
+                .title('Published')
+                .child(
+                  S.documentList()
+                    .schemaType('journalPost')
+                    .filter('status == "published"')
+                    .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
+                ),
+              S.listItem()
+                .title('Drafts')
+                .child(
+                  S.documentList()
+                    .schemaType('journalPost')
+                    .filter('status == "draft"')
+                    .defaultOrdering([{field: '_updatedAt', direction: 'desc'}])
+                ),
+              S.listItem()
+                .title('All Articles')
+                .child(
+                  S.documentList()
+                    .schemaType('journalPost')
+                    .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
+                ),
+            ])
+        ),
     ]);

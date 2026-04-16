@@ -22,8 +22,9 @@ npm run dev
 
 ## Content flow
 
-- Sanity is the live CMS for website content.
-- Notion is intended as the editorial workspace for drafts and approvals.
+- Sanity is the live CMS for the Journal landing page and real Journal articles.
+- `Journal Page` controls the landing-page hero, filters, featured story, and newsletter.
+- `Journal Articles` are the real publishable posts. Lise can log in, create an article, write a title, slug, excerpt, and 3 paragraphs, then publish it.
 - The site build fetches published Sanity content at build time and falls back to the checked-in local content module if Sanity is not configured yet.
 
 ## Netlify
