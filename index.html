@@ -2628,6 +2628,107 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   transform:scale(.98);
 }
 
+
+/* ── CONTACT MODAL ── */
+.cm-overlay{
+  position:fixed;inset:0;z-index:9000;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(13,46,34,.78);
+  backdrop-filter:blur(6px);
+  padding:16px;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s var(--smooth);
+}
+.cm-overlay.open{opacity:1;pointer-events:all}
+.cm-panel{
+  position:relative;
+  background:var(--forest-dark);
+  border:1px solid rgba(189,203,148,.18);
+  border-radius:12px;
+  padding:40px;
+  width:100%;max-width:480px;
+  transform:translateY(16px) scale(.97);
+  transition:transform .3s var(--spring);
+}
+.cm-overlay.open .cm-panel{transform:none}
+.cm-close{
+  position:absolute;top:16px;right:16px;
+  background:none;border:none;cursor:pointer;
+  color:rgba(255,255,255,.4);font-size:18px;line-height:1;
+  padding:4px 8px;
+  transition:color .2s;
+}
+.cm-close:hover{color:var(--sage)}
+.cm-eyebrow{
+  font-family:var(--sans);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--sage);margin:0 0 8px;
+}
+.cm-title{
+  font-family:var(--serif);font-size:32px;font-weight:300;
+  color:var(--cream);margin:0 0 28px;line-height:1;
+}
+.cm-to-row{
+  display:flex;align-items:center;gap:10px;
+  border-bottom:1px solid rgba(189,203,148,.14);
+  padding-bottom:16px;margin-bottom:20px;
+}
+.cm-to-label{
+  font-family:var(--sans);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(255,255,255,.35);
+  flex-shrink:0;
+}
+.cm-to-value{
+  font-family:var(--sans);font-size:14px;color:rgba(255,255,255,.65);
+}
+.cm-form{display:flex;flex-direction:column;gap:16px}
+.cm-field{display:flex;flex-direction:column;gap:6px}
+.cm-label{
+  font-family:var(--sans);font-size:12px;letter-spacing:.06em;
+  text-transform:uppercase;color:rgba(255,255,255,.45);
+}
+.cm-input{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(189,203,148,.18);
+  border-radius:6px;
+  color:var(--cream);
+  font-family:var(--sans);font-size:15px;
+  padding:12px 14px;
+  outline:none;
+  transition:border-color .2s,background .2s;
+  width:100%;box-sizing:border-box;
+}
+.cm-input::placeholder{color:rgba(255,255,255,.22)}
+.cm-input:focus{
+  border-color:rgba(189,203,148,.55);
+  background:rgba(255,255,255,.09);
+}
+.cm-textarea{resize:vertical;min-height:100px}
+.cm-honeypot{display:none}
+.cm-submit{
+  margin-top:8px;
+  background:var(--sage);color:var(--forest-dark);
+  border:none;border-radius:6px;cursor:pointer;
+  font-family:var(--sans);font-size:13px;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;
+  padding:14px 24px;width:100%;
+  transition:background .2s,transform .15s;
+}
+.cm-submit:hover{background:#cdd9a5;transform:translateY(-1px)}
+.cm-success{text-align:center;padding:24px 0;flex-direction:column;align-items:center;display:none}
+.cm-success:not([hidden]){display:flex}
+.cm-success-icon{font-size:40px;margin:0 0 16px;line-height:1}
+.cm-success-title{
+  font-family:var(--serif);font-size:28px;font-weight:300;
+  color:var(--cream);margin:0 0 8px;
+}
+.cm-success-body{
+  font-family:var(--sans);font-size:14px;color:rgba(255,255,255,.55);
+  margin:0 0 28px;
+}
+@media(max-width:520px){
+  .cm-panel{padding:28px 20px}
+  .cm-title{font-size:26px}
+}
 </style>
 </head>
 <body>
@@ -2656,7 +2757,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   <div class="nav-links">
     <a href="#" onclick="showPage('about');return false">About</a>
     <a href="#" onclick="showPage('blog');return false">Blog</a>
-    <a href="#cta" class="nav-cta" onclick="goToSection('cta');return false">Contact us</a>
+    <a href="#" class="nav-cta" onclick="openContactModal();return false">Contact us</a>
   </div>
   <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation menu" aria-expanded="false">
     <span></span>
@@ -2671,14 +2772,14 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   <a href="#" onclick="showPage('home');closeMobileMenu();return false">Home</a>
   <a href="#" onclick="showPage('about');closeMobileMenu();return false">About</a>
   <a href="#" onclick="showPage('blog');closeMobileMenu();return false">Blog</a>
-  <a href="#cta" class="mob-cta" onclick="goToSection('cta');closeMobileMenu();return false">Contact us</a>
+  <a href="#" class="mob-cta" onclick="closeMobileMenu();openContactModal();return false">Contact us</a>
 </div>
 
 <div class="mobile-bottom-nav" aria-label="Mobile quick navigation">
   <a href="#" class="mobile-bottom-link active" data-mobile-page="home" onclick="showPage('home');return false"><span>01</span><strong>Home</strong></a>
   <a href="#" class="mobile-bottom-link" data-mobile-page="about" onclick="showPage('about');return false"><span>02</span><strong>About</strong></a>
   <a href="#" class="mobile-bottom-link" data-mobile-page="blog" onclick="showPage('blog');return false"><span>03</span><strong>Journal</strong></a>
-  <a href="#" class="mobile-bottom-link" data-mobile-page="contact" onclick="goToSection('cta');return false"><span>04</span><strong>Contact</strong></a>
+  <a href="#" class="mobile-bottom-link" data-mobile-page="contact" onclick="openContactModal();return false"><span>04</span><strong>Contact</strong></a>
 </div>
 
 
@@ -2708,7 +2809,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       We build the structured strategies and digital systems that empower mission-driven brands to expand their reach and elevate their influence.
     </p>
     <div class="hero-actions">
-      <a href="#cta" class="btn-primary magnetic" onclick="goToSection('cta');return false">Contact us</a>
+      <a href="#" class="btn-primary magnetic" onclick="openContactModal();return false">Contact us</a>
     </div>
   </div>
 
@@ -3168,7 +3269,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
     </p>
   </div>
   <div class="cta-right r d3">
-    <a href="/cdn-cgi/l/email-protection#7915100a1c390e101514181a1615151c1a0d100f1c571a1614" class="btn-cta magnetic">Let's talk</a>
+    <a href="#" class="btn-cta magnetic" onclick="openContactModal();return false">Let's talk</a>
   </div>
 </section>
 
@@ -3311,7 +3412,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   <div class="ft-mid">
     <a href="#" onclick="showPage('home');return false">Home</a>
     <a href="#" onclick="showPage('blog');return false">Blog</a>
-    <a href="/cdn-cgi/l/email-protection#f894918b9db88f919495999b9794949d9b8c918e9dd69b9795">Contact</a>
+    <a href="#" onclick="openContactModal();return false">Contact</a>
   </div>
   <div class="ft-right">
     <a href="#">@wilmacollective</a>
@@ -3492,7 +3593,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   <div class="ft-mid">
     <a href="#" onclick="showPage('home');return false">Home</a>
     <a href="#" onclick="showPage('about');return false">About</a>
-    <a href="/cdn-cgi/l/email-protection#315d5842547146585d5c50525e5d5d5452455847541f525e5c">Contact</a>
+    <a href="#" onclick="openContactModal();return false">Contact</a>
   </div>
   <div class="ft-right">
     <a href="#">@wilmacollective</a>
@@ -3502,6 +3603,42 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
 </footer>
 
 </div><!-- /blog-page -->
+
+<!-- CONTACT MODAL -->
+<div id="contact-modal" class="cm-overlay" role="dialog" aria-modal="true" aria-label="Send a message" hidden>
+  <div class="cm-panel">
+    <button class="cm-close" onclick="closeContactModal()" aria-label="Close">&#x2715;</button>
+    <p class="cm-eyebrow">Get in touch</p>
+    <h2 class="cm-title">Let's talk.</h2>
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" class="cm-form" onsubmit="handleContactSubmit(event)">
+      <input type="hidden" name="form-name" value="contact">
+      <p class="cm-honeypot"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <div class="cm-to-row">
+        <span class="cm-to-label">To</span>
+        <span class="cm-to-value">lise@wilmacollective.co.za</span>
+      </div>
+      <div class="cm-field">
+        <label class="cm-label" for="cm-name">Your name</label>
+        <input class="cm-input" type="text" id="cm-name" name="name" required placeholder="Jane Smith">
+      </div>
+      <div class="cm-field">
+        <label class="cm-label" for="cm-email">Your email</label>
+        <input class="cm-input" type="email" id="cm-email" name="email" required placeholder="jane@company.com">
+      </div>
+      <div class="cm-field">
+        <label class="cm-label" for="cm-message">Message</label>
+        <textarea class="cm-input cm-textarea" id="cm-message" name="message" required placeholder="Tell us about your project…" rows="4"></textarea>
+      </div>
+      <button type="submit" class="cm-submit">Send message</button>
+    </form>
+    <div class="cm-success" hidden>
+      <p class="cm-success-icon">✓</p>
+      <p class="cm-success-title">Message sent.</p>
+      <p class="cm-success-body">Lise will be in touch soon.</p>
+      <button class="cm-submit" onclick="closeContactModal()">Close</button>
+    </div>
+  </div>
+</div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* Blog filter tabs */
@@ -3813,6 +3950,42 @@ function showPage(p, options={}){
   }
 }
 syncMobileNav('home');
+
+function openContactModal(){
+  const modal=document.getElementById('contact-modal');
+  modal.removeAttribute('hidden');
+  requestAnimationFrame(()=>modal.classList.add('open'));
+  document.body.style.overflow='hidden';
+  setTimeout(()=>{const f=modal.querySelector('#cm-name');if(f)f.focus();},50);
+}
+function closeContactModal(){
+  const modal=document.getElementById('contact-modal');
+  modal.classList.remove('open');
+  document.body.style.overflow='';
+  setTimeout(()=>{
+    modal.setAttribute('hidden','');
+    const form=modal.querySelector('form');
+    const success=modal.querySelector('.cm-success');
+    if(form){form.removeAttribute('hidden');form.reset();}
+    if(success)success.setAttribute('hidden','');
+  },280);
+}
+function handleContactSubmit(e){
+  e.preventDefault();
+  const form=e.target;
+  fetch('/',{method:'POST',body:new FormData(form)})
+    .then(()=>{
+      form.setAttribute('hidden','');
+      form.closest('.cm-panel').querySelector('.cm-success').removeAttribute('hidden');
+    })
+    .catch(()=>form.submit());
+}
+document.getElementById('contact-modal').addEventListener('click',function(e){
+  if(e.target===this)closeContactModal();
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&document.getElementById('contact-modal').classList.contains('open'))closeContactModal();
+});
 </script>
 <script type="module" src="/cms.js"></script>
 </body>
