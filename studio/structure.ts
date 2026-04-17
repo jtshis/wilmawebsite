@@ -15,21 +15,21 @@ export const structure: StructureResolver = S =>
             .title('Articles')
             .items([
               S.listItem()
-                .title('Published')
+                .title('🟢 Live')
                 .child(
                   S.documentList()
                     .id('published-articles')
                     .schemaType('journalPost')
-                    .filter('status == "published"')
+                    .filter('_type == "journalPost" && !(_id in path("drafts.**"))')
                     .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
                 ),
               S.listItem()
-                .title('Drafts')
+                .title('✏️ Drafts')
                 .child(
                   S.documentList()
                     .id('draft-articles')
                     .schemaType('journalPost')
-                    .filter('status == "draft"')
+                    .filter('_type == "journalPost" && _id in path("drafts.**")')
                     .defaultOrdering([{field: '_updatedAt', direction: 'desc'}])
                 ),
               S.listItem()

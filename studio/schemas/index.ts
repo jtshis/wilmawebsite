@@ -334,29 +334,36 @@ export const schemaTypes = [
       stringField('title', 'Title', {validation: Rule => Rule.required()}),
       defineField({
         name: 'slug',
-        title: 'Slug',
+        title: 'Article URL',
         type: 'slug',
+        description: 'The web address for this article. Click "Generate" to create it automatically from the title.',
         options: {
           source: 'title',
           maxLength: 96
         },
         validation: Rule => Rule.required()
       }),
-      stringField('category', 'Category', {validation: Rule => Rule.required()}),
       defineField({
-        name: 'status',
-        title: 'Status',
+        name: 'category',
+        title: 'Category',
         type: 'string',
+        description: 'Choose the topic category for this article.',
         options: {
-          list: ['draft', 'published'],
-          layout: 'radio'
+          list: [
+            {title: 'Strategy', value: 'Strategy'},
+            {title: 'Impact', value: 'Impact'},
+            {title: 'Digital', value: 'Digital'},
+            {title: 'Culture', value: 'Culture'},
+          ],
+          layout: 'dropdown'
         },
-        initialValue: 'draft'
+        validation: Rule => Rule.required()
       }),
       defineField({
         name: 'publishedAt',
         title: 'Published date',
-        type: 'datetime'
+        type: 'datetime',
+        description: 'When was (or will) this article be published? Used to sort articles by date.'
       }),
       stringField('author', 'Author', {initialValue: 'Lise Kriekemans'}),
       textField('excerpt', 'Excerpt', {rows: 3, validation: Rule => Rule.required()}),
@@ -424,16 +431,13 @@ export const schemaTypes = [
       select: {
         title: 'title',
         category: 'category',
-        status: 'status',
         date: 'publishedAt',
         image: 'image'
       },
-      prepare({title, category, status, date, image}) {
-        const statusEmoji = status === 'published' ? '✓' : '✎';
-        const parts = [statusEmoji, category || 'Journal', date || 'No date'];
+      prepare({title, category, date, image}) {
         return {
           title: title || 'Untitled',
-          subtitle: parts.join(' · '),
+          subtitle: [category || 'Uncategorised', date ? date.split('T')[0] : 'No date'].join(' · '),
           media: image
         };
       }

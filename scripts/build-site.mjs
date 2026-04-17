@@ -24,7 +24,6 @@ async function loadSanityContent() {
         title,
         "slug": slug.current,
         category,
-        status,
         publishedAt,
         author,
         excerpt,
@@ -35,12 +34,11 @@ async function loadSanityContent() {
         "ogImage": ogImage.asset->{url}
       }
     },
-    "journalPosts": *[_type=="journalPost" && status=="published"] | order(publishedAt desc){
+    "journalPosts": *[_type=="journalPost"] | order(publishedAt desc){
       _id,
       title,
       "slug": slug.current,
       category,
-      status,
       publishedAt,
       author,
       excerpt,

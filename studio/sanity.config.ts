@@ -1,10 +1,10 @@
 import {defineConfig} from 'sanity';
 import {structureTool} from 'sanity/structure';
 import {dashboardTool} from '@sanity/dashboard';
-import {visionTool} from '@sanity/vision';
 import {netlifyWidget} from 'sanity-plugin-dashboard-widget-netlify';
 import {schemaTypes} from './schemas';
 import {structure} from './structure';
+import {StudioLayout} from './StudioLayout';
 
 export default defineConfig({
   name: 'default',
@@ -28,10 +28,15 @@ export default defineConfig({
           ]
         })
       ]
-    }),
-    visionTool()
+    })
+    // visionTool() intentionally removed — developer-only GROQ query tool, not relevant to content editors
   ],
   schema: {
     types: schemaTypes
+  },
+  studio: {
+    components: {
+      layout: StudioLayout
+    }
   }
 });
