@@ -467,6 +467,12 @@ function applyBlog(blog, siteSettings = {}, journalPosts = []) {
   const featured = q('.blog-featured', page);
   if (featured) {
     const featuredSlug = resolveJournalSlug(blog.featured || {});
+    const featuredTitle = stripHtml(blog.featured?.titleHtml || blog.featured?.title || 'featured article');
+    featured.dataset.journalSlug = featuredSlug;
+    featured.setAttribute('role', 'link');
+    featured.setAttribute('tabindex', '0');
+    featured.style.cursor = 'pointer';
+    featured.setAttribute('aria-label', `Read article: ${featuredTitle}`);
     setText('.blog-tag', blog.featured?.tag, featured);
     setHTML('.blog-featured-title', blog.featured?.titleHtml, featured);
     setText('.blog-featured-excerpt', blog.featured?.excerpt, featured);
@@ -480,9 +486,7 @@ function applyBlog(blog, siteSettings = {}, journalPosts = []) {
     if (meta[2]) meta[2].textContent = formatJournalDate(resolveJournalDate(blog.featured));
     const readMore = q('.blog-read-more', featured);
     if (readMore) {
-      readMore.dataset.journalSlug = featuredSlug;
       readMore.setAttribute('href', `#${featuredSlug}`);
-      readMore.setAttribute('aria-label', `Read article: ${stripHtml(blog.featured?.titleHtml || blog.featured?.title || 'featured article')}`);
     }
   }
 
