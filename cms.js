@@ -1,6 +1,8 @@
-import siteData from '/content/site-data.local.mjs';
+const siteData = await import('/content/site-data.local.mjs')
+  .then(m => m.default || {})
+  .catch(() => ({}));
 
-const data = prepareJournalContent(siteData || {});
+const data = prepareJournalContent(siteData);
 
 const q = (selector, root = document) => root.querySelector(selector);
 const qa = (selector, root = document) => Array.from(root.querySelectorAll(selector));
@@ -482,8 +484,12 @@ function applyBlog(blog, siteSettings = {}, journalPosts = []) {
     featured.setAttribute('tabindex', '0');
     featured.style.cursor = 'pointer';
     featured.setAttribute('aria-label', `Read article: ${featuredTitle}`);
-    setText('.blog-tag', blog.featured.tag, featured);
-    setHTML('.blog-featured-title', blog.featured.titleHtml, featured);
+    setText('.blog-tag', blog.featured.tag ?? blog.featured.category, featured);
+    if (blog.featured.title != null) {
+      setText('.blog-featured-title', blog.featured.title, featured);
+    } else if (blog.featured.titleHtml != null) {
+      setHTML('.blog-featured-title', blog.featured.titleHtml, featured);
+    }
     setText('.blog-featured-excerpt', blog.featured.excerpt, featured);
     const placeholder = q('.blog-featured-placeholder', featured);
     if (placeholder && blog.featured.author) {
