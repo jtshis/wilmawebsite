@@ -2008,8 +2008,10 @@ footer{
   border-bottom:1px solid var(--grid-col);
 }
 .blog-card{
+  display:block;
   background:var(--cream);padding:48px 40px;
   transition:background .3s;position:relative;
+  color:inherit;text-decoration:none;cursor:pointer;
 }
 .blog-card:hover{background:rgba(189,203,148,.06)}
 .blog-card::before{
@@ -3105,42 +3107,6 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
 </section>
 
 
-<!-- â‘¥ PROJECTS â€” dark band -->
-<section class="section-projects" data-section="5">
-  <p class="projects-label r">Selected work</p>
-  <div class="logos-row">
-    <div class="logo-client r d1">
-      <div class="logo-client-img">
-        <!-- ASSET SLOT: <img src="beyond-the-bet-logo.png" alt="Beyond the Bet"> -->
-      </div>
-      <span class="logo-client-name">Beyond the Bet</span>
-      <span class="logo-client-type">Social impact - Belgium</span>
-    </div>
-    <div class="logo-client r d2">
-      <div class="logo-client-img">
-        <!-- ASSET SLOT: <img src="irdh-logo.png" alt="IRDH"> -->
-      </div>
-      <span class="logo-client-name">IRDH</span>
-      <span class="logo-client-type">Human Rights - The DRC</span>
-    </div>
-    <div class="logo-client r d3">
-      <div class="logo-client-img">
-        <!-- ASSET SLOT: <img src="lifepowr-logo.png" alt="LIFEPOWR"> -->
-      </div>
-      <span class="logo-client-name">LIFEPOWR</span>
-      <span class="logo-client-type">Green energy - Belgium</span>
-    </div>
-    <div class="logo-client r d4">
-      <div class="logo-client-img">
-        <!-- ASSET SLOT: <img src="uptomore-logo.png" alt="UpToMore"> -->
-      </div>
-      <span class="logo-client-name">UpToMore</span>
-      <span class="logo-client-type">FinTech - The Netherlands</span>
-    </div>
-  </div>
-</section>
-
-
 <!-- â‘¦ SIGNATURE -->
 <!-- CASE STUDIES -->
 <section class="section-cases" id="section-cases" data-section="6">
@@ -3337,20 +3303,6 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   </div>
 </section>
 
-<!-- VALUES -->
-<section class="about-values-new">
-  <div class="about-values-inner">
-    <p class="section-label r">What we stand for</p>
-    <h2 class="section-title r d1">Core <em>values.</em></h2>
-    <div class="values-grid">
-      <div class="val-card r d1"><h3 class="val-title">Growth</h3><p class="val-body">Every engagement begins with awareness: of self, of need, of impact. We build toward where your brand wants to be in years, not quarters.</p></div>
-      <div class="val-card r d2"><h3 class="val-title">Credibility</h3><p class="val-body">Trust is earned through transparency, not performance. We mean what we say and deliver what we promise.</p></div>
-      <div class="val-card r d3"><h3 class="val-title">Accountability</h3><p class="val-body">Full accountability from the first brief to the final handover. No excuses.</p></div>
-      <div class="val-card r d4"><h3 class="val-title">Balance</h3><p class="val-body">Less is more. In design and in impact measurement, clean essential work outlasts noise.</p></div>
-    </div>
-  </div>
-</section>
-
 <!-- THE FOUNDER -->
 <section class="about-founder">
   <div class="about-founder-img r">
@@ -3388,15 +3340,61 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
   </div>
 </section>
 
+<!-- VALUES -->
+<section class="about-values-new">
+  <div class="about-values-inner">
+    <p class="section-label r">What we stand for</p>
+    <h2 class="section-title r d1">Core <em>values.</em></h2>
+    <div class="values-grid">
+      <div class="val-card r d1"><h3 class="val-title">Growth</h3><p class="val-body">Every engagement begins with awareness: of self, of need, of impact. We build toward where your brand wants to be in years, not quarters.</p></div>
+      <div class="val-card r d2"><h3 class="val-title">Credibility</h3><p class="val-body">Trust is earned through transparency, not performance. We mean what we say and deliver what we promise.</p></div>
+      <div class="val-card r d3"><h3 class="val-title">Accountability</h3><p class="val-body">Full accountability from the first brief to the final handover. No excuses.</p></div>
+      <div class="val-card r d4"><h3 class="val-title">Balance</h3><p class="val-body">Less is more. In design and in impact measurement, clean essential work outlasts noise.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SELECTED WORK -->
+<section class="section-projects about-selected-work">
+  <p class="projects-label r">Selected work</p>
+  <div class="logos-row">
+    <div class="logo-client r d1">
+      <div class="logo-client-img">
+        <!-- ASSET SLOT: <img src="beyond-the-bet-logo.png" alt="Beyond the Bet"> -->
+      </div>
+      <span class="logo-client-name">Beyond the Bet</span>
+      <span class="logo-client-type">Social impact - Belgium</span>
+    </div>
+    <div class="logo-client r d2">
+      <div class="logo-client-img">
+        <!-- ASSET SLOT: <img src="irdh-logo.png" alt="IRDH"> -->
+      </div>
+      <span class="logo-client-name">IRDH</span>
+      <span class="logo-client-type">Human Rights - The DRC</span>
+    </div>
+    <div class="logo-client r d3">
+      <div class="logo-client-img">
+        <!-- ASSET SLOT: <img src="lifepowr-logo.png" alt="LIFEPOWR"> -->
+      </div>
+      <span class="logo-client-name">LIFEPOWR</span>
+      <span class="logo-client-type">Green energy - Belgium</span>
+    </div>
+    <div class="logo-client r d4">
+      <div class="logo-client-img">
+        <!-- ASSET SLOT: <img src="uptomore-logo.png" alt="UpToMore"> -->
+      </div>
+      <span class="logo-client-name">UpToMore</span>
+      <span class="logo-client-type">FinTech - The Netherlands</span>
+    </div>
+  </div>
+</section>
+
 <!-- SIGNATURE VIDEO -->
 <section class="about-signature">
   <video autoplay muted loop playsinline class="about-sig-video">
     <source src="wilma-signature.mp4" type="video/mp4">
     <img src="wilma-signature.jpg" alt="Wilma" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
   </video>
-  <div class="about-sig-overlay">
-    <p class="about-sig-name r">Wilma<em>.</em></p>
-  </div>
 </section>
 
 <!-- FOOTER -->
@@ -3475,7 +3473,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
 <!-- POST GRID -->
 <div class="blog-grid">
 
-  <article class="blog-card r d1">
+  <a href="#journal-article-1" class="blog-card r d1">
     <div class="blog-card-img"><div class="blog-card-img-inner"><span class="blog-card-num">01</span></div></div>
     <p class="blog-tag">Impact</p>
     <h3 class="blog-card-title">The B-Corp communications <em>gap</em> and how to close it</h3>
@@ -3485,9 +3483,9 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       <span class="blog-meta-dot"></span>
       <span>Feb 2026</span>
     </div>
-  </article>
+  </a>
 
-  <article class="blog-card r d2">
+  <a href="#journal-article-2" class="blog-card r d2">
     <div class="blog-card-img"><div class="blog-card-img-inner"><span class="blog-card-num">02</span></div></div>
     <p class="blog-tag">Digital</p>
     <h3 class="blog-card-title">Ethical SEO: what it means to rank without <em>manipulating</em></h3>
@@ -3497,9 +3495,9 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       <span class="blog-meta-dot"></span>
       <span>Feb 2026</span>
     </div>
-  </article>
+  </a>
 
-  <article class="blog-card r d3">
+  <a href="#journal-article-3" class="blog-card r d3">
     <div class="blog-card-img"><div class="blog-card-img-inner"><span class="blog-card-num">03</span></div></div>
     <p class="blog-tag">Culture</p>
     <h3 class="blog-card-title">What working in Zambia taught me about <em>storytelling</em></h3>
@@ -3509,9 +3507,9 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       <span class="blog-meta-dot"></span>
       <span>Jan 2026</span>
     </div>
-  </article>
+  </a>
 
-  <article class="blog-card r d1">
+  <a href="#journal-article-4" class="blog-card r d1">
     <div class="blog-card-img"><div class="blog-card-img-inner"><span class="blog-card-num">04</span></div></div>
     <p class="blog-tag">Strategy</p>
     <h3 class="blog-card-title">Content strategy for early-stage impact <em>startups</em></h3>
@@ -3521,9 +3519,9 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       <span class="blog-meta-dot"></span>
       <span>Jan 2026</span>
     </div>
-  </article>
+  </a>
 
-  <article class="blog-card r d2">
+  <a href="#journal-article-5" class="blog-card r d2">
     <div class="blog-card-img"><div class="blog-card-img-inner"><span class="blog-card-num">05</span></div></div>
     <p class="blog-tag">Digital</p>
     <h3 class="blog-card-title">LinkedIn for NGOs: beyond the <em>awareness post</em></h3>
@@ -3533,9 +3531,9 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       <span class="blog-meta-dot"></span>
       <span>Dec 2025</span>
     </div>
-  </article>
+  </a>
 
-  <article class="blog-card r d3">
+  <a href="#journal-article-6" class="blog-card r d3">
     <div class="blog-card-img"><div class="blog-card-img-inner"><span class="blog-card-num">06</span></div></div>
     <p class="blog-tag">Impact</p>
     <h3 class="blog-card-title">Measuring what matters: impact metrics that do not <em>mislead</em></h3>
@@ -3545,7 +3543,7 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       <span class="blog-meta-dot"></span>
       <span>Nov 2025</span>
     </div>
-  </article>
+  </a>
 
 </div>
 
