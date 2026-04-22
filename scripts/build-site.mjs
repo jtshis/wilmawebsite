@@ -371,7 +371,7 @@ ${buttons}
       const date = formatJournalDate(card.date);
       const slug = card.slug || resolveJournalSlug(card);
       const num = String(idx + 1).padStart(2, '0');
-      return `  <article class="blog-card r d${(idx % 3) + 1}" role="link" tabindex="0" data-journal-slug="${slug}">
+      return `  <a href="#${slug}" class="blog-card r d${(idx % 3) + 1}" role="link" tabindex="0" data-journal-slug="${slug}">
     <div class="blog-card-img"><div class="blog-card-img-inner"><span class="blog-card-num">${num}</span></div></div>
     <p class="blog-tag">${tag}</p>
     <h3 class="blog-card-title">${titleHtml}</h3>
@@ -381,7 +381,7 @@ ${buttons}
       <span class="blog-meta-dot"></span>
       <span>${date}</span>
     </div>
-  </article>`;
+  </a>`;
     }).join('\n\n');
     html = html.replace(
       /<!-- POST GRID -->[\s\S]*?<!-- NEWSLETTER -->/,

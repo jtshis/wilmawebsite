@@ -325,6 +325,17 @@ function applyAbout(about, siteSettings) {
     });
   }
 
+  const selectedWork = q('.about-selected-work');
+  if (selectedWork) {
+    setText('.about-selected-work .projects-label', about.selectedWork?.label, selectedWork);
+    qa('.about-selected-work .logo-client').forEach((card, index) => {
+      const item = about.selectedWork?.items?.[index];
+      if (!item) return;
+      setText('.logo-client-name', item.name, card);
+      setText('.logo-client-type', item.type, card);
+    });
+  }
+
   const founder = q('.about-founder');
   if (founder) {
     setText('.about-founder .about-eyebrow', about.founder?.eyebrow, founder);
@@ -481,6 +492,7 @@ function applyBlog(blog, siteSettings = {}, journalPosts = []) {
     if (!item) return;
     const slug = resolveJournalSlug(item);
     card.dataset.journalSlug = slug;
+    card.setAttribute('href', `#${slug}`);
     card.setAttribute('role', 'link');
     card.setAttribute('tabindex', '0');
     card.style.cursor = 'pointer';

@@ -170,6 +170,15 @@ export default {
         }
       ]
     },
+    selectedWork: {
+      label: 'Selected work',
+      items: [
+        {name: 'Beyond the Bet', type: 'Social impact - Belgium'},
+        {name: 'IRDH', type: 'Human Rights - The DRC'},
+        {name: 'LIFEPOWR', type: 'Green energy - Belgium'},
+        {name: 'UpToMore', type: 'FinTech - The Netherlands'}
+      ]
+    },
     founder: {
       eyebrow: 'The founder',
       titleHtml: 'Lise <em>Kriekemans.</em>',

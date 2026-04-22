@@ -237,6 +237,25 @@ export const schemaTypes = [
         ]
       }),
       defineField({
+        name: 'selectedWork',
+        title: 'Selected work',
+        type: 'object',
+        fields: [
+          stringField('label', 'Label'),
+          defineField({
+            name: 'items',
+            title: 'Items',
+            type: 'array',
+            of: [
+              defineArrayMember({
+                type: 'object',
+                fields: [stringField('name', 'Name'), stringField('type', 'Type')]
+              })
+            ]
+          })
+        ]
+      }),
+      defineField({
         name: 'founder',
         title: 'Founder',
         type: 'object',
