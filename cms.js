@@ -129,7 +129,16 @@ function normalizeJournalPost(post = {}) {
     readingTime: post.readingTime || '5 min read',
     publishedAt: resolveJournalDate(post),
     body: Array.isArray(post.body)
-      ? post.body.map(paragraph => String(paragraph || '').trim()).filter(Boolean)
+      ? post.body
+          .map(item => {
+            if (typeof item === 'string') return item.trim();
+            // Portable Text block from Sanity
+            if (item && item._type === 'block') {
+              return (item.children || []).map(c => c.text || '').join('').trim();
+            }
+            return '';
+          })
+          .filter(Boolean)
       : []
   };
 }
