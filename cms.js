@@ -1,4 +1,4 @@
-import siteData from './content/site-data.local.mjs';
+import siteData from '/content/site-data.local.mjs';
 
 const data = prepareJournalContent(siteData || {});
 
@@ -46,7 +46,7 @@ function formatJournalDate(value) {
 }
 
 function sortJournalCards(cards = []) {
-  return [...cards].sort((a, b) => parseJournalDate(b.date) - parseJournalDate(a.date));
+  return [...(cards || [])].filter(Boolean).sort((a, b) => parseJournalDate(b.date) - parseJournalDate(a.date));
 }
 
 function stripHtml(value = '') {
@@ -474,25 +474,25 @@ function applyBlog(blog, siteSettings = {}, journalPosts = []) {
   });
 
   const featured = q('.blog-featured', page);
-  if (featured) {
-    const featuredSlug = resolveJournalSlug(blog.featured || {});
-    const featuredTitle = stripHtml(blog.featured?.titleHtml || blog.featured?.title || 'featured article');
+  if (featured && blog.featured) {
+    const featuredSlug = resolveJournalSlug(blog.featured);
+    const featuredTitle = stripHtml(blog.featured.titleHtml || blog.featured.title || 'featured article');
     featured.dataset.journalSlug = featuredSlug;
     featured.setAttribute('role', 'link');
     featured.setAttribute('tabindex', '0');
     featured.style.cursor = 'pointer';
     featured.setAttribute('aria-label', `Read article: ${featuredTitle}`);
-    setText('.blog-tag', blog.featured?.tag, featured);
-    setHTML('.blog-featured-title', blog.featured?.titleHtml, featured);
-    setText('.blog-featured-excerpt', blog.featured?.excerpt, featured);
+    setText('.blog-tag', blog.featured.tag, featured);
+    setHTML('.blog-featured-title', blog.featured.titleHtml, featured);
+    setText('.blog-featured-excerpt', blog.featured.excerpt, featured);
     const placeholder = q('.blog-featured-placeholder', featured);
-    if (placeholder && blog.featured?.author) {
+    if (placeholder && blog.featured.author) {
       placeholder.textContent = blog.featured.author.trim().charAt(0).toUpperCase();
     }
     const meta = qa('.blog-meta span', featured).filter(el => !el.classList.contains('blog-meta-dot'));
-    if (meta[0]) meta[0].textContent = blog.featured?.author || '';
-    if (meta[1]) meta[1].textContent = blog.featured?.readingTime || '';
-    if (meta[2]) meta[2].textContent = formatJournalDate(resolveJournalDate(blog.featured));
+    if (meta[0]) meta[0].textContent = blog.featured.author || '';
+    if (meta[1]) meta[1].textContent = blog.featured.readingTime || '';
+    if (meta[2]) meta[2].textContent = formatJournalDate(resolveJournalDate(blog.featured) || '');
     const readMore = q('.blog-read-more', featured);
     if (readMore) {
       readMore.setAttribute('href', `#${featuredSlug}`);
