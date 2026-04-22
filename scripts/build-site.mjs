@@ -218,18 +218,21 @@ function portableTextToHtml(blocks = []) {
 }
 
 function normalizeJournalPost(post = {}) {
-  const title = post.title || 'Journal article';
+  const title = post.title || stripHtml(post.titleHtml || 'Journal article');
   const readingTime = calculateReadingTime(post.body);
 
   return {
     ...post,
     title,
+    titleHtml: undefined,  // strip legacy field; cms.js uses title directly
     slug: post.slug || slugify(title),
-    category: post.category || 'Journal',
+    category: post.category || post.tag || 'Journal',
+    tag: undefined,        // strip legacy field; use category
     excerpt: post.excerpt || '',
     author: post.author || 'Lise Kriekemans',
     readingTime,
-    publishedAt: post.publishedAt || '',
+    publishedAt: post.publishedAt || post.date || '',
+    date: undefined,       // strip legacy field; use publishedAt
     body: post.body || [],
     image: post.image,
     imageAlt: post.imageAlt,
@@ -447,7 +450,10 @@ async function build() {
   if (sanityContent) {
     const cardCount = sanityContent.blogPage?.cards?.length || 0;
     const articleCount = sanityContent.journalPosts?.length || 0;
-    console.log('✅ Loaded from Sanity: blogPage with', cardCount, 'cards and', articleCount, 'articles');
+    const featuredTitle = sanityContent.blogPage?.featured?.title || null;
+    console.log('✅ Loaded from Sanity:', articleCount, 'articles,', cardCount, 'cards');
+    console.log('   blogPage:', sanityContent.blogPage ? 'found' : 'not found (draft or missing — publish it in Sanity Studio)');
+    console.log('   featured:', featuredTitle ? `"${featuredTitle}"` : 'not set or not published');
   } else {
     console.log('⚠️  Using fallback data (Sanity fetch failed or not configured)');
   }
