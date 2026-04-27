@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Globe — Our Belief Prototype</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background: #154739;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end; /* right-anchor like the real section */
+      overflow: hidden;
+    }
+
+    /* Simulate the section layout */
+    .section-mock {
+      position: relative;
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Ghost text block — gives spatial context */
+    .text-block {
+      position: absolute;
+      left: 52px;
+      max-width: 520px;
+      pointer-events: none;
+    }
+    .label {
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(189,203,148,0.7);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .label::before {
+      content: '';
+      width: 28px;
+      height: 1px;
+      background: rgba(189,203,148,0.7);
+    }
+    .headline {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(36px, 4.5vw, 64px);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      color: rgba(255,255,255,0.88);
+      margin-bottom: 32px;
+    }
+    .body-text {
+      font-size: 15px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.45);
+      max-width: 460px;
+    }
+
+    /* Globe canvas — right edge, partially cropped */
+    .globe-wrap {
+      position: absolute;
+      right: -120px; /* bleed off right edge */
+      top: 50%;
+      transform: translateY(-50%);
+      width: 640px;
+      height: 640px;
+      pointer-events: none;
+    }
+
+    canvas {
+      display: block;
+      width: 640px;
+      height: 640px;
+    }
+  </style>
+</head>
+<body>
+  <div class="section-mock">
+
+    <div class="text-block">
+      <p class="label">Our Belief</p>
+      <h2 class="headline">You've built something good,<br>let's make it known.</h2>
+      <p class="body-text">We trade short-term tactics for long-term ecosystems. By building robust digital infrastructure, we help purpose-led organisations scale their influence without losing their soul.</p>
+    </div>
+
+    <div class="globe-wrap">
+      <canvas id="c" width="640" height="640"></canvas>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+  <script>
+  (() => {
+    const canvas = document.getElementById('c');
+    const ctx    = canvas.getContext('2d');
+
+    const W  = 640, H  = 640;
+    const CX = 320, CY = 320;
+    const SR = 290;  // sphere radius — nearly fills the 640px canvas
+
+    // ── Brand colours ────────────────────────────────────────────────────────
+    const SAGE = '189,203,148';   // #BDCB94 — the only accent
+    const WHT  = '255,255,255';   // ghost whites for globe geometry
+
+    // ── Projection ───────────────────────────────────────────────────────────
+    const projection = d3.geoOrthographic()
+      .scale(SR)
+      .translate([CX, CY])
+      .clipAngle(90)
+      .precision(0.3);
+
+    const geoPath = d3.geoPath().projection(projection).context(ctx);
+
+    const graticule = d3.geoGraticule().step([20, 20])();
+
+    // ── Globe motion ─────────────────────────────────────────────────────────
+    const SPIN_MS  = 42000;   // one full rotation — slow, ambient
+    const VIEW_PHI = -23.5;   // Earth's actual axial tilt as camera pitch
+
+    // ── Comet ────────────────────────────────────────────────────────────────
+    const COMET = {
+      rx: SR + 48,        // orbital ellipse semi-major (extends beyond sphere)
+      ry: 108,            // semi-minor — pronounced incline gives depth
+      tiltDeg: -22,       // screen-space tilt of orbital plane
+      spanDeg: 235,       // arc length — long tail for drama at this scale
+      periodMs: 8500,     // one orbit — noticeably faster than globe
+      maxOp: 0.92,        // head opacity — sage at nearly full strength
+      headW: 2.0,         // stroke width at head
+    };
+
+    // ── Data ─────────────────────────────────────────────────────────────────
+    let countries = null;
+
+    fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+      .then(r => r.json())
+      .then(world => {
+        countries = topojson.feature(world, world.objects.countries);
+        requestAnimationFrame(loop);
+      });
+
+    // ── Draw: globe geometry ─────────────────────────────────────────────────
+    function drawGlobe(spinDeg) {
+      projection.rotate([spinDeg, VIEW_PHI, 0]);
+
+      // Sphere boundary — barely-there halo
+      ctx.beginPath();
+      geoPath({ type: 'Sphere' });
+      ctx.strokeStyle = `rgba(${WHT},0.07)`;
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+
+      // Graticule — pure texture, almost invisible
+      ctx.beginPath();
+      geoPath(graticule);
+      ctx.strokeStyle = `rgba(${WHT},0.045)`;
+      ctx.lineWidth   = 0.5;
+      ctx.stroke();
+
+      // Country outlines — ghost white, legible but not dominant
+      if (countries) {
+        ctx.beginPath();
+        geoPath(countries);
+        ctx.strokeStyle = `rgba(${WHT},0.13)`;
+        ctx.lineWidth   = 0.85;
+        ctx.stroke();
+      }
+    }
+
+    // ── Draw: sage comet arc ─────────────────────────────────────────────────
+    // Per-segment drawing gives us the gradient tail → head.
+    // Colour is pure sage throughout; only opacity and width taper.
+    function drawComet(tiltRad, orbitAngle) {
+      const N       = 110;
+      const spanRad = COMET.spanDeg * Math.PI / 180;
+      const cosT    = Math.cos(tiltRad);
+      const sinT    = Math.sin(tiltRad);
+
+      ctx.lineCap = 'round';
+
+      for (let i = 0; i < N; i++) {
+        const t0 = i       / N;
+        const t1 = (i + 1) / N;
+
+        const a0 = orbitAngle + t0 * spanRad;
+        const a1 = orbitAngle + t1 * spanRad;
+
+        const ex0 = COMET.rx * Math.cos(a0);
+        const ey0 = COMET.ry * Math.sin(a0);
+        const ex1 = COMET.rx * Math.cos(a1);
+        const ey1 = COMET.ry * Math.sin(a1);
+
+        const sx0 = CX + ex0 * cosT - ey0 * sinT;
+        const sy0 = CY + ex0 * sinT + ey0 * cosT;
+        const sx1 = CX + ex1 * cosT - ey1 * sinT;
+        const sy1 = CY + ex1 * sinT + ey1 * cosT;
+
+        // t0=0 → transparent tail; t0=1 → full sage head
+        // Cubic ease keeps tail dim for longer, snaps bright near head
+        const op = COMET.maxOp * Math.pow(t0, 2.2);
+        const lw = COMET.headW * (0.15 + 0.85 * t0); // taper: whisker tail → thick head
+
+        ctx.strokeStyle = `rgba(${SAGE},${op.toFixed(3)})`;
+        ctx.lineWidth   = lw;
+        ctx.beginPath();
+        ctx.moveTo(sx0, sy0);
+        ctx.lineTo(sx1, sy1);
+        ctx.stroke();
+      }
+    }
+
+    // ── Main loop ────────────────────────────────────────────────────────────
+    function loop(ts) {
+      ctx.clearRect(0, 0, W, H);
+
+      const spinDeg    = (ts / SPIN_MS)        * 360;
+      const orbitAngle = (ts / COMET.periodMs) * Math.PI * 2;
+      const tiltRad    = COMET.tiltDeg         * Math.PI / 180;
+
+      // Globe first (geometry layer), comet on top (accent layer)
+      drawGlobe(spinDeg);
+      drawComet(tiltRad, orbitAngle);
+
+      requestAnimationFrame(loop);
+    }
+  })();
+  </script>
+</body>
+</html>
