@@ -2,10 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "Wilma Collective Local Preview",
+      "name": "build-and-serve",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "8000"],
-      "port": 8000
+      "runtimeArgs": ["-m", "http.server", "3000", "--directory", "dist"],
+      "port": 3000
     }
   ]
 }

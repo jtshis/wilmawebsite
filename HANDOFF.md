@@ -35,15 +35,22 @@ for **two unrelated reasons**, and confusing them wastes hours.
 Edit files → commit → push to `main` → Netlify auto-builds → live.
 
 ### Track B — Content changes (Lise, in Sanity)
-Edit an article in Sanity Studio → publish → **the change is NOT live yet**.
-It only appears on the next Netlify build, because content is fetched at
-*build time*, not in the browser.
+Edit an article in Sanity Studio → publish → **the change is NOT live yet.**
+Content is fetched at *build time*, not in the browser, so publishing alone
+does nothing to the live site.
 
-> ⚠️ **Open question — verify before relying on it:** it is not confirmed
-> whether a Sanity webhook is wired to a Netlify build hook. If it is not,
-> a content-only edit sits invisible until someone triggers a rebuild
-> (push a commit, or hit "Trigger deploy" in Netlify). Confirm this before
-> telling Lise her publishes go live automatically.
+**Confirmed: there is no automatic Sanity → Netlify webhook.** Instead, the
+Studio has a **Dashboard** tab (Structure / Dashboard / Releases, top nav) with
+a "Netlify Deploys" widget — from the `sanity-plugin-dashboard-widget-netlify`
+dependency in `package.json` — showing the last deploy status and a manual
+**Deploy** button. That button calls a Netlify build hook directly.
+
+**So the real publishing workflow is a two-step manual process:**
+1. Publish the article in Sanity (native Publish button, per document).
+2. Go to Studio → **Dashboard** → click **Deploy**.
+
+Step 2 is easy to forget. If Lise (or anyone) publishes content and doesn't see
+it live, this is the first thing to check — not a bug, just a missed step.
 
 ---
 
@@ -137,9 +144,9 @@ experience. It requires a separate deploy (`cd studio && npx sanity deploy`).
 ### Dead weight — no bearing on the live site
 | File | Status |
 |---|---|
-| `globedesign.html` | Tracked in git, but never linked from `index.html` and never copied to `dist/`. Leftover prototype from the globe redesign (commit `5d391b4`). Safe to delete. |
-| `manifesto-globe-continents.svg` | Still copied into `dist/` by the build script, but nothing references it — the SVG globe was replaced by a canvas globe. Deployed but unreachable. Safe to delete (remove from the `staticFiles` array too). |
-| `final logo arborius blad wit.png` | Untracked, unreferenced. Stray file. |
+| `globedesign.html` | Tracked in git, but never linked from `index.html` and never copied to `dist/`. Leftover prototype from the globe redesign (commit `5d391b4`). Still present — safe to delete. |
+| `manifesto-globe-continents.svg` | **Deleted** (commit `8f24027`) — it was unreferenced since the SVG globe was replaced by a canvas globe. ⚠️ `scripts/build-site.mjs`'s `staticFiles` array (~line 492) **still names it**. Harmless — `copyFileIfExists()` skips missing files silently — but the array now lies about what it copies. Remove the entry when convenient. |
+| `final logo arborius blad wit.png` | **Gone** — was untracked/unreferenced clutter, removed from disk since this doc was first written. |
 
 ---
 
@@ -236,13 +243,20 @@ posts to it.
 
 - **Consolidate the duplicated journal logic** between `build-site.mjs` and
   `cms.js` into a shared module (§4). Highest-value refactor here.
-- **Confirm/wire the Sanity → Netlify build hook** so Lise's publishes go live
-  without a manual trigger (§2).
-- **Delete the dead files** listed in §5.
+- **Consider auto-wiring the Sanity → Netlify build hook** (a Sanity webhook
+  firing the same build hook the Dashboard's Deploy button calls) so publishing
+  goes live without the manual Dashboard step (§2). Currently manual by design/
+  by accident — unclear which; worth asking whoever set it up.
+- **Delete the remaining dead files** (§5): `globedesign.html` is still there;
+  clean the stale `manifesto-globe-continents.svg` entry out of the
+  `staticFiles` array in `scripts/build-site.mjs`.
 - **Remove the unused Contentful env vars** (§8).
 - **Image optimisation** — `hero-cherries.jpg` (1.6 MB), `hero-cherries-mobile.jpg`
-  (1.7 MB), `lise-founder.jpg` (1.3 MB) are large and hurt mobile load,
-  which matters given the site's own stated audience (low-bandwidth markets).
+  (1.7 MB), `lise-founder.jpg` (1.3 MB) are large and hurt mobile load, which
+  matters given the site's own stated audience (low-bandwidth markets). Note:
+  `hero-cherries-mobile.jpg` is currently **larger** than the desktop version
+  it's meant to replace on small screens (`index.html` ~line 2820) — the
+  mobile-optimised asset is actively making mobile worse. Fix this first.
 - Reading-time auto-calculation, scheduled publishing (future-dated
   `publishedAt` is stored but not specially handled), multi-author support,
   newsletter backend.

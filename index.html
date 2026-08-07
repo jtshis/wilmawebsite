@@ -242,6 +242,25 @@ nav.scrolled{
   align-items:end;
   margin-bottom:28px;
 }
+.journal-article-image{
+  margin:0 0 44px;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  background:var(--cream-deep);
+}
+.journal-article-image img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.blog-featured-img-inner img,
+.blog-card-img-inner img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
 .journal-article-label{
   font-size:10px;
   font-weight:500;
@@ -3518,6 +3537,9 @@ nav.scrolled .nav-hamburger span{background:var(--forest)}
       <span class="journal-article-date">Mar 2026</span>
     </div>
   </div>
+  <figure class="journal-article-image" hidden>
+    <img alt="">
+  </figure>
   <div class="journal-article-body">
     <p>Select an article from the Journal cards to read the full draft.</p>
   </div>

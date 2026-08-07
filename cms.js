@@ -392,6 +392,20 @@ function renderJournalArticle(post) {
     const initial = post.author ? post.author.trim().charAt(0).toUpperCase() : 'W';
     placeholder.textContent = initial;
   }
+  const articleImage = q('.journal-article-image', article);
+  const articleImageElement = articleImage ? q('img', articleImage) : null;
+  if (articleImage && articleImageElement) {
+    if (post.image?.url) {
+      articleImageElement.src = `${post.image.url}?w=1200&q=75&auto=format`;
+      articleImageElement.alt = post.imageAlt || '';
+      articleImage.hidden = false;
+    } else {
+      articleImageElement.removeAttribute('src');
+      articleImageElement.alt = '';
+      articleImage.hidden = true;
+    }
+  }
+
   const meta = qa('.journal-article-meta span', article).filter(el => !el.classList.contains('blog-meta-dot'));
   if (meta[0]) meta[0].textContent = post.author || '';
   if (meta[1]) meta[1].textContent = post.readingTime || '';

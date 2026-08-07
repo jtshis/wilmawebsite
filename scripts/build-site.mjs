@@ -105,6 +105,29 @@ function stripHtml(value = '') {
     .trim();
 }
 
+function escapeAttribute(value = '') {
+  return String(value).replace(/[&<>"']/g, character => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[character]);
+}
+
+// Sanity images come back as {url, metadata}. Serve them through Sanity's CDN
+// transforms so a 3000px upload does not ship whole into a card thumbnail.
+function sanityImageUrl(image, width) {
+  if (!image?.url) return null;
+  return `${image.url}?w=${width}&q=75&auto=format`;
+}
+
+function journalImageTag(image, imageAlt, width) {
+  const src = sanityImageUrl(image, width);
+  if (!src) return null;
+  return `<img src="${escapeAttribute(src)}" alt="${escapeAttribute(imageAlt || '')}" loading="lazy" decoding="async">`;
+}
+
 function slugify(value = '') {
   const base = stripHtml(value)
     .toLowerCase()
@@ -333,15 +356,17 @@ ${buttons}
 
   // Featured post
   if (blogPage.featured) {
-    const { category, title, excerpt, author, readingTime, slug, publishedAt } = blogPage.featured;
+    const { category, title, excerpt, author, readingTime, slug, publishedAt, image, imageAlt } = blogPage.featured;
     const initial = author ? author.trim().charAt(0).toUpperCase() : 'W';
+    const featuredVisual = journalImageTag(image, imageAlt, 1000)
+      || `<span class="blog-featured-placeholder">${initial}</span>`;
     html = html.replace(
       /<!-- FEATURED POST -->[\s\S]*?<!-- POST GRID -->/,
       `<!-- FEATURED POST -->
 <article class="blog-featured r">
   <div class="blog-featured-img">
     <div class="blog-featured-img-inner">
-      <span class="blog-featured-placeholder">${initial}</span>
+      ${featuredVisual}
     </div>
   </div>
   <div class="blog-featured-content">
@@ -374,8 +399,10 @@ ${buttons}
       const date = formatJournalDate(card.date);
       const slug = card.slug || resolveJournalSlug(card);
       const num = String(idx + 1).padStart(2, '0');
+      const cardVisual = journalImageTag(card.image, card.imageAlt, 800)
+        || `<span class="blog-card-num">${num}</span>`;
       return `  <a href="#${slug}" class="blog-card r d${(idx % 3) + 1}" role="link" tabindex="0" data-journal-slug="${slug}">
-    <div class="blog-card-img"><div class="blog-card-img-inner"><span class="blog-card-num">${num}</span></div></div>
+    <div class="blog-card-img"><div class="blog-card-img-inner">${cardVisual}</div></div>
     <p class="blog-tag">${tag}</p>
     <h3 class="blog-card-title">${titleHtml}</h3>
     <p class="blog-card-excerpt">${excerpt}</p>
