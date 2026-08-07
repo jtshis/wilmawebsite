@@ -152,34 +152,40 @@ experience. It requires a separate deploy (`cd studio && npx sanity deploy`).
 
 ## 6. Sanity content model
 
-Five document types in `studio/schemas/index.ts` — **but only two are actually
-wired up.**
+> ### 📌 Scope decision: Sanity owns the Journal only
+>
+> **Sanity's job is to publish journal articles and configure the journal
+> landing page. Nothing else.** This is deliberate, not an oversight.
+>
+> Homepage, About and site-settings copy is **code-owned** — it lives in
+> `content/site-data.local.mjs` and `index.html`, and is edited by a developer.
+> It is not exposed to Lise in Studio.
+>
+> Why: that copy changes maybe yearly, while articles change weekly. And the
+> homepage hero headline is animation-critical markup
+> (`<span class="line"><span class="word">…`) — handing a rich-text field over
+> it is a way to break the homepage, not a feature.
+>
+> **Do not "fix" this by wiring more document types into the GROQ query.**
+> Earlier versions of this doc suggested exactly that; it was wrong.
 
-| Type | Studio name | Live? | Notes |
-|---|---|---|---|
-| `blogPage` | Journal Page | ✅ **fetched** | The journal **landing page**: hero, featured article (a reference), pinned articles, filter categories, newsletter block. |
-| `journalPost` | Journal Article | ✅ **fetched** | The actual articles. Title, slug, category, publishedAt, author, excerpt, image, **body (Portable Text)**, SEO fields. |
-| `siteSettings` | Site Settings | ❌ **ignored** | Brand name, SEO description, OG image, LinkedIn URLs, theme colour. |
-| `homePage` | Home Page | ❌ **ignored** | Hero, "How we work", manifesto, "Who we work with", case studies, selected work. |
-| `aboutPage` | About Page | ❌ **ignored** | Hero, agency section, core values, founder bio, fun fact. |
+Two document types in `studio/schemas/index.ts`:
 
-> ### 🚨 The GROQ query only fetches `blogPage` and `journalPosts`
->
-> Look at `loadSanityContent()` in `scripts/build-site.mjs` — the query object
-> has exactly two keys. `siteSettings`, `homePage` and `aboutPage` are **never
-> requested**, so editing them in Studio changes nothing on the live site.
->
-> **Homepage and About copy actually lives in `content/site-data.local.mjs`**,
-> committed in the repo, and is applied to the page at runtime by `cms.js`.
-> To change homepage copy you edit that file (and see the warning below), not
-> Sanity.
->
-> This makes `content/site-data.local.mjs` dual-purpose: it is both the
-> *fallback* for the journal data **and** the *primary source* for everything
-> else. Do not assume it is only a fallback.
->
-> Wiring the other three types into the query is a real, contained improvement
-> — it would make Studio match the mental model people expect.
+| Type | Studio name | Notes |
+|---|---|---|
+| `blogPage` | Journal Page | The journal **landing page**: hero, featured article (a reference), pinned articles, filter categories, newsletter block. |
+| `journalPost` | Journal Article | The actual articles. Title, slug, category, publishedAt, author, excerpt, image, **body (Portable Text)**, SEO fields. |
+
+`siteSettings`, `homePage` and `aboutPage` schemas previously existed here but
+were never fetched by the build — they advertised editing that did nothing.
+They were removed to match the scope decision above. Any leftover documents of
+those types remain harmlessly in the Sanity dataset; the Studio just no longer
+surfaces them.
+
+**Where non-journal copy actually lives:** `content/site-data.local.mjs`. Note
+this file is dual-purpose — it is both the *fallback* for journal data **and**
+the *primary source* for homepage/about copy. Do not assume it is only a
+fallback.
 
 **⚠️ Copy is duplicated a third time, in `index.html`.** The static markup
 carries its own copy of the hero subheadline, the "How we work" card bodies,
@@ -282,9 +288,13 @@ posts to it.
 
 - **Consolidate the duplicated journal logic** between `build-site.mjs` and
   `cms.js` into a shared module (§4). Highest-value refactor here.
-- **Wire `siteSettings` / `homePage` / `aboutPage` into the GROQ query** (§6) so
-  the Studio documents that already exist actually drive the site, instead of
-  homepage copy living in `content/site-data.local.mjs` + `index.html`.
+- **Deploy the Studio** so the schema removal (§6) reaches
+  `wilmacollective.sanity.studio` — `cd studio && npx sanity deploy`. Until then
+  the live Studio still shows the removed Site Settings / Home Page / About
+  Page documents.
+- **Collapse the copy duplication** between `content/site-data.local.mjs` and
+  the static markup in `index.html` (§6) so homepage copy has one home rather
+  than needing the same edit in two files.
 - **Per-article social images** — `journalPost.ogImage` is fetched but unused;
   `og:image` always falls back to the global `siteSettings.ogImage`.
 - **Sanity `hotspot` is ignored** — `journalPost.image` has `hotspot: true`, so
