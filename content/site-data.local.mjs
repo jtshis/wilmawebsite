@@ -17,7 +17,7 @@ export default {
       headlineHtml:
         '<span class="line"><span class="word">Scale your</span></span><span class="line"><span class="word"><em>purpose.</em></span></span>',
       subheadline:
-        'We build the structured strategies and digital systems that empower mission-driven brands to expand their reach and elevate their influence.',
+        'We build the structured marketing strategies and digital systems that empower mission-driven brands to expand their reach and influence.',
       ctaLabel: 'Contact us'
     },
     howWeWork: {
@@ -28,13 +28,13 @@ export default {
           num: '01',
           title: 'The Diagnosis',
           body:
-            'We start with a strategic audit. No guesswork. We identify where your mission-critical impact is being lost in translation.'
+            'We start with a strategic audit. No guesswork. We identify where the gaps in your impact are and what is being lost in translation.'
         },
         {
           num: '02',
           title: 'The Build',
           body:
-            'Execution that respects human agency. We build systems that convert and reach the right target audiences in Europe and beyond.'
+            'Execution that respects human agency. We build systems that convert and reach the right target audiences in Africa, Europe and beyond.'
         },
         {
           num: '03',

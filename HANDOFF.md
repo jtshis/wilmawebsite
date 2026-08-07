@@ -152,15 +152,40 @@ experience. It requires a separate deploy (`cd studio && npx sanity deploy`).
 
 ## 6. Sanity content model
 
-Five document types in `studio/schemas/index.ts`:
+Five document types in `studio/schemas/index.ts` — **but only two are actually
+wired up.**
 
-| Type | Studio name | Notes |
-|---|---|---|
-| `siteSettings` | Site Settings | Brand name, SEO description, OG image, LinkedIn URLs, theme colour. |
-| `homePage` | Home Page | Hero, "How we work", manifesto, "Who we work with", case studies, selected work. |
-| `aboutPage` | About Page | Hero, agency section, core values, founder bio, fun fact. |
-| `blogPage` | Journal Page | The journal **landing page**: hero, featured article (a reference), pinned articles, filter categories, newsletter block. |
-| `journalPost` | Journal Article | The actual articles. Title, slug, category, publishedAt, author, excerpt, image, **body (Portable Text)**, SEO fields. |
+| Type | Studio name | Live? | Notes |
+|---|---|---|---|
+| `blogPage` | Journal Page | ✅ **fetched** | The journal **landing page**: hero, featured article (a reference), pinned articles, filter categories, newsletter block. |
+| `journalPost` | Journal Article | ✅ **fetched** | The actual articles. Title, slug, category, publishedAt, author, excerpt, image, **body (Portable Text)**, SEO fields. |
+| `siteSettings` | Site Settings | ❌ **ignored** | Brand name, SEO description, OG image, LinkedIn URLs, theme colour. |
+| `homePage` | Home Page | ❌ **ignored** | Hero, "How we work", manifesto, "Who we work with", case studies, selected work. |
+| `aboutPage` | About Page | ❌ **ignored** | Hero, agency section, core values, founder bio, fun fact. |
+
+> ### 🚨 The GROQ query only fetches `blogPage` and `journalPosts`
+>
+> Look at `loadSanityContent()` in `scripts/build-site.mjs` — the query object
+> has exactly two keys. `siteSettings`, `homePage` and `aboutPage` are **never
+> requested**, so editing them in Studio changes nothing on the live site.
+>
+> **Homepage and About copy actually lives in `content/site-data.local.mjs`**,
+> committed in the repo, and is applied to the page at runtime by `cms.js`.
+> To change homepage copy you edit that file (and see the warning below), not
+> Sanity.
+>
+> This makes `content/site-data.local.mjs` dual-purpose: it is both the
+> *fallback* for the journal data **and** the *primary source* for everything
+> else. Do not assume it is only a fallback.
+>
+> Wiring the other three types into the query is a real, contained improvement
+> — it would make Studio match the mental model people expect.
+
+**⚠️ Copy is duplicated a third time, in `index.html`.** The static markup
+carries its own copy of the hero subheadline, the "How we work" card bodies,
+etc. `cms.js` overwrites it at runtime from `site-data.local.mjs`, so the data
+file wins — but if you edit only the data file, the stale static text flashes
+briefly on load. **Edit both, and keep them identical.**
 
 **Naming trap:** the schema is called `blogPage` but everything user-facing says
 "Journal". They are the same thing.
@@ -236,6 +261,20 @@ posts to it.
    sub-paths without updating both.
 5. **A stale-looking site is usually a stale build, not a code bug.** Content
    changes need a rebuild (§2).
+6. **Sanity images are objects, not strings.** The GROQ query dereferences them
+   (`"image": image.asset->{url, metadata}`), so you need `image.url`. The
+   homepage case-study images are plain string paths, so code copied from there
+   yields `src="[object Object]"`. Always route journal images through the
+   `journalImageTag()` / `sanityImageUrl()` helpers in `build-site.mjs`.
+7. **Always serve Sanity images through CDN transforms.** Uploads are huge —
+   the current journal images are 3360×1890 PNGs at ~10 MB each. Appending
+   `?w=<width>&q=75&auto=format` returns 35–45 KB WebP instead. That single
+   parameter is the difference between a ~150 KB Journal page and a ~42 MB one.
+   `auto=format` negotiates WebP/AVIF from the browser's `Accept` header.
+8. **Card images are hidden on mobile by design.** `index.html` (~line 2501)
+   has `.blog-card-img{display:none}` under the comment *"no card image on
+   mobile, save space"*. Featured and article images still show. If someone
+   reports "images don't appear on my phone", this is why — it is deliberate.
 
 ---
 
@@ -243,6 +282,14 @@ posts to it.
 
 - **Consolidate the duplicated journal logic** between `build-site.mjs` and
   `cms.js` into a shared module (§4). Highest-value refactor here.
+- **Wire `siteSettings` / `homePage` / `aboutPage` into the GROQ query** (§6) so
+  the Studio documents that already exist actually drive the site, instead of
+  homepage copy living in `content/site-data.local.mjs` + `index.html`.
+- **Per-article social images** — `journalPost.ogImage` is fetched but unused;
+  `og:image` always falls back to the global `siteSettings.ogImage`.
+- **Sanity `hotspot` is ignored** — `journalPost.image` has `hotspot: true`, so
+  Lise can set a focal point in Studio, but rendering uses plain
+  `object-fit: cover`. Expect occasional awkward crops on faces.
 - **Consider auto-wiring the Sanity → Netlify build hook** (a Sanity webhook
   firing the same build hook the Dashboard's Deploy button calls) so publishing
   goes live without the manual Dashboard step (§2). Currently manual by design/
